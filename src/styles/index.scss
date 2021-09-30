@@ -1,0 +1,23 @@
+@import './normalize.scss';
+@import './fonts/iconfont.css';
+@import './element.scss';
+@import './transition.scss';
+@import './reset.scss';
+
+html {
+  /* rem em */
+  /*em 相对于父元素的font-size*/
+  /*rem 相对于根元素html的font-size, r就是root的意思*/
+  /*16 * 62.5% = 10px*/
+  /*1rem === 10px*/
+  font-size: 62.5%;
+}
+
+/*viewport height === vh*/
+html body #app {
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {width:7px; height:10px; background-color:transparent;} /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar-track {background-color:#f0f6ff;  } /*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-thumb {background-color:#73abb1; border-radius:6px;} /*定义滑块 内阴影+圆角*/

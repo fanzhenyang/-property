@@ -1,0 +1,55 @@
+.form-transparent {
+  .el-form-item {
+    border: .01rem solid rgba(255, 255, 255, 0.1);
+    height: 4.7rem;
+    line-height: 4.4rem;
+  }
+  .el-input__inner {
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    border-radius: 0;
+    padding: 1.2rem 2.3rem 1.2rem 3.5rem;
+    color: #fff;
+    height: 4.7rem;
+  }
+}
+
+.el-popper.is-light {
+  border: none;
+}
+
+.scrollbar__view {
+  height: 100%;
+ .el-scrollbar__view {
+   height: 100%;
+ }
+}
+.el-scrollbar__wrap {
+  overflow: hidden;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.el-menu--popup {
+  background: #043078; 
+}
+.el-menu--horizontal {
+  border-bottom: none;
+  .el-menu .el-menu-item {
+    background: #043078;
+    color: $fff;
+    &:hover {
+      color: $fff;
+      background-color: rgba(0, 0, 0, .3);
+    }
+  } 
+}
+.header-menu {
+  >.el-sub-menu.is-active .el-sub-menu__title {
+    border: none;
+  }
+  .el-menu-item.is-active {
+    border: none;
+  }
+}

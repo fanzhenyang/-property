@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://www.cnblogs.com/moonache/p/4661058.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin-when-crossorigin">
+    <meta name="description" content="1.Echarts自动刷新数据 1.Echarts柱状图的正常配置 注：声明了 myChart、test这两个都有用 官方示例中myChart是声明在 function(ec)里面的 &amp;lt;scri">
+    <meta property="og:description" content="1.Echarts自动刷新数据 1.Echarts柱状图的正常配置 注：声明了 myChart、test这两个都有用 官方示例中myChart是声明在 function(ec)里面的 &amp;lt;scri">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Echarts自动刷新数据 - 只追昭熙 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="https://common.cnblogs.com/favicon.svg" type="image/svg+xml">
+    
+    <link rel="stylesheet" href="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/bundle-codinglife.min.css">
+    <link type="text/css" rel="stylesheet" href="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/cnblogs.css">
+    <link type="text/css" rel="stylesheet" href="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/custom.css">
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/bundle-codinglife-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/moonache/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/moonache/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/moonache/wlwmanifest.xml">
+    <script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/encoder.js.下载"></script><script>
+        var currentBlogId = 231102;
+        var currentBlogApp = 'moonache';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'CodingLife';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function(){ return ''; } });
+            }
+        } catch(error) { }
+    </script>
+        <script>
+            var currentPostDateAdded = '2015-07-20 11:57';
+        </script>
+    <script src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/blog-common.min.js.下载"></script><style type="text/css">.medium-zoom-overlay{position:fixed;top:0;right:0;bottom:0;left:0;opacity:0;transition:opacity .3s;will-change:opacity}.medium-zoom--opened .medium-zoom-overlay{cursor:pointer;cursor:zoom-out;opacity:1}.medium-zoom-image{cursor:pointer;cursor:zoom-in;transition:transform .3s cubic-bezier(.2,0,.2,1)!important}.medium-zoom-image--hidden{visibility:hidden}.medium-zoom-image--opened{position:relative;cursor:pointer;cursor:zoom-out;will-change:transform}</style>
+    
+    
+    
+    <script type="text/javascript">
+        window.codeHighlightEngine = 1
+        window.enableCodeLineNumber = false
+    </script>
+<style>.juejin-search[data-v-f493e070]{display:flex;width:682px;height:46px;border-radius:2px;flex-direction:row;align-items:center;justify-content:center;position:relative}.juejin-search .search-anim[data-v-f493e070]{position:absolute;left:8px;width:28px;height:28px;object-fit:contain;animation-play-state:paused}.juejin-search .search-anim.slide-right-enter-active[data-v-f493e070],.juejin-search .search-anim.slide-right-leave-active[data-v-f493e070]{transition:width .3s linear}.juejin-search .search-anim.slide-right-enter-from[data-v-f493e070],.juejin-search .search-anim.slide-right-leave-to[data-v-f493e070]{width:0}.juejin-search .juejin-search-logo[data-v-f493e070]{right:16px;position:absolute;width:23px;height:18px;object-fit:contain}.juejin-search .juejin-search-logo path[data-v-f493e070]{transition:all .3s linear}.juejin-search #juejin-search-input-global.input[data-v-f493e070]{padding:0 39px 0 33px;width:100%;height:100%;outline:0;border:none;border-radius:2px;background-color:#fff;color:#1d2129;font-size:18px;line-height:22px;font-weight:500;caret-color:transparent;box-sizing:border-box;background:rgba(148,191,255,.1)}.juejin-search #juejin-search-input-global.input.active[data-v-f493e070]{border:2px solid #bedaff}.juejin-search #juejin-search-input-global.input.animation-stopped[data-v-f493e070]{caret-color:#1e80ff;padding-left:16px}.juejin-search #juejin-search-input-global.input[data-v-f493e070]::placeholder{font-weight:400;color:#86909c}:root{--color-input-bg:#f4f5f5;--color-input-error-bg:#ffece8;--color-input-placeholder:#86909c;--color-input-text:#4e5969;--color-input-icon:#f53f3f}:root .dark{--color-input-bg:rgba(255, 255, 255, 0.12);--color-input-error-bg:rgba(255, 81, 50, 0.15);--color-input-placeholder:#e3e3e3;--color-input-text:#e3e3e3;--color-input-icon:#ff6247}[data-v-4c531118]:root{--color-brand:#1E80FF;--color-brand-light:#E8F3FF;--color-nav-title:#86909C;--color-nav-popup-bg:#FFFFFF;--color-primary:#1D2129;--color-secondary:#4E5969;--color-thirdly:#86909C;--color-hover:#1e80ff;--color-hover-thirdly:#86909c;--color-dropdown-text:#1E80FF;--color-divider:#E5E6EB;--color-main-bg:#f4f5f5;--color-secondary-bg:#FFFFFF;--color-thirdly-bg:#f4f5f5;--color-hover-bg:#E8F3FF;--color-comment-bg:rgba(244, 245, 245, 0.5);--hover-bg:linear-gradient(
+    90deg,
+    rgba(232, 243, 255, 0) 0%,
+    rgba(232, 243, 255, 0.8) 25.09%,
+    #e8f3ff 50.16%,
+    rgba(232, 243, 255, 0.8) 75.47%,
+    rgba(232, 243, 255, 0) 100%
+  );--color-mask:rgba(0, 0, 0, 0.4);--color-quick-nav-text:#ffffff;--color-nav-bg:rgba(255, 255, 255, 0.13);--color-nav-selected-border:rgba(229, 230, 235, 0.3);--color-tips:#F53F3F;--color-fourthly:#C9CDD4;--color-shadow:rgba(0, 0, 0, 0.16);--color-grey-triangle:#e5e6eb;--color-icon-search:#ffffff;--color-navbar-icon:#1e80ff;--color-layout-dropdown-bg:rgba(232, 243, 255, 0.8);--color-layout-title:#4E5969;--color-layout-title-active:#1E80FF;--color-layout-icon-outline:rgba(30, 128, 255, 0.5);--color-layout-icon-fill:#ffffff}:root .dark[data-v-4c531118]{--color-brand:#1352a3;--color-nav-title:#e3e3e3;--color-nav-popup-bg:#1352A3;--color-primary:#e3e3e3;--color-secondary:#a9a9a9;--color-thirdly:#7d7d7f;--color-hover:#eeeeee;--color-hover-thirdly:#878789;--color-dropdown-text:#878789;--color-divider:#4a4a4a;--color-main-bg:#121212;--color-secondary-bg:#272727;--color-thirdly-bg:#3a3a3a;--color-hover-bg:#3a3a3a;--color-comment-bg:#313131;--hover-bg:linear-gradient(
+    90deg,
+    rgba(58, 58, 58, 0) 0%,
+    rgba(58, 58, 58, 0.8) 25.09%,
+    #3a3a3a 50.16%,
+    rgba(58, 58, 58, 0.8) 75.47%,
+    rgba(58, 58, 58, 0) 100%
+  );--color-mask:rgba(0, 0, 0, 0.4);--color-quick-nav-text:#e3e3e3;--color-nav-bg:rgb(30, 30, 30);--color-nav-selected-border:#4a4a4a;--color-tips:#bc3030;--color-fourthly:#878789;--color-shadow:rgba(0, 0, 0, 0.16);--color-grey-triangle:#3a3a3a;--color-icon-search:#e3e3e3;--color-navbar-icon:#e3e3e3;--color-layout-dropdown-bg:rgba(125, 125, 127, 0.8);--color-layout-title:#eeeeee;--color-layout-title-active:#eeeeee;--color-layout-icon-outline:#131313;--color-layout-icon-fill:#e3e3e3}.input-option[data-v-4c531118]{display:flex;flex-direction:column}.input-option span.error[data-v-4c531118]{margin-left:5.1666666667rem;font-size:1rem;line-height:20px;display:inline-block;height:20px;color:var(--color-tips)}.input-wrapper[data-v-4c531118]{display:flex;flex-direction:row;align-items:center;width:100%}.input-wrapper label[data-v-4c531118]{width:4em;font-size:1.1666666667rem;line-height:1.8333333333rem;color:var(--color-thirdly);margin-right:1rem}.input-wrapper .input[data-v-4c531118]{flex:1 0 auto;position:relative}.input-wrapper .input.error .input-inner[data-v-4c531118]{background-color:var(--color-input-error-bg)}.input-wrapper .input.error .btn-clear[data-v-4c531118]{color:var(--color-input-icon)}.input-wrapper .input .input-inner[data-v-4c531118]{background:var(--color-input-bg);border-radius:2px;color:var(--color-input-text);font-size:1.0833333333rem;line-height:1.8333333333rem;height:2.3333333333rem;padding:0 8px;outline:0;border:none;width:100%}.input-wrapper .input .input-inner[data-v-4c531118]::placeholder{color:var(--color-input-placeholder)}.input-wrapper .btn-clear[data-v-4c531118]{position:absolute;top:50%;right:0;transform:translateY(-50%);background:0 0;border:none;outline:0;color:var(--color-fourthly)}.input-wrapper .btn-clear[data-v-4c531118]::before{font-size:10px;line-height:10px}[data-v-25df73b2]{box-sizing:border-box}.color-tool[data-v-25df73b2]{padding:0 16px!important}.color-tool .row[data-v-25df73b2]{display:flex;align-items:center}.color-tool .color-picker[data-v-25df73b2]{cursor:pointer;outline:0;border:none;padding:0;margin:0;border-radius:2px;background-color:transparent;width:92px;height:40px}.color-tool .color-picker[data-v-25df73b2]::-webkit-color-swatch-wrapper{padding:3px;border:1px solid transparent;border-radius:4px;transition:all .15s linear}.color-tool .color-picker[data-v-25df73b2]::-webkit-color-swatch-wrapper:hover{border:1px solid #bedaff}.color-tool .color-picker[data-v-25df73b2]::-webkit-color-swatch{border-radius:2px;border:none}.color-tool .input[data-v-25df73b2]{transform:translateY(10px);flex:1 1 auto;margin:0 12px}.color-tool .input[data-v-25df73b2] input.input-inner{height:40px;padding-left:16px;font-size:14px;color:#1d2129;box-sizing:border-box;background:#f4f5f5}.color-tool .input[data-v-25df73b2] label{display:none}.color-tool .input[data-v-25df73b2] span.error{margin-left:16px}.color-tool .input[data-v-25df73b2] .input-wrapper .btn-clear{right:8px}.color-tool .input[data-v-25df73b2] .input-wrapper .btn-clear::before{font-size:14px;color:#c9cdd4}.color-tool button[data-v-25df73b2]{outline:0;border:none;background-color:unset;width:93px;height:40px;font-size:14px}.color-tool .btn-convert[data-v-25df73b2]{background:#1e80ff;border-radius:2px;color:#fff;transition:all .15s linear}.color-tool .btn-convert[data-v-25df73b2]:hover{background:#5399ff}.color-tool .btn-convert[data-v-25df73b2]:active{background:#0060dd}.color-tool .btn-copy[data-v-25df73b2]{background:rgba(30,128,255,.05);border:1px solid rgba(30,128,255,.3);border-radius:2px;color:#1e80ff;transition:all .15s linear}.color-tool .btn-copy[data-v-25df73b2]:hover{background:rgba(30,128,255,.1);border-color:rgba(30,128,255,.45)}.color-tool .btn-copy[data-v-25df73b2]:active{background:rgba(30,128,255,.2);border-color:rgba(30,128,255,.6)}.color-tool .display[data-v-25df73b2]{flex:1;text-align:start;background-color:#f4f5f5;height:40px;margin:0 12px;border-radius:2px;line-height:40px;padding-left:16px;font-size:14px;color:#1d2129}.color-tool .label[data-v-25df73b2]{width:92px;font-size:16px;font-weight:500;color:#1d2129;text-align:end}.color-tool .row[data-v-25df73b2]:not(:first-of-type){margin-top:16px}.tool[data-v-5c9b7424]{width:100%;height:100%}iframe[data-v-5c9b7424]{min-height:488px}.calculator[data-v-81e152a8]{display:flex;align-items:center;padding:14px 16px 14px 24px}.calculator .result[data-v-81e152a8]{font-size:16px;font-weight:500;line-height:22px;color:#1d2129;margin:0 16px;text-overflow:ellipsis;flex:1 0 auto;overflow:hidden;white-space:nowrap;max-width:490px}.calculator .hint[data-v-81e152a8]{font-size:14px;line-height:22px;color:#86909c}.search-action[data-v-71378e58]{display:flex;align-items:center;padding:0 16px 0 20px;box-sizing:border-box;user-select:none;cursor:pointer;height:44px;border-left:4px solid transparent;border-top:4px solid transparent;border-bottom:4px solid transparent;transition:all .15s linear}.search-action.active[data-v-71378e58],.search-action[data-v-71378e58]:hover{border-left-color:#1e80ff;background-color:#f4f5f5}.search-action .search-content[data-v-71378e58]{display:flex;align-items:center;flex:1 0 auto;margin-right:16px}.search-action .search-content .search-content__logo[data-v-71378e58]{width:32px;height:32px}.search-action .search-content .search-content__engine[data-v-71378e58],.search-action .search-content .search-content__keyword[data-v-71378e58]{font-size:16px;font-weight:500;line-height:22px}.search-action .search-content .search-content__keyword[data-v-71378e58]{color:#1d2129;margin:0 4px 0 16px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:396px}.search-action .search-content .search-content__engine[data-v-71378e58]{color:#1e80ff}.search-action .hint[data-v-71378e58]{font-size:14px;line-height:22px;color:#1e80ff}[data-v-b7831bf2]:root{--color-brand:#1E80FF;--color-brand-light:#E8F3FF;--color-nav-title:#86909C;--color-nav-popup-bg:#FFFFFF;--color-primary:#1D2129;--color-secondary:#4E5969;--color-thirdly:#86909C;--color-hover:#1e80ff;--color-hover-thirdly:#86909c;--color-dropdown-text:#1E80FF;--color-divider:#E5E6EB;--color-main-bg:#f4f5f5;--color-secondary-bg:#FFFFFF;--color-thirdly-bg:#f4f5f5;--color-hover-bg:#E8F3FF;--color-comment-bg:rgba(244, 245, 245, 0.5);--hover-bg:linear-gradient(
+    90deg,
+    rgba(232, 243, 255, 0) 0%,
+    rgba(232, 243, 255, 0.8) 25.09%,
+    #e8f3ff 50.16%,
+    rgba(232, 243, 255, 0.8) 75.47%,
+    rgba(232, 243, 255, 0) 100%
+  );--color-mask:rgba(0, 0, 0, 0.4);--color-quick-nav-text:#ffffff;--color-nav-bg:rgba(255, 255, 255, 0.13);--color-nav-selected-border:rgba(229, 230, 235, 0.3);--color-tips:#F53F3F;--color-fourthly:#C9CDD4;--color-shadow:rgba(0, 0, 0, 0.16);--color-grey-triangle:#e5e6eb;--color-icon-search:#ffffff;--color-navbar-icon:#1e80ff;--color-layout-dropdown-bg:rgba(232, 243, 255, 0.8);--color-layout-title:#4E5969;--color-layout-title-active:#1E80FF;--color-layout-icon-outline:rgba(30, 128, 255, 0.5);--color-layout-icon-fill:#ffffff}:root .dark[data-v-b7831bf2]{--color-brand:#1352a3;--color-nav-title:#e3e3e3;--color-nav-popup-bg:#1352A3;--color-primary:#e3e3e3;--color-secondary:#a9a9a9;--color-thirdly:#7d7d7f;--color-hover:#eeeeee;--color-hover-thirdly:#878789;--color-dropdown-text:#878789;--color-divider:#4a4a4a;--color-main-bg:#121212;--color-secondary-bg:#272727;--color-thirdly-bg:#3a3a3a;--color-hover-bg:#3a3a3a;--color-comment-bg:#313131;--hover-bg:linear-gradient(
+    90deg,
+    rgba(58, 58, 58, 0) 0%,
+    rgba(58, 58, 58, 0.8) 25.09%,
+    #3a3a3a 50.16%,
+    rgba(58, 58, 58, 0.8) 75.47%,
+    rgba(58, 58, 58, 0) 100%
+  );--color-mask:rgba(0, 0, 0, 0.4);--color-quick-nav-text:#e3e3e3;--color-nav-bg:rgb(30, 30, 30);--color-nav-selected-border:#4a4a4a;--color-tips:#bc3030;--color-fourthly:#878789;--color-shadow:rgba(0, 0, 0, 0.16);--color-grey-triangle:#3a3a3a;--color-icon-search:#e3e3e3;--color-navbar-icon:#e3e3e3;--color-layout-dropdown-bg:rgba(125, 125, 127, 0.8);--color-layout-title:#eeeeee;--color-layout-title-active:#eeeeee;--color-layout-icon-outline:#131313;--color-layout-icon-fill:#e3e3e3}.search-app[data-v-b7831bf2]{z-index:9999;padding-top:160px;position:fixed;left:0;right:0;top:0;bottom:0;display:flex;align-items:flex-start;justify-content:center}.search-app.extension[data-v-b7831bf2]{z-index:700}@media (max-height:720px){.search-app.tool-active[data-v-b7831bf2]{padding-top:80px}}@media (max-height:640px){.search-app.tool-active[data-v-b7831bf2]{padding-top:30px}}.search-app .search-app__wrapper__[data-v-b7831bf2]{border-radius:2px;border:1px solid #1e80ff;background:#fff;box-shadow:0 0 0 4px rgba(30,128,255,.2),0 0 20px rgba(0,0,0,.15);backdrop-filter:blur(15px)}.search-app .search-app__wrapper__ .search-result[data-v-b7831bf2]{margin-top:8px}.search-app .search-app__wrapper__ .search-result .tool[data-v-b7831bf2]{padding:0 8px}.search-app .search-app__wrapper__ .search-result .setting-hint[data-v-b7831bf2]{display:flex;align-items:center;justify-content:flex-end;margin:0 16px;padding:12px 0 16px}.search-app .search-app__wrapper__ .search-result .setting-hint .text[data-v-b7831bf2]{color:#86909c;line-height:22px;cursor:pointer;user-select:none}.search-app .search-app__wrapper__ .search-result .setting-hint .text[data-v-b7831bf2]:hover:not(.disabled){color:#1e80ff;transition:all .15s linear}.search-app .search-app__wrapper__ .search-result .setting-hint .text.disabled[data-v-b7831bf2]{cursor:initial}.search-app .juejin-search[data-v-b7831bf2]{margin:8px}</style><style type="text/css">@font-face {
+  font-family: 'rbicon';
+  src: url(chrome-extension://dipiagiiohfljcicegpgffpbnjmgjcnf/fonts/rbicon.woff2) format("woff2");
+  font-weight: normal;
+  font-style: normal; }
+</style></head>
+<body class="skin-codinglife no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding"><a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/logo.svg" alt="博客园Logo"></a></li>
+                <li><a href="https://www.cnblogs.com/" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;skin-navbar-sitehome&#39;)">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;skin-navbar-news&#39;)">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;skin-navbar-q&#39;)">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;skin-navbar-brands&#39;)">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;skin-navbar-ing&#39;)">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;skin-navbar-edu&#39;)">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="text" tabindex="3">
+                        <button type="submit" id="zzk_search_button">
+                            <img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/search.svg" alt="搜索">
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔" style="display: none;">
+                        <img id="new_post_icon" class="navbar-icon" src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/newpost.svg" alt="写随笔">
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客" style="display: none;">
+                        <img id="myblog_icon" class="navbar-icon" src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/myblog.svg" alt="我的博客">
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息" style="display: none;">
+                        <img id="msg_icon" class="navbar-icon" src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/message.svg" alt="短消息">
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown" style="display: none;">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/avatar-default.svg" alt="用户头像">
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/lite-mode-check.svg" class="hide"><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup/" style="display: inline;">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()" style="display: inline;">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <link type="text/css" rel="stylesheet" href="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/shCoreDefault.css">
+<link type="text/css" rel="stylesheet" href="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/shThemeDefault.css">
+    </div>
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/moonache/"><img id="blogLogo" src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/logo.gif" alt="返回主页"></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/moonache/">沉香</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/moonache/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%8F%AA%E8%BF%BD%E6%98%AD%E7%86%99">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/moonache/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<span id="stats_post_count">随笔 - 82&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 30&nbsp; </span>
+<span id="stats-total-view-count">阅读 - 
+<span title="总阅读数: 393003">
+39万</span></span>
+
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/moonache/p/4661058.html">
+    <span>Echarts自动刷新数据</span>
+    
+
+
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body blogpost-body-html">
+<p class="MsoNormal" style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;, Georgia, Helvetica, Arial, sans-serif, 宋体, PMingLiU, serif"><span style="color: rgba(139, 139, 0, 1); font-family: 微软雅黑, sans-serif; font-size: 16pt; font-weight: bold; line-height: 1.5">1.Echarts自动刷新数据</span></p>
+<div class="MsoNormal" style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;, Georgia, Helvetica, Arial, sans-serif, 宋体, PMingLiU, serif; text-align: center" align="center"><hr align="center" size="2" width="100%"></div>
+<div><span style="font-size: 10.5pt; line-height: 1.5"><strong>1.Echarts柱状图的正常配置</strong></span></div>
+<div><span style="font-size: 10.5pt; line-height: 1.5"><span style="color: rgba(255, 0, 0, 1)">注：</span>声明了 myChart、test这两个都有用</span></div>
+<div><span style="font-size: 10.5pt; line-height: 1.5">官方示例中myChart是声明在 function(ec)里面的</span></div>
+<div>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">script </span><span style="color: rgba(255, 0, 0, 1)">src</span><span style="color: rgba(0, 0, 255, 1)">="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"</span><span style="color: rgba(0, 0, 255, 1)">&gt;&lt;/</span><span style="color: rgba(128, 0, 0, 1)">script</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">script </span><span style="color: rgba(255, 0, 0, 1)">src</span><span style="color: rgba(0, 0, 255, 1)">="http://echarts.baidu.com/build/dist/echarts.js"</span><span style="color: rgba(0, 0, 255, 1)">&gt;&lt;/</span><span style="color: rgba(128, 0, 0, 1)">script</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">script </span><span style="color: rgba(255, 0, 0, 1)">type</span><span style="color: rgba(0, 0, 255, 1)">="text/javascript"</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+    <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> myChart;
+    </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> test </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span> <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span>
+    <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 路径配置</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">    require.config({
+        paths: {
+            echarts: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">http://echarts.baidu.com/build/dist</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">
+        }
+    });
+    </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 使用</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">    require(
+        [
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">echarts</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">echarts/chart/bar</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span> <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 使用柱状图就加载bar模块，按需加载</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">        ],
+        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">function</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> (ec) {
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 基于准备好的dom，初始化echarts图表</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">             myChart </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> ec.init(document.getElementById(</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">divProgress</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">));
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> option </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> {
+                tooltip: {
+                    show: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">true</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">
+                },
+                animation: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">false</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                legend: {
+                    data: [</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">销量</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">]
+                },
+                xAxis: [
+                    {
+                        type: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">category</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                        data: [</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">衬衫</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">羊毛衫</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">雪纺衫</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">裤子</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">高跟鞋</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">袜子</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">]
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">value</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">
+                    }
+                ],
+                series: [
+                    {
+                        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">name</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">销量</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">type</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">bar</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">data</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">: [</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">5</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">20</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">40</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">20</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">]
+                    }
+                ]
+            };
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 为echarts对象加载数据 </span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">            myChart.setOption(option);
+        }
+    );
+</span><span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">script</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+</div>
+<div><strong>2.添加 refreshData函数</strong></div>
+<div>在第一步在顶部声明的myChart和test都会在refreshData函数里面用上</div>
+<div><span style="color: rgba(255, 0, 0, 1)">注：</span><span class="pln" style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 12.631579399108887px; line-height: 17.99342155456543px; white-space: pre; background-color: rgba(247, 247, 249, 1)">option</span><span class="pun" style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 12.631579399108887px; line-height: 17.99342155456543px; white-space: pre; background-color: rgba(247, 247, 249, 1)">.</span><span class="pln" style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 12.631579399108887px; line-height: 17.99342155456543px; white-space: pre; background-color: rgba(247, 247, 249, 1)">series</span><span class="pun" style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 12.631579399108887px; line-height: 17.99342155456543px; white-space: pre; background-color: rgba(247, 247, 249, 1)">[</span><span class="lit" style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 12.631579399108887px; line-height: 17.99342155456543px; white-space: pre; background-color: rgba(247, 247, 249, 1)">0</span><span class="pun" style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 12.631579399108887px; line-height: 17.99342155456543px; white-space: pre; background-color: rgba(247, 247, 249, 1)">].</span><span class="pln" style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 12.631579399108887px; line-height: 17.99342155456543px; white-space: pre; background-color: rgba(247, 247, 249, 1)">data </span><span class="pun" style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 12.631579399108887px; line-height: 17.99342155456543px; white-space: pre; background-color: rgba(247, 247, 249, 1)">=</span><span class="pln" style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 12.631579399108887px; line-height: 17.99342155456543px; white-space: pre; background-color: rgba(247, 247, 249, 1)"> data</span><span class="pun" style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 12.631579399108887px; line-height: 17.99342155456543px; white-space: pre; background-color: rgba(247, 247, 249, 1)">;</span><span style="font-size: 10.5pt; line-height: 1.5">这句的格式最重要</span></div>
+<div>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">script </span><span style="color: rgba(255, 0, 0, 1)">src</span><span style="color: rgba(0, 0, 255, 1)">="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"</span><span style="color: rgba(0, 0, 255, 1)">&gt;&lt;/</span><span style="color: rgba(128, 0, 0, 1)">script</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">script </span><span style="color: rgba(255, 0, 0, 1)">src</span><span style="color: rgba(0, 0, 255, 1)">="http://echarts.baidu.com/build/dist/echarts.js"</span><span style="color: rgba(0, 0, 255, 1)">&gt;&lt;/</span><span style="color: rgba(128, 0, 0, 1)">script</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">script </span><span style="color: rgba(255, 0, 0, 1)">type</span><span style="color: rgba(0, 0, 255, 1)">="text/javascript"</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+    <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> myChart;
+    </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> test </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span> <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span>
+    <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 路径配置</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">    require.config({
+        paths: {
+            echarts: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">http://echarts.baidu.com/build/dist</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">
+        }
+    });
+    </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 使用</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">    require(
+        [
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">echarts</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">echarts/chart/bar</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span> <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 使用柱状图就加载bar模块，按需加载</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">        ],
+        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">function</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> (ec) {
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 基于准备好的dom，初始化echarts图表</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">             myChart </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> ec.init(document.getElementById(</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">divProgress</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">));
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> option </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> {
+                tooltip: {
+                    show: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">true</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">
+                },
+                animation: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">false</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                legend: {
+                    data: [</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">销量</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">]
+                },
+                xAxis: [
+                    {
+                        type: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">category</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                        data: [</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">衬衫</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">羊毛衫</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">雪纺衫</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">裤子</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">高跟鞋</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">袜子</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">]
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">value</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">
+                    }
+                ],
+                series: [
+                    {
+                        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">name</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">销量</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">type</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">bar</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">data</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">: [</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">5</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">20</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">40</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">20</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">]
+                    }
+                ]
+            };
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 为echarts对象加载数据 </span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">            myChart.setOption(option);
+        }
+    );
+    
+</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">function</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> refreshData(data){
+     </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">if</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">(</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">!</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">myChart){
+          </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">return</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">;
+     }
+     
+     </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">更新数据</span>
+      <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> option </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> myChart.getOption();
+      option.series[</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">0</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">].data </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> data;   
+      myChart.setOption(option);    
+}
+</span><span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">script</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+</div>
+<div>
+<div><strong>3.使用window.setInterval 来实现自动刷新数据</strong></div>
+</div>
+<div>用了jQuery的，所以在第一句就引用了jQuery</div>
+<div>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">script </span><span style="color: rgba(255, 0, 0, 1)">src</span><span style="color: rgba(0, 0, 255, 1)">="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"</span><span style="color: rgba(0, 0, 255, 1)">&gt;&lt;/</span><span style="color: rgba(128, 0, 0, 1)">script</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">script </span><span style="color: rgba(255, 0, 0, 1)">src</span><span style="color: rgba(0, 0, 255, 1)">="http://echarts.baidu.com/build/dist/echarts.js"</span><span style="color: rgba(0, 0, 255, 1)">&gt;&lt;/</span><span style="color: rgba(128, 0, 0, 1)">script</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">script </span><span style="color: rgba(255, 0, 0, 1)">type</span><span style="color: rgba(0, 0, 255, 1)">="text/javascript"</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+    <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> myChart;
+    </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> test </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span> <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span>
+    <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 路径配置</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">    require.config({
+        paths: {
+            echarts: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">http://echarts.baidu.com/build/dist</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">
+        }
+    });
+    </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 使用</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">    require(
+        [
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">echarts</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">echarts/chart/bar</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span> <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 使用柱状图就加载bar模块，按需加载</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">        ],
+        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">function</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> (ec) {
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 基于准备好的dom，初始化echarts图表</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">             myChart </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> ec.init(document.getElementById(</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">divProgress</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">));
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> option </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> {
+                tooltip: {
+                    show: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">true</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">
+                },
+                animation: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">false</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                legend: {
+                    data: [</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">销量</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">]
+                },
+                xAxis: [
+                    {
+                        type: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">category</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                        data: [</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">衬衫</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">羊毛衫</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">雪纺衫</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">裤子</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">高跟鞋</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">袜子</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">]
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">value</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">'</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">
+                    }
+                ],
+                series: [
+                    {
+                        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">name</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">销量</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">type</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">bar</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,
+                        </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">data</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">: [</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">5</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">20</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">40</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">20</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">]
+                    }
+                ]
+            };
+            </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)"> 为echarts对象加载数据 </span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">            myChart.setOption(option);
+        }
+    );
+    
+    </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">这里用setTimeout代替ajax请求进行演示</span>
+<span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">window.setInterval(</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">function</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> () {
+    </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> data </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> [test, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">5</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">40</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">20</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">];
+   $.get(</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">SQLTest.ashx</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">,</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">function</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">(responseTxt,statusTxt,xhr)
+   {
+    test</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">responseTxt;
+    </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">if (statusTxt == "success")alert(test);</span>
+    <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">if</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> (statusTxt </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">==</span> <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">error</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">)
+            alert(</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">Error: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span> <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">+</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> xhr.status </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">+</span> <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">: </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">"</span> <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">+</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> xhr.statusText);
+   });
+    data </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> [test, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">5</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">40</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">20</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">, </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">10</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">];
+    refreshData(data);       
+},</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">3000</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">);
+ 
+</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">function</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> refreshData(data){
+     </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">if</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">(</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">!</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">myChart){
+          </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">return</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">;
+     }
+     
+     </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">//</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 128, 0, 1)">更新数据</span>
+      <span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 255, 1)">var</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> option </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> myChart.getOption();
+      option.series[</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">0</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">].data </span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)">=</span><span style="background-color: rgba(245, 245, 245, 1); color: rgba(0, 0, 0, 1)"> data;   
+      myChart.setOption(option);    
+}
+</span><span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">script</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+</div>
+<div>
+<div><strong>4.SQLTest.ashx</strong></div>
+</div>
+<div>1.ContentType设置为text/plain</div>
+<div>2.直接把需要返回的数据 write回来即可</div>
+<div>3.当然，在这里随便返回个&lt;=100的整数都行，你完全可以在一个txt文档里面写个60，然后第三步中填上txt文档的路径。</div>
+<div>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre>&lt;%@ WebHandler Language=<span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(128, 0, 0, 1)">C#</span><span style="color: rgba(128, 0, 0, 1)">"</span> Class=<span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(128, 0, 0, 1)">SQLTest</span><span style="color: rgba(128, 0, 0, 1)">"</span> %&gt;
+<span style="color: rgba(0, 0, 255, 1)">using</span><span style="color: rgba(0, 0, 0, 1)"> System;
+</span><span style="color: rgba(0, 0, 255, 1)">using</span><span style="color: rgba(0, 0, 0, 1)"> System.Web;
+</span><span style="color: rgba(0, 0, 255, 1)">using</span><span style="color: rgba(0, 0, 0, 1)"> DAL;
+</span><span style="color: rgba(0, 0, 255, 1)">using</span><span style="color: rgba(0, 0, 0, 1)"> System.Data;
+</span><span style="color: rgba(0, 0, 255, 1)">using</span><span style="color: rgba(0, 0, 0, 1)"> System.Configuration;
+</span><span style="color: rgba(0, 0, 255, 1)">using</span><span style="color: rgba(0, 0, 0, 1)"> System.Data.SqlClient;
+</span><span style="color: rgba(0, 0, 255, 1)">public</span> <span style="color: rgba(0, 0, 255, 1)">class</span><span style="color: rgba(0, 0, 0, 1)"> SQLTest : IHttpHandler {
+    SQLHelper SQLAss </span>= <span style="color: rgba(0, 0, 255, 1)">new</span><span style="color: rgba(0, 0, 0, 1)"> SQLHelper();
+    </span><span style="color: rgba(0, 0, 255, 1)">string</span> StrCon = ConfigurationManager.ConnectionStrings[<span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(128, 0, 0, 1)">DatabaseTest</span><span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(0, 0, 0, 1)">].ConnectionString;
+    </span><span style="color: rgba(0, 0, 255, 1)">static</span> <span style="color: rgba(0, 0, 255, 1)">int</span> i=<span style="color: rgba(128, 0, 128, 1)">1</span><span style="color: rgba(0, 0, 0, 1)">;
+    </span><span style="color: rgba(0, 0, 255, 1)">public</span> <span style="color: rgba(0, 0, 255, 1)">void</span><span style="color: rgba(0, 0, 0, 1)"> ProcessRequest (HttpContext context) 
+    {
+        context.Response.ContentType </span>= <span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(128, 0, 0, 1)">text/plain</span><span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(0, 0, 0, 1)">;
+        </span><span style="color: rgba(0, 0, 255, 1)">string</span> sqlstr = <span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(128, 0, 0, 1)">SELECT Progress FROM T_EchartData1 WHERE Num LIKE '</span><span style="color: rgba(128, 0, 0, 1)">"</span> + i.ToString() + <span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(128, 0, 0, 1)">'</span><span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(0, 0, 0, 1)">;
+        </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">SELECT Age FROM Person1 WHERE id = '2'  SQL可以用等号</span>
+        <span style="color: rgba(0, 0, 255, 1)">var</span> dt = SQLAss.ExecuteQuery(sqlstr, CommandType.Text);<span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">将读取的数据存到dt里面</span>
+        i++<span style="color: rgba(0, 0, 0, 1)">;
+        </span><span style="color: rgba(0, 0, 255, 1)">if</span> (i &gt;= <span style="color: rgba(128, 0, 128, 1)">6</span>) i = <span style="color: rgba(128, 0, 128, 1)">1</span><span style="color: rgba(0, 0, 0, 1)">;
+        context.Response.Write(Convert.ToInt32(dt.Rows[</span><span style="color: rgba(128, 0, 128, 1)">0</span>][<span style="color: rgba(128, 0, 128, 1)">0</span><span style="color: rgba(0, 0, 0, 1)">].ToString()));
+    }
+ 
+    </span><span style="color: rgba(0, 0, 255, 1)">public</span> <span style="color: rgba(0, 0, 255, 1)">bool</span><span style="color: rgba(0, 0, 0, 1)"> IsReusable {
+        </span><span style="color: rgba(0, 0, 255, 1)">get</span><span style="color: rgba(0, 0, 0, 1)"> {
+            </span><span style="color: rgba(0, 0, 255, 1)">return</span> <span style="color: rgba(0, 0, 255, 1)">false</span><span style="color: rgba(0, 0, 0, 1)">;
+        }
+    }
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+</div>
+<div><a title="来自为知笔记(Wiz)" href="http://www.wiz.cn/i/4c8adfef">来自为知笔记(Wiz)</a></div>
+<p>&nbsp;</p>
+</div>
+<div id="MySignature">
+    <p style="background: rgb(255,255,255); padding: 10px 10px 10px 10px; border: 1px dashed rgb(224,224,224); font-family: 微软雅黑; font-size: 13px; text-indent: 0em;">
+	作者：<a href="http://www.cnblogs.com/moonache/" target="_blank">Moonache</a>
+	<br>
+	出处：<a href="http://www.cnblogs.com/moonache/" target="_blank">http://www.cnblogs.com/moonache/</a>
+	<br>
+	本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文链接，否则保留追究法律责任的权利。
+</p>
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/moonache/category/739923.html" target="_blank">ASP.NET</a>,             <a href="https://www.cnblogs.com/moonache/category/739925.html" target="_blank">Internet</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(4661058,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;b4306280-bffe-e411-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/moonache/" target="_blank"><img src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/sample_face.gif" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/moonache/">只追昭熙</a><br>
+            <a href="https://home.cnblogs.com/u/moonache/followees/">关注 - 69</a><br>
+            <a href="https://home.cnblogs.com/u/moonache/followers/">粉丝 - 70</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;b4306280-bffe-e411-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(4661058,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">3</span>
+    </div>
+    <div class="buryit" onclick="votePost(4661058,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/moonache/p/4644081.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/moonache/p/4644081.html" title="发布于 2015-07-13 22:06">初识Windows服务 C#</a>
+    <br>
+    <a href="https://www.cnblogs.com/moonache/p/4708908.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/moonache/p/4708908.html" title="发布于 2015-08-06 19:12">ASP.NET CSS 小结</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2015-07-20 11:57</span>&nbsp;
+<a href="https://www.cnblogs.com/moonache/">只追昭熙</a>&nbsp;
+阅读(<span id="post_view_count">96131</span>)&nbsp;
+评论(<span id="post_comment_count">1</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=4661058" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(4661058);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: &#39;&#39;, targetType: &#39;blogPost&#39;, targetId: &#39;4661058&#39;, targetLink: &#39;https://www.cnblogs.com/moonache/p/4661058.html&#39;, title: &#39;Echarts自动刷新数据&#39; })">举报</a></div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/highlight.min.js.下载" async="" onload="markdown_highlight()"></script>
+<script>
+    var allowComments = true, cb_blogId = 231102, cb_blogApp = 'moonache', cb_blogUserGuid = 'b4306280-bffe-e411-b908-9dcfd8948a71';
+    var cb_entryId = 4661058, cb_entryCreatedDate = '2015-07-20 11:57', cb_postType = 1;
+    updatePostStats(
+        [cb_entryId],
+        function(id, count) { $("#post_view_count").text(count) },
+        function(id, count) { $("#post_comment_count").text(count) })
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+</script>
+
+<a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/moonache/p/4661058.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/moonache/p/4661058.html#top">返回顶部</a></div>
+    <div id="comment_form_container" style="visibility: visible;"><div class="login_tips">
+    登录后才能查看或发表评论，立即 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return account.login(&#39;!comments&#39;);">登录</a> 或者
+    <a href="https://www.cnblogs.com/">逛逛</a> 博客园首页
+</div>
+</div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.baidu.com/campaign/bccdiscount/index.html?track=cp:bokeyuan|pf:pc|pp:H-bokeyuan-21bccsanqi-neiyewenzilian|pu:21bccsanqi-neiyewenzilian|ci:21bcc|kw:10370321" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-百度智能云&#39;)">【推荐】百度智能云超值优惠：新用户首购云服务器1核1G低至69元/年</a><br><a href="http://www.uccpsoft.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-ucancode&#39;)">【推荐】跨平台组态\工控\仿真\CAD 50万行C++源码全开放免费下载！</a><br><a href="https://www.aliyun.com/minisite/goods?taskCode=yds2021-09zy&amp;recordId=883117&amp;userCode=swh7dvlt" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云-cps&#39;)">【推荐】阿里云云大使特惠：新用户购ECS服务器1核2G最低价87元/年</a><br><a href="https://brands.cnblogs.com/huawei" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-华为专区&#39;)">【推荐】和开发者在一起：华为开发者社区，入驻博客园科技品牌专区</a><br><a href="https://www.cnblogs.com/cmt/p/15147135.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-众安保险&#39;)">【推广】园子与爱卡汽车爱宝险合作，随手就可以买一份的百万医疗保险</a><br></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+             <a onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;Pangle-C1&#39;)" target="_blank" rel="nofollow" href="https://c.gridsumdissector.com/r/?gid=gad_545_ph4hkwzt&amp;ck=32&amp;adk=442&amp;autorefresh=__AUTOREFRESH__">
+                <img style="width: 300px; height: 250px;" src="./Echarts自动刷新数据 - 只追昭熙 - 博客园_files/35695-20210817131346802-930113090.jpg" alt="" onload="gscmdImpress()">
+             </a>
+    </div>
+    <div id="under_post_card1"><div class="under-post-card">
+<b>编辑推荐：</b>
+<br>
+
+· <a href="https://www.cnblogs.com/iwiniwin/p/15323970.html" target="_blank">深入 xLua 实现原理之 C# 如何调用 Lua</a>
+    <br>
+· <a href="https://www.cnblogs.com/chopper-poet/p/15328054.html" target="_blank">记一次 k8s pod 频繁重启的优化之旅</a>
+    <br>
+· <a href="https://www.cnblogs.com/kklldog/p/netcore-with-microservices-11.html" target="_blank">.Net Core with 微服务：分布式事务 - 可靠消息最终一致性</a>
+    <br>
+· <a href="https://www.cnblogs.com/zhujiqian/p/15312435.html" target="_blank"> 通过 Wireshark 抓包分析谈谈 DNS 域名解析的那些事儿</a>
+    <br>
+· <a href="https://www.cnblogs.com/eventhorizon/p/15316955.html" target="_blank">概述 .NET 6 ThreadPool 实现</a>
+    <br>
+</div></div>
+    <div id="under_post_card2"><div class="itnews under-post-card">
+    <b>最新新闻</b>：
+    <br>
+ ·          <a href="https://news.cnblogs.com/n/702906/" target="_blank">Facebook正持续研究BOLT'ing以提高Linux内核执行性能（2021-09-26 08:50）</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/702905/" target="_blank">微软正在完成最后准备 Windows 11正式版即将推送（2021-09-26 08:40）</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/702904/" target="_blank">国际戏剧舞台雇员联盟：苹果称其Apple TV+订阅用户不到2000万（2021-09-26 08:35）</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/702903/" target="_blank">研究显示Apple Watch Series 6氧气传感器跟医院设备一样好（2021-09-26 08:28）</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/702902/" target="_blank">孟晚舟被“扣押”在加拿大的1028天 任正非做了什么？（2021-09-26 08:20）</a>
+        <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="under-post-card" style="display: none;"></div>
+    <script type="text/javascript">
+       var commentManager = new blogCommentManager();
+       commentManager.renderComments(0);
+       fixPostBody();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);       deliverT2();
+       deliverC1C2();
+       loadNewsAndKb();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);       LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+       GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+       loadOptUnderPost();
+       GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem"><!--done-->
+<h3 class="catListTitle">公告</h3>
+
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/moonache/">
+            只追昭熙
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/moonache/" title="入园时间：2015-05-20">
+            6年4个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/moonache/followers/">
+            70
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/moonache/followees/">
+            69
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;b4306280-bffe-e411-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('b4306280-bffe-e411-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2021/08/26&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2021年9月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2021/10/26&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    <tr>
+        <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+        <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+        <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+        <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+        <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+        <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+        <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+    </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                        <td class="" align="center">
+                            3
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        4
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            5
+                        </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                7
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            11
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            12
+                        </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            18
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            19
+                        </td>
+                            <td class="" align="center">
+                                20
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                            <td class="" align="center">
+                                24
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            25
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            26
+                        </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                            <td class="" align="center">
+                                30
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            2
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            3
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                8
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            9
+                        </td>
+                </tr>
+    </tbody>
+</table></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block"><div class="catListLink">
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+    
+<li><a href="https://www.cnblogs.com/moonache/p/" title="我的博客的随笔列表">我的随笔</a></li>
+<li><a href="https://www.cnblogs.com/moonache/MyComments.html" title="我的发表过的评论列表">我的评论</a></li>
+<li><a href="https://www.cnblogs.com/moonache/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li>
+<li><a href="https://www.cnblogs.com/moonache/RecentComments.html" title="我的博客的评论列表">最新评论</a></li>
+<li><a href="https://www.cnblogs.com/moonache/tag/" title="我的博客的标签列表">我的标签</a></li>
+
+</ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block"><div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+        <li>
+            <a href="https://www.cnblogs.com/moonache/tag/C%23/">C#<span class="tag-count">(32)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/moonache/tag/C%23%E5%9B%BE%E8%A7%A3%E6%95%99%E7%A8%8B/">C#图解教程<span class="tag-count">(26)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/moonache/tag/ASP.NET/">ASP.NET<span class="tag-count">(13)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/moonache/tag/Directory%20Opus/">Directory Opus<span class="tag-count">(2)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/moonache/tag/GridView/">GridView<span class="tag-count">(2)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/moonache/tag/WinForm/">WinForm<span class="tag-count">(1)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/moonache/tag/Aspose/">Aspose<span class="tag-count">(1)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/moonache/tag/CSS/">CSS<span class="tag-count">(1)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/moonache/tag/jQuery/">jQuery<span class="tag-count">(1)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/moonache/tag/Repeater/">Repeater<span class="tag-count">(1)</span></a>
+        </li>
+    <li>
+        <a href="https://www.cnblogs.com/moonache/tag/">更多</a>
+    </li>
+
+</ul>
+</div>
+
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+
+    <div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+        <h3 class="catListTitle">
+            
+随笔分类
+
+
+
+        </h3>
+
+        <ul>
+
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/category/739923.html" rel="" target="">
+    ASP.NET(30)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/category/899741.html" rel="" target="">
+    C#(32)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/category/743208.html" rel="" target="">
+    Directory Opus(2)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/category/739925.html" rel="" target="">
+    Internet(7)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/category/776154.html" rel="" target="">
+    Python(6)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/category/754067.html" rel="" target="">
+    Read(2)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/category/739926.html" rel="" target="">
+    Software(5)
+</a>
+ 
+                </li>                
+            
+        </ul>
+
+
+    </div>    
+    <div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+        <h3 class="catListTitle">
+            
+随笔档案
+
+
+
+        </h3>
+
+        <ul>
+
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2018/12.html" rel="" target="">
+    2018年12月(1)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2017/12.html" rel="" target="">
+    2017年12月(1)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2017/10.html" rel="" target="">
+    2017年10月(1)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2017/09.html" rel="" target="">
+    2017年9月(5)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2017/08.html" rel="" target="">
+    2017年8月(2)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2017/07.html" rel="" target="">
+    2017年7月(1)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2017/04.html" rel="" target="">
+    2017年4月(2)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2017/03.html" rel="" target="">
+    2017年3月(3)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2017/02.html" rel="" target="">
+    2017年2月(5)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2017/01.html" rel="" target="">
+    2017年1月(4)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/12.html" rel="" target="">
+    2016年12月(6)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/11.html" rel="" target="">
+    2016年11月(4)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/10.html" rel="" target="">
+    2016年10月(4)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/09.html" rel="" target="">
+    2016年9月(2)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/08.html" rel="" target="">
+    2016年8月(1)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/06.html" rel="" target="">
+    2016年6月(5)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/05.html" rel="" target="">
+    2016年5月(1)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/04.html" rel="" target="">
+    2016年4月(3)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/03.html" rel="" target="">
+    2016年3月(5)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/02.html" rel="" target="">
+    2016年2月(2)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2016/01.html" rel="" target="">
+    2016年1月(7)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2015/11.html" rel="" target="">
+    2015年11月(3)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2015/10.html" rel="" target="">
+    2015年10月(3)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2015/09.html" rel="" target="">
+    2015年9月(3)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2015/08.html" rel="" target="">
+    2015年8月(1)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2015/07.html" rel="" target="">
+    2015年7月(3)
+</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/moonache/archive/2015/06.html" rel="" target="">
+    2015年6月(1)
+</a>
+ 
+                </li>                
+            <li>
+                <a href="javascript:void(0)" onclick="sideColumnManager.loadMore(this)">更多</a>
+            </li>
+        </ul>
+
+
+    </div>    
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block"><div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/moonache/p/5034974.html">1. Re:手心输入法皮肤制作技巧</a></li>
+                    <li class="recent_comment_body">请问手心输入法皮肤编辑器 在哪可以下载？在官网点了下没看到有链接，<br>百度搜索也是第三方提供的，不放心</li>
+                    <li class="recent_comment_author">--jxl278384651</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/moonache/p/6038631.html">2. Re:C# 图解教程 第四章 类的基本概念</a></li>
+                    <li class="recent_comment_body">@ 寂静音无没有错，你可以编译运行试试。...</li>
+                    <li class="recent_comment_author">--只追昭熙</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/moonache/p/6038631.html">3. Re:C# 图解教程 第四章 类的基本概念</a></li>
+                    <li class="recent_comment_body">t1.Average()<br>t2.Average()<br>这俩结果错了吧</li>
+                    <li class="recent_comment_author">--寂静音无</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/moonache/p/5832315.html">4. Re:C# 程序员最常犯的 10 个错误（转）</a></li>
+                    <li class="recent_comment_body">一半以上看不太懂，唉，努力把</li>
+                    <li class="recent_comment_author">--袁承旭</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/moonache/p/7532006.html">5. Re:C#图解教程 第二十四章 反射和特性</a></li>
+                    <li class="recent_comment_body">@ 特斯拉马蒂尼特性使数据能有额外的信息，反射能帮助我们动态的构造对象。AOP 我用得不多，但看网上的文章主要还是依靠接口（约定）实现的。...</li>
+                    <li class="recent_comment_author">--只追昭熙</li>
+        </ul>
+    </div>
+</div>
+
+</div>
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block"><div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/moonache/p/4661058.html">
+                            1. Echarts自动刷新数据(96129)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/moonache/p/4871148.html">
+                            2. Directory Opus（DO） 个人使用经验 1.0(33172)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/moonache/p/6552843.html">
+                            3. C#图解教程 第十九章 LINQ(32911)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/moonache/p/5101210.html">
+                            4. DELL XPS 13 9350 装Win7系统（坑爹）(25990)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/moonache/p/5995866.html">
+                            5. C# 图解教程 第一章 C#和.NET框架(18477)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block"><div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/moonache/p/4871148.html">
+                            1. Directory Opus（DO） 个人使用经验 1.0(8)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/moonache/p/6552843.html">
+                            2. C#图解教程 第十九章 LINQ(6)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/moonache/p/7532006.html">
+                            3. C#图解教程 第二十四章 反射和特性(2)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/moonache/p/7509695.html">
+                            4. 使用 LINQPad 助力 LINQ 学习(2)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/moonache/p/6038631.html">
+                            5. C# 图解教程 第四章 类的基本概念(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/moonache/p/6552843.html">
+                                1. C#图解教程 第十九章 LINQ(11)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/moonache/p/7687551.html">
+                                2. 《C#图解教程》 总览(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/moonache/p/5995866.html">
+                                3. C# 图解教程 第一章 C#和.NET框架(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/moonache/p/4661058.html">
+                                4. Echarts自动刷新数据(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/moonache/p/10113874.html">
+                                5. 欢迎来语雀关注我(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div></div></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright © 2021 只追昭熙
+<br><span id="poweredby">Powered by .NET 6 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8NACB8VE9qlHm6Ujjqxvg5AC2KTxkbghunLGyXtUX-rTiR5305ba9JRUZOm2C2jDRMD93lggKDLHwcrdETf4kLJRx7nTgzDxiZHVdcezLCDjwHjbVqMO0rmKc8fFj4-PKx-IYJWf96XzmAugn87AWaI">
+
+
+<div id="rememberry__extension__root" style="all: unset;"></div></body><div id="saladict-saladbowl-root" class="saladict-div saladict-external"><div class="saladict-external"></div></div></html>

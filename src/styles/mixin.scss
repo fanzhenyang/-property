@@ -1,0 +1,22 @@
+@mixin flex-center($justify: center, $align: center, $wrap: nowrap, $row: row) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+  flex-direction: $row;
+}
+
+@mixin vertically($str: 'center') {
+  position: absolute;
+  @if $str == 'leftCenter' {
+    left: 50%;
+    transform: translateX(-50%);
+  } @else if $str == 'topCenter' {
+    top: 50%;
+    transform: translateY(-50%);
+  } @else {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
