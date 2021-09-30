@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent, Slot } from 'vue'
+import { defineComponent, Slot, watch } from 'vue'
 // 定义类型
 const PropsType = {
   rowKey: {
@@ -38,7 +38,7 @@ const PropsType = {
     type: Boolean,
     default: false
   },
-  defaultxpandAll: {
+  defaultExpandpandAll: {
     type: Boolean,
     default: false
   }
@@ -58,6 +58,10 @@ export default defineComponent({
   inheritAttrs: false,
   props: PropsType,
   setup (props, { slots, attrs }) {
+    watch(() => props.data, newVal => {
+      // props.data = newVal
+      console.log('%c 🌯 newVal: ', 'font-size:20px;background-color: #ED9EC7;color:#fff;', newVal)
+    }, { deep: true })
     return () => (
       <el-table
         data={props.data}
@@ -66,7 +70,7 @@ export default defineComponent({
         height={props.height}
         style={{ width: props.width }}
         rowKey={props.rowKey}
-        defaultxpandAll={props.defaultxpandAll}
+        defaultExpandpandAll={props.defaultExpandpandAll}
       >
         {
           TableColumn(props.isSelection, props.isIndex)

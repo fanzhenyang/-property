@@ -54,6 +54,7 @@ const submitSearchForm = (form: IformSearch) => {
 }
 
 const tableCbs = (tableList: IPlatformTree[]) => {
+  console.log('%c 🍋 tableList: ', 'font-size:20px;background-color: #465975;color:#fff;', tableList)
   const columnData: IColumn[] = [
     { label: '模块名称', prop: 'moduleName' },
     { label: '模块路径', prop: 'url', tooltip: true },
@@ -69,7 +70,7 @@ const tableCbs = (tableList: IPlatformTree[]) => {
     children: 'children'
   })
   return (
-    <tableComp data={tableList} treeProps={treeProps} defaultxpandAll={true} isSelection={true} rowKey={'id'} columnData={columnData}>
+    <tableComp data={tableList} treeProps={treeProps} defaultExpandpandAll={true} isSelection={true} rowKey={'id'} columnData={columnData}>
 
     </tableComp>
   )
