@@ -86,23 +86,23 @@ const tableCbs = (tableList: IPlatformTree[]) => {
     <tableComp data={tableList} treeProps={treeProps} defaultExpandpandAll={true} isSelection={true} rowKey={'id'} columnData={columnData}>
       {{
         operationHeader: () => (
-          <el-dropdown hide-on-click={false}>
+          <el-dropdown hide-on-click={false} vSlots={{
+            dropdown: () => <el-dropdown-menu>
+              <el-checkbox-group vModel={checkData.value}>
+                {
+                  checkList.map(check => {
+                    return <el-dropdown-item key={check}>
+                      <el-checkbox label={check} key={check} />
+                    </el-dropdown-item>
+                  })
+                }
+              </el-checkbox-group>
+            </el-dropdown-menu>
+          }}>
             <span>
               操作<i class="el-icon-s-operation columnSetIco"/>
             </span>
-            {{
-              dropdown: () => <el-dropdown-menu>
-                <el-checkbox-group vModel={checkData.value}>
-                  {
-                    checkList.map(check => {
-                      return <el-dropdown-item key={check}>
-                        <el-checkbox label={check} key={check} />
-                      </el-dropdown-item>
-                    })
-                  }
-                </el-checkbox-group>
-              </el-dropdown-menu>
-            }}
+
           </el-dropdown>
         ),
         operation: (scope: any) => (<>
