@@ -19,7 +19,7 @@ export default defineComponent({
     const form = reactive({
       moduleName: '',
       status: 0,
-      platformId: 0,
+      platformId: 1,
       PId: 0
     })
     watch(() => [props.listGather.platformList, props.listGather.parentTree], ([newFormList, newParentList]) => {
@@ -54,7 +54,7 @@ export default defineComponent({
     }
 
     return () => (
-      <el-form model={form} ref={formRef} inline labelWidth={'80px'}>
+      <el-form model={form} class="form-public" ref={formRef} inline labelWidth={'80px'}>
         <el-row>
           <el-col span={5}>
             <el-form-item label="模块名称">

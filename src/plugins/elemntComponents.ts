@@ -1,3 +1,4 @@
+
 import {
   ElMenu,
   ElMenuItem,
@@ -19,9 +20,15 @@ import {
   ElPopover,
   ElScrollbar,
   ElCollapseTransition,
+  ElPopconfirm,
   ElSelect,
   ElOption,
-  ElTree
+  ElTree,
+  ElCheckboxGroup,
+  ElCheckbox,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem
 } from 'element-plus/lib/'
 
 const elemnt: any[] = [
@@ -42,7 +49,13 @@ const elemnt: any[] = [
   ElCollapseTransition,
   ElSelect,
   ElOption,
-  ElTree
+  ElTree,
+  ElPopconfirm,
+  ElCheckbox,
+  ElCheckboxGroup,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem
 ]
 
 const plugins: any[] = [

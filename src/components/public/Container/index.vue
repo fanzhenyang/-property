@@ -5,7 +5,7 @@ export default defineComponent({
   name: 'Container',
   inheritAttrs: false,
   setup (props, { slots, attrs }) {
-    const url = Number(attrs.imgIndex) === 1 ? require('@/assets/img/home/bg.png') : Number(attrs.imgIndex) === 2 ? require('@/assets/img/home/full_bg.png') : ''
+    const url = Number(attrs.imgIndex) === 1 ? require('@/assets/img/home/bg.png') : Number(attrs.imgIndex) === 2 ? require('@/assets/img/home/full_bg.png') : require('@/assets/img/home/bg.png')
     if (url) {
       return () => (
         <div class={['container', attrs.class]} style={{ background: `url(${url}) no-repeat center center / 100% 100%` }}>

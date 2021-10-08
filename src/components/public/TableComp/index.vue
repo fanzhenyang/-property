@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent, Slot, watch } from 'vue'
+import { defineComponent, Slot } from 'vue'
 // 定义类型
 const PropsType = {
   rowKey: {
@@ -46,6 +46,7 @@ const PropsType = {
 
 export interface IColumn {
   template?: boolean
+  templateHeader?: boolean
   align?: string
   label: string
   prop: string
@@ -58,10 +59,9 @@ export default defineComponent({
   inheritAttrs: false,
   props: PropsType,
   setup (props, { slots, attrs }) {
-    watch(() => props.data, newVal => {
-      // props.data = newVal
-      console.log('%c 🌯 newVal: ', 'font-size:20px;background-color: #ED9EC7;color:#fff;', newVal)
-    }, { deep: true })
+    const headerSlot = (column: IColumn) => {
+      return column.templateHeader ? <>{slots[`${column.prop}Header`] && (slots[`${column.prop}Header`] as Slot)()}</> : null
+    }
     return () => (
       <el-table
         data={props.data}
@@ -70,35 +70,43 @@ export default defineComponent({
         height={props.height}
         style={{ width: props.width }}
         rowKey={props.rowKey}
+        class="table-public"
         defaultExpandpandAll={props.defaultExpandpandAll}
       >
+
         {
           TableColumn(props.isSelection, props.isIndex)
         }
+
         {
           (props.columnData as any[]).map((column: IColumn) => {
             if (column.template) {
               return <el-table-column
                 key={column.label}
-                align={column.align}
-                label={column.label}
+                align={column.align || 'center'}
+                label={column.templateHeader ? null : column.label}
                 prop={column.prop || ''}
                 width={column.width}
                 show-overflow-tooltip={column.tooltip || false}
               >
                 {/* 具名插槽cont */}
-                {slots[column.prop] && (slots[column.prop] as Slot)(column)}
+
+                {{
+                  header: headerSlot(column),
+                  default: (scope: any) => (<>{ slots[column.prop] && (slots[column.prop] as Slot)(scope.row, scope.$index) }</>)
+                }}
               </el-table-column>
             } else {
               return <el-table-column
-                align={column.align}
+                align={column.align || 'center'}
                 key={column.label}
-                label={column.label}
-                prop={column.label || ''}
+                label={column.templateHeader ? null : column.label}
+                prop={column.prop || ''}
                 width={column.width}
                 show-overflow-tooltip={column.tooltip}
-
-              />
+              >
+                {{ header: headerSlot(column) }}
+              </el-table-column>
             }
           })
         }
@@ -118,3 +126,9 @@ const TableColumn = (isSelection = false, isIndex = false) => {
   return null
 }
 </script>
+
+<style lang="scss" scoped>
+.table-public {
+  background: transparent;
+}
+</style>

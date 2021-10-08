@@ -31,6 +31,9 @@
   overflow-y: auto;
 }
 
+.el-scrollbar{overflow:hidden;position:relative}.el-scrollbar:active>.el-scrollbar__bar,.el-scrollbar:focus>.el-scrollbar__bar,.el-scrollbar:hover>.el-scrollbar__bar{opacity:1;-webkit-transition:opacity 340ms ease-out;transition:opacity 340ms ease-out}.el-scrollbar__wrap{overflow:scroll;height:100%}.el-scrollbar__wrap--hidden-default{scrollbar-width:none}.el-scrollbar__wrap--hidden-default::-webkit-scrollbar{width:0;height:0}.el-scrollbar__thumb{position:relative;display:block;width:0;height:0;cursor:pointer;border-radius:inherit;background-color:rgba(144,147,153,.3);-webkit-transition:.3s background-color;transition:.3s background-color}.el-scrollbar__thumb:hover{background-color:rgba(144,147,153,.5)}.el-scrollbar__bar{position:absolute;right:2px;bottom:2px;z-index:1;border-radius:4px;opacity:0;-webkit-transition:opacity 120ms ease-out;transition:opacity 120ms ease-out}.el-scrollbar__bar.is-vertical{width:6px;top:2px}.el-scrollbar__bar.is-vertical>div{width:100%}.el-scrollbar__bar.is-horizontal{height:6px;left:2px}.el-scrollbar__bar.is-horizontal>div{height:100%}
+.el-scrollbar__wrap:not(.el-scrollbar__wrap--hidden-default){padding-bottom:15px}
+.el-scrollbar.is-empty .el-select-dropdown__list{padding:0}
 .el-menu--popup {
   background: #043078; 
 }
@@ -51,5 +54,37 @@
   }
   .el-menu-item.is-active {
     border: none;
+  }
+}
+
+/* 表格 */
+.table-public {
+  th.el-table__cell,
+  tr {
+    background-color: transparent;
+    color: $fff;
+    .el-icon-arrow-right {
+      color: $fff;
+    }
+  }
+  .el-dropdown {
+    color: $fff;
+  }
+}
+
+.el-table--enable-row-hover .el-table__body tr:hover > td.el-table__cell {
+  background-color: rgba(245, 247, 250, .15);
+}
+.el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
+  border-bottom: 1px solid rgba(245, 247, 250, 0.25);
+}
+.el-table--border::after, .el-table--group::after, .el-table::before {
+  border-bottom: 1px solid rgba(245, 247, 250, 0.25);
+}
+
+/* 表单 */
+.form-public {
+  .el-form-item__label {
+    color: $fff;
   }
 }
