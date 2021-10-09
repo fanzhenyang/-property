@@ -30,8 +30,8 @@ module.exports = {
       '/itps': {
         // target: "http://192.168.116.134", //本地
         // target: 'http://172.28.1.4', // 线上
-        target: 'http://125.75.36.79:81',
-        // target: 'http://172.26.1.102',
+        // target: 'http://125.75.36.79:81',
+        target: 'http://172.26.1.102',
         // target: 'http://172.26.10.2',
         changeOrigin: true,
         pathRewrite: {

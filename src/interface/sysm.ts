@@ -19,4 +19,5 @@ export interface IPlatformTree {
   platformName: string
   url: string
   createTime: string
+  [x: string]: string | number | boolean | IPlatformTree[]
 }
