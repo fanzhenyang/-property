@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent, Slot, ref } from 'vue'
+import { defineComponent, Slot, ref, nextTick } from 'vue'
 // 定义类型
 const PropsType = {
   rowKey: {
@@ -79,22 +79,45 @@ export default defineComponent({
 
     // 全选,全部取消
     const handleSelectAllChange = (val: any[]) => {
-      deepList(val, val.length > 0)
-      console.log('%c 🍩 val: ', 'font-size:20px;background-color: #F5CE50;color:#fff;', val)
+      // console.log('%c 🌮 val: ', 'font-size:20px;background-color: #B03734;color:#fff;', val)
+      deepList(val)
       emit('handleSelect', 'all', val)
     }
-    const deepList = (list: any[], bool: boolean) => {
-      console.log('%c 🍰 bool: ', 'font-size:20px;background-color: #42b983;color:#fff;', bool)
-      list.forEach((item: any) => {
-        if (item[props.treeProps.children] && item[props.treeProps.children].length > 0) {
-          selectList.value.push(item)
-          deepList(item[props.treeProps.children], bool)
-          props.tableRef.value.toggleRowSelection(item, bool)
+    const deepList = (list: any[]) => {
+      // tabledata第一层只要有在selection里面就是全选
+      const isSelect = list.some(el => {
+        const tableDataIds = props.data.map((j: any) => j[props.treeProps?.id])
+        return tableDataIds.includes(el[props.treeProps?.id])
+      })
+      // tableDate第一层只要有不在selection里面就是全不选
+      const isCancel = !props.data.every((el: any) => {
+        const selectIds = list.map((j: any) => j[props.treeProps?.id])
+        return selectIds.includes(el[props.treeProps?.id])
+      })
+      if (isSelect) {
+        deepFun(list, true)
+      }
+      if (isCancel) {
+        deepFun(props.data, false)
+      }
+    }
+
+    const deepFun = (list: any, bool: boolean) => {
+      list.forEach((el: any) => {
+        if (el[props.treeProps?.children] && el[props.treeProps?.children].length > 0) {
+          deepFun(el[props.treeProps?.children], bool)
         } else {
-          selectList.value.push(item)
-          props.tableRef.value.toggleRowSelection(item, bool)
+          toggleSelection(el, bool)
         }
       })
+    }
+
+    const toggleSelection = (row: any, select: boolean) => {
+      if (row) {
+        nextTick(() => {
+          props.tableRef && props.tableRef.value.toggleRowSelection(row, select)
+        })
+      }
     }
 
     return () => (

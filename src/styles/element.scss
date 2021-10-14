@@ -83,8 +83,14 @@
 }
 
 /* 表单 */
-.form-public {
+.form-public-fff {
   .el-form-item__label {
     color: $fff;
+  }
+}
+
+.form-public-grey {
+  .el-form-item__label {
+    color: $grey;
   }
 }

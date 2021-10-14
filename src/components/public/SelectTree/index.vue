@@ -21,7 +21,7 @@ const propsType = {
 interface IDefaultProps {
   label: string
   children: string | []
-  value: string
+  value: string | number
 }
 export default defineComponent({
   name: 'SelectTree',
@@ -32,6 +32,7 @@ export default defineComponent({
     const parentText = ref('')
 
     const handleNodeClick = (node: any) => {
+      console.log('%c 🍌 node: ', 'font-size:20px;background-color: #E41A6A;color:#fff;', (props.defaultProps as IDefaultProps).label)
       parentText.value = node[(props.defaultProps as IDefaultProps).label]
       showPopover.value = false
       emit('nodeClick', node[(props.defaultProps as IDefaultProps).value])
@@ -69,7 +70,7 @@ export default defineComponent({
         <el-popover
           placement="bottom"
           width={width.value}
-          visible={showPopover.value}
+          v-model={[showPopover.value, 'visible']}
         >
           {{
             default: () => (

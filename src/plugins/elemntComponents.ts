@@ -28,7 +28,8 @@ import {
   ElCheckbox,
   ElDropdown,
   ElDropdownMenu,
-  ElDropdownItem
+  ElDropdownItem,
+  ElDialog
 } from 'element-plus/lib/'
 
 const elemnt: any[] = [
@@ -55,7 +56,8 @@ const elemnt: any[] = [
   ElCheckboxGroup,
   ElDropdown,
   ElDropdownMenu,
-  ElDropdownItem
+  ElDropdownItem,
+  ElDialog
 ]
 
 const plugins: any[] = [

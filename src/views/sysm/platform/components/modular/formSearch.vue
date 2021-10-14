@@ -20,7 +20,7 @@ export default defineComponent({
       moduleName: '',
       status: 0,
       platformId: 1,
-      PId: 0
+      pId: 0
     })
     watch(() => [props.listGather.platformList, props.listGather.parentTree], ([newFormList, newParentList]) => {
       newFormList && platformList(newFormList)
@@ -37,13 +37,13 @@ export default defineComponent({
     }
 
     const nodeClick = (value: number) => {
-      form.PId = value
+      form.pId = value
     }
     const parentList = (list: IPlatformTree[]) => {
       return (<selectTree treeLsit={list} defaultProps={defaultTreeProps} {...{ onNodeClick: nodeClick }} />)
     }
 
-    const formRef = ref()
+    const formRef = ref<any>()
 
     const resetForm = () => {
       (formRef.value as any).resetFields()
@@ -54,7 +54,7 @@ export default defineComponent({
     }
 
     return () => (
-      <el-form model={form} class="form-public" ref={formRef} inline labelWidth={'80px'}>
+      <el-form model={form} class="form-public-fff" ref={formRef} inline labelWidth={'80px'}>
         <el-row>
           <el-col span={5}>
             <el-form-item label="模块名称">
