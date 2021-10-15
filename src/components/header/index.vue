@@ -87,9 +87,9 @@ const routerItem = (i: IMenuItem, el: Menu, router: Router) => {
   }
 }
 
-const handleClick = (el: Menu|undefined, router: Router) => {
-  const path = (el as Menu).url
-  router.push(path as string)
+const handleClick = (el: Menu | unknown, router: Router) => {
+  const path = (el as Menu)?.url
+  router && router.push(path as string)
 }
 
 const slots = (name: string, el?: Menu, router?: Router) => {

@@ -4,9 +4,13 @@ export default defineComponent({
   setup () {
     return () => (
       <div class="layout">
-        <Transition name="fade-transform" mode="out-in">
-          <router-view key="key" />
-        </Transition>
+        {
+          // <Transition name="fade-transform" mode="out-in">
+          //   <component is="Component" />
+          // </Transition>
+        }
+        <router-view />
+
       </div>
     )
   }

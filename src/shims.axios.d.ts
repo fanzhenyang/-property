@@ -2,10 +2,11 @@ import { AxiosRequestConfig } from 'axios'
 
 declare module 'axios' {
   export interface AxiosRequestConfig {
-    cbs?: () => void
+    cbs?: () => void,
+    msg?: boolean
   }
 
   interface AxiosInstance {
     (config: AxiosRequestConfig): Promise<any>
   }
-} 
+}

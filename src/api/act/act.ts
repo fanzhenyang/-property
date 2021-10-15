@@ -15,10 +15,10 @@ export function treeList (params: null, cbs?:() => void):Promise<IProps> {
 
 // 流程名称
 interface Iparams {
-  category: string
-  status: string
+  category: number | string
+  status: number
 }
-export function list (params: Iparams, cbs?:() => void):Promise<IProps> {
+export function list (params: Iparams, cbs?:() => void):Promise<any> {
   return http.request({
     url: 'act/model/list',
     method: 'get',

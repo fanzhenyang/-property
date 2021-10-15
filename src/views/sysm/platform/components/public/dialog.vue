@@ -17,6 +17,10 @@ const propsType = {
   top: {
     type: String,
     default: '15vh'
+  },
+  modal: {
+    type: Boolean,
+    default: false
   }
 } as const
 export default defineComponent({
@@ -34,6 +38,7 @@ export default defineComponent({
         title={props.title}
         vModel={visible.value}
         width={props.width}
+        close-on-click-modal={props.modal}
         append-to-body={true}
         onClose={onClose}
       >

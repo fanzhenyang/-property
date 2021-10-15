@@ -1,6 +1,6 @@
 <script lang="tsx">
-import { defineComponent, reactive, readonly, ref, watch, Ref } from 'vue'
-import { list, listByTree } from '@/api/sysm/sysm'
+import { defineComponent, reactive, readonly, ref, watch, Ref, watchEffect } from 'vue'
+import { list, listByTree, deleteById } from '@/api/sysm/sysm'
 import { IPlatform, IPlatformTree } from '@/interface/sysm'
 import { treeList } from '@/api/act/act'
 import { TreeList } from '@/interface/act'
@@ -8,7 +8,7 @@ import { IColumn } from '@/components/public/TableComp/index.vue'
 import { ElMessage } from 'element-plus'
 import Header from './components/header.vue'
 import FormSearch from './components/modular/formSearch.vue'
-import DialogDetele from './components/public/dialogDetele.vue'
+import Dialog from './components/public/dialog.vue'
 import AddOrEditOrDel from './components/modular/addOrEditOrDel.vue'
 interface listData {
   platformList: IPlatform[]
@@ -16,13 +16,12 @@ interface listData {
   treeList?: TreeList[]
 }
 export default defineComponent({
-  setup () {
-    const listGather: listData = reactive({
+  setup (props, { emit }) {
+    const listGather = reactive<listData>({
       platformList: [],
       parentTree: [],
       treeList: []
     })
-
     // 异步获取所属平台
     const initPlatform = async () => {
       const { data } = await list(null)
@@ -31,11 +30,14 @@ export default defineComponent({
     }
     initPlatform()
 
-    // 获取所属平台对应menu
+    // 获取表格数据
+    const tabLoading = ref<boolean>(false)
     const initParentTree = async () => {
-      const { data } = await listByTree(null)
+      tabLoading.value = true
+      const { data } = await listByTree(null, () => {
+        tabLoading.value = false
+      })
       listGather.parentTree = data
-      initImg(listGather.parentTree)
     }
 
     // 获取流程
@@ -45,111 +47,35 @@ export default defineComponent({
     }
     flow()
 
-    // 处理图片
-    const initImg = (list: IPlatformTree[]) => {
-      list.forEach((item: IPlatformTree) => {
-        if (item.logo) {
-          item.logoUrl = `${process.env.VUE_APP_BASE_API}sysm/files/download?fileUrl=${item.logo}`
-        }
-        if (item.children && item.children.length > 0) {
-          initImg(item.children)
-        }
-      })
-    }
-
-    // 删除
-    const isDetele = ref(false)
-    const ids = ref<string | number>('')
-
-    // 新增，编辑，详情
-    const isAddOrEditOrDel = ref<boolean>(false)
-
-    return () => <container imgIndex={1} >
-      {{
+    return () => <container imgIndex={1}
+      vSlots={{
         cont: () => (<>
-          <Header { ...{ onHandleOperate: (type: string) => handleOperate(type, ids, isDetele, isAddOrEditOrDel) } } >
-            {{ collapse: () => <FormSearch listGather={listGather as listData} {...{ onSubmitSearchForm: submitSearchForm }} /> }}
-          </Header>
-          {tableCbs(listGather, isDetele, ids)}
-          {isDetele.value ? deteleComp(isDetele, ids) : null}
-          {isAddOrEditOrDel.value ? addOrEditOrDelComp(isAddOrEditOrDel, listGather) : null}
+          <TableView listGather={listGather}/>
         </>)
       }}
 
+    >
     </container>
   }
 })
-// 点击顶部按钮
-const handleOperate = (type: string, ids: Ref<string | number>, isDetele: Ref<boolean>, isAddOrEditOrDel: Ref<boolean>) => {
-  if (type === 'delete') {
-    if (!ids.value) {
-      ElMessage.error({
-        message: '请至少选择一条数据',
-        type: 'error'
-      })
-      return false
-    }
-    isDetele.value = true
-    return true
-  } else if (type === 'add') {
-    isAddOrEditOrDel.value = true
-    return true
-  }
-}
-
-// 新增，编辑，和详情
-const addOrEditOrDelComp = (isBool: Ref<boolean>, listGather: listData) => {
-  console.log('%c 🌽 isAddOrEditOrDel: ', 'font-size:20px;background-color: #2EAFB0;color:#fff;', isBool.value)
-  return (
-    <DialogDetele
-      title="新增"
-      width={'70vw'}
-      v-model={[isBool.value, 'dialogVisible']}
-    >
-      {{
-        main: () => <AddOrEditOrDel listGather={listGather} />
-      }}
-    </DialogDetele>
-  )
-}
-
-// 删除
-const handleDetele = (ids: Ref<string | number>) => {
-  console.log('%c 🍥 id: ', 'font-size:20px;background-color: #FFDD4D;color:#fff;', ids.value)
-}
-const handleClose = (bool: Ref<boolean>, ids: Ref<string | number>) => {
-  bool.value = false
-  ids.value = ''
-}
-const deteleComp = (bool: Ref<boolean>, ids: Ref<string | number>) => {
-  return <DialogDetele
-    title="提示"
-    v-model={[bool.value, 'dialogVisible']}
-  >
-    {{
-      main: () => <div>确定删除?</div>,
-      footer: () => <span class="dialog-footer">
-        <el-button size="mini" onClick={() => handleClose(bool, ids)}>取 消</el-button>
-        <el-button size="mini" type="primary" onClick={() => handleDetele(ids)}>确 定</el-button>
-      </span>
-    }}
-
-  </DialogDetele>
-}
-
-// 搜索
-interface IformSearch {
-  moduleName: string
-  status: number
-  platformId: number
-  PId: number
-}
-const submitSearchForm = (form: IformSearch) => {
-  console.log('%c 🥫 form: ', 'font-size:20px;background-color: #E41A6A;color:#fff;', form)
-}
 
 // 表格
-const tableCbs = (targetList: listData, isDetele:Ref<boolean>, ids:Ref<string | number>) => {
+const TableView = ({ ...props }) => {
+  console.log('%c 🥘 props: ', 'font-size:20px;background-color: #F5CE50;color:#fff;', props)
+  console.log('zhixing')
+  // const { listGather } = props
+  // 处理图片
+  const initImg = (list: IPlatformTree[]) => {
+    list.forEach((item: IPlatformTree) => {
+      if (item.logo) {
+        item.logoUrl = `${process.env.VUE_APP_BASE_API}sysm/files/download?fileUrl=${item.logo}`
+      }
+      if (item.children && item.children.length > 0) {
+        initImg(item.children)
+      }
+    })
+  }
+  // initImg(props.listGather.parentTree)
   const checkList = readonly<string[]>(['模块名称', '模块路径', '排序号', '备注', '启停状态', '模块图标', '编制人员', '编制时间'])
   const checkData = ref<string[]>(['模块名称', '模块路径', '排序号', '备注', '启停状态', '模块图标', '编制人员', '编制时间'])
   const columnData = ref<IColumn[]>([
@@ -168,39 +94,41 @@ const tableCbs = (targetList: listData, isDetele:Ref<boolean>, ids:Ref<string | 
     id: 'id'
   })
   const handleDelete = (row: IPlatformTree) => {
-    isDetele.value = true
-    ids.value = row.id
+    console.log(123)
   }
-  watch(() => checkData.value, (val) => {
-    columnData.value.forEach(item => {
-      if (val.includes(item.label) || item.prop === 'operation') {
-        item.ispass = true
-      } else {
-        item.ispass = false
-      }
-    })
-  }, { deep: true })
+  const handleOperation = (row: IPlatformTree, type: string) => {
+    console.log(456)
+  }
+  // watch(() => checkData.value, (val) => {
+  //   columnData.value.forEach(item => {
+  //     if (val.includes(item.label) || item.prop === 'operation') {
+  //       item.ispass = true
+  //     } else {
+  //       item.ispass = false
+  //     }
+  //   })
+  // }, { deep: true })
   const tableRef = ref(null)
   const handleSelect = (type: string, list: IPlatformTree[]) => {
-    ids.value = list.map(el => el.id).toString()
+    // ids.value = list.map(el => el.id).toString()
   }
   return (
     <tableComp
-      data={targetList.parentTree}
+      data={props.listGather.parentTree}
       tableRef={tableRef}
       treeProps={treeProps}
-      defaultExpandpandAll={true}
       isSelection={true}
       rowKey={'id'}
+      defaultExpandpandAll={true}
       columnData={columnData.value}
-      {...{ onHandleSelect: handleSelect }}
     >
       {{
+        // {...{ onHandleSelect: handleSelect }}
         status: (row: IPlatformTree) => (<>
           {row.status === 1 ? <img src={require('@/assets/img/icons/open.png')} alt="" /> : <img src={require('@/assets/img/icons/close.png')} alt=""/>}
         </>),
         logoUrl: (row: IPlatformTree) => (<>
-          {row.logoUrl && <img src={row.logoUrl as string} alt="" style={{ width: '3rem' }} /> }
+          {row.logoUrl ? <img src={row.logoUrl as string} alt="" style={{ width: '3rem' }} /> : '暂无' }
         </>),
         operationHeader: () => (
           <el-dropdown hide-on-click={false}
@@ -223,8 +151,8 @@ const tableCbs = (targetList: listData, isDetele:Ref<boolean>, ids:Ref<string | 
           </el-dropdown>
         ),
         operation: (row: IPlatformTree) => (<>
-          <el-button type="text">查看</el-button>
-          <el-button type="text">编辑</el-button>
+          <el-button type="text" onClick={() => handleOperation(row, 'details')}>查看</el-button>
+          <el-button type="text" onClick={() => handleOperation(row, 'edit')}>编辑</el-button>
           <el-button type="text" style={{ color: 'red' }} onClick={() => handleDelete(row)}>删除</el-button>
         </>)
       }}

@@ -66,7 +66,9 @@ export default defineComponent({
   setup (props, { slots, emit }) {
     const selectList = ref<any[]>([])
     const headerSlot = (column: IColumn) => {
-      return column.templateHeader ? <>{slots[`${column.prop}Header`] && (slots[`${column.prop}Header`] as Slot)()}</> : null
+      if (column.templateHeader) {
+        return { header: () => <>{slots[`${column.prop}Header`] && (slots[`${column.prop}Header`] as Slot)()}</> }
+      }
     }
     const defaultSlot = (column:IColumn) => {
       return (scope: any) => (<>{ slots[column.prop] && (slots[column.prop] as Slot)(scope.row, scope.$index)}</>)
@@ -79,7 +81,6 @@ export default defineComponent({
 
     // 全选,全部取消
     const handleSelectAllChange = (val: any[]) => {
-      // console.log('%c 🌮 val: ', 'font-size:20px;background-color: #B03734;color:#fff;', val)
       deepList(val)
       emit('handleSelect', 'all', val)
     }
@@ -149,7 +150,7 @@ export default defineComponent({
                   prop={column.prop || ''}
                   width={column.width}
                   show-overflow-tooltip={column.tooltip || false}
-                  vSlots={{ header: headerSlot(column), default: defaultSlot(column) }}
+                  vSlots={{ ...[headerSlot(column)][0], default: defaultSlot(column) }}
                 />
               } else {
                 return <el-table-column
@@ -159,7 +160,7 @@ export default defineComponent({
                   prop={column.prop || ''}
                   width={column.width}
                   show-overflow-tooltip={column.tooltip}
-                  vSlots={{ header: headerSlot(column) }}
+                  vSlots={ headerSlot(column) }
                 />
               }
             }

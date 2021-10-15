@@ -1,29 +1,52 @@
 <script lang="tsx">
 import { defineComponent, ref, readonly, watch, reactive } from 'vue'
 import { list } from '@/api/act/act'
+import { upload, saveOrUpdate } from '@/api/sysm/sysm'
 import { IPlatform, IPlatformTree } from '@/interface/sysm'
 import { TreeList } from '@/interface/act'
 const propsType = {
   listGather: {
     type: Object,
     default: () => ({})
+  },
+  ElMessage: {
+    type: Object,
+    default: () => ({})
+  },
+  type: {
+    type: String,
+    default: 'add'
   }
 } as const
-
+interface IForm<T, U> {
+  moduleName: T
+  modulePath: T
+  platformId: T | U
+  status: number
+  url: T
+  logo: T
+  memo: T
+  orderNo: T | U
+  pId: T | U
+  actModelTypeId: T | U
+  actModelId: T | U
+  fileName: T
+}
 export default defineComponent({
   props: propsType,
   setup (props, { emit }) {
-    const form = reactive({
+    const form = reactive<IForm<string, number>>({
       moduleName: '',
       modulePath: '',
-      platformId: null,
+      platformId: '',
       status: 0,
       url: '',
       logo: '',
       memo: '',
-      orderNo: 0,
-      pId: 0,
-      actModelTypeId: 0,
+      orderNo: '',
+      pId: '',
+      actModelTypeId: '',
+      actModelId: '',
       fileName: ''
     })
     // label
@@ -46,25 +69,53 @@ export default defineComponent({
       return (<>
         {
           list && list.map(option => {
-            return <el-option label={option.platformName} value={option.id} />
+            return <el-option label={option.platformName || option.name} value={option.id} />
           })
         }
       </>)
     }
     const nodeClick = (value: number, type: number) => {
-      console.log('%c 🥑 type: ', 'font-size:20px;background-color: #EA7E5C;color:#fff;', type)
-      console.log('%c 🍰 value: ', 'font-size:20px;background-color: #FCA650;color:#fff;', value)
-      // if (typeof value === 'string') {
-      //   (form.pId as string) = value
-      // }
-      // if (typeof value === 'number') {
-      //   (form.pId as number) = value
-      // }
-      // if (t) {}
-      type === 1 ? form.pId = value : form.actModelTypeId = value
+      if (type === 1) {
+        form.pId = value
+      } else {
+        form.actModelTypeId = value
+        getList()
+      }
+    }
+    const technological = ref<any[]>([])
+    const getList = async () => {
+      const { data } = await list({ category: form.actModelTypeId, status: 1 })
+      technological.value = data
     }
     const parentList = (list: IPlatformTree[] | TreeList[], type = 1) => {
       return (<selectTree treeLsit={form.platformId && type === 1 ? list : type === 2 ? list : []} defaultProps={type === 1 ? defaultTreeProps : defaultTreeProps1} {...{ onNodeClick: (value: number) => nodeClick(value, type) }} />)
+    }
+
+    const beforeAvatarUpload = async (file: any) => {
+      const param = new FormData()
+      param.append('file', file)
+      const { data } = await upload(param)
+      form.fileName = file.name
+      form.logo = data
+      return false
+    }
+
+    const subLoading = ref<boolean>(false)
+    const subForm = async () => {
+      if (form.modulePath === '' || form.moduleName === '' || form.url === '') {
+        props.ElMessage.warning('请分别填写模块名称、文件路径、菜单路径')
+        return false
+      }
+      if (form.orderNo && isNaN(Number(form.orderNo))) {
+        form.orderNo = ''
+        props.ElMessage.warning('请输入数字')
+        return false
+      }
+      subLoading.value = true
+      await saveOrUpdate(Object.assign(form, { orderNo: Number(form.orderNo) }), () => {
+        subLoading.value = false
+      })
+      emit('successFunc')
     }
     return () => (
       <el-form mode={form} class="form-public-grey" labelWidth={'80px'}>
@@ -95,7 +146,7 @@ export default defineComponent({
         <el-row gutter={20}>
           <el-col span={6}>
             <el-form-item label="菜单路径">
-              <el-input vModel={form.moduleName} size="mini" placeholder="请输入菜单路径" />
+              <el-input vModel={form.url} size="mini" placeholder="请输入菜单路径" />
             </el-form-item>
           </el-col>
           <el-col span={6}>
@@ -110,8 +161,8 @@ export default defineComponent({
           </el-col>
           <el-col span={6}>
             <el-form-item label="流程名称">
-              <el-select vModel={form.platformId} clearable size="mini" filterable placeholder="请选择">
-                {platformList(props.listGather.platformList)}
+              <el-select vModel={form.actModelId} clearable size="mini" filterable placeholder="请选择">
+                {platformList(technological.value)}
               </el-select>
             </el-form-item>
           </el-col>
@@ -124,9 +175,18 @@ export default defineComponent({
           </el-col>
           <el-col span={12}>
             <el-form-item label="模块图标">
-              <el-input vModel={form.logo} size="mini" placeholder="排序号" readonly>
+              <el-input vModel={form.fileName} size="mini" placeholder="排序号" readonly>
+                {
+                //  action={'/dfs/upload'}
+                }
                 {{
-                  suffix: () => <el-button size="mini" type="text">图片上传</el-button>
+                  suffix: () => <el-upload
+                    class="avatar-uploader"
+                    accept={'image/*'}
+                    show-file-list={false}
+                    before-upload={(file: any) => beforeAvatarUpload(file)}>
+                    <el-button type="text" size="mini">图片上传</el-button>
+                  </el-upload>
                 }}
               </el-input>
             </el-form-item>
@@ -140,8 +200,10 @@ export default defineComponent({
           </el-col>
         </el-row>
         <el-row>
-          <el-button type="primary" plain size="mini">保存</el-button>
-          <el-button plain size="mini" >关闭</el-button>
+          <el-col span={24} style={{ 'text-align': 'right' }}>
+            <el-button type="primary" plain size="mini" loading={subLoading.value} onClick={() => subForm()}>保存</el-button>
+            <el-button plain size="mini" >关闭</el-button>
+          </el-col>
         </el-row>
       </el-form>
     )

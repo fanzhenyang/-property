@@ -36,7 +36,7 @@ class Http {
 
     // 响应拦截
     instance.interceptors.response.use((res: AxiosResponse) => {
-      // res.config.cbs && res.config.cbs()
+      res.config.cbs && res.config.cbs()
       // 返回数据
       const { data, config, status } = res
       if (config.url && config.url.includes('auth/oauth/token')) {
@@ -47,8 +47,18 @@ class Http {
           ElMessage.success('登录成功')
         }
       }
+
+      if (res.config.msg && document.getElementsByClassName('el-message').length === 0) {
+        if (data.status === 200) {
+          ElMessage.success(data.message)
+        } else {
+          ElMessage.error(data.message)
+        }
+      }
+
       return Object.assign({}, data, status)
-    }, (error: unknown) => {
+    }, (error: any) => {
+      error.config.cbs && error.config.cbs()
       return Promise.reject(error)
     })
   }

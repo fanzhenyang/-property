@@ -29,7 +29,8 @@ import {
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
-  ElDialog
+  ElDialog,
+  ElUpload
 } from 'element-plus/lib/'
 
 const elemnt: any[] = [
@@ -57,7 +58,8 @@ const elemnt: any[] = [
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
-  ElDialog
+  ElDialog,
+  ElUpload
 ]
 
 const plugins: any[] = [

@@ -4,6 +4,7 @@ export interface IPlatform {
   platformName: string
   createUserId: number
   platformCode: string
+  [key: string]: string | number
 }
 
 // 获取所属平台对应子菜单
