@@ -63,6 +63,7 @@ export default defineComponent({
   name: 'TableComp',
   inheritAttrs: false,
   props: PropsType,
+  emits: ['handleSelect'],
   setup (props, { slots, emit }) {
     const selectList = ref<any[]>([])
     const headerSlot = (column: IColumn) => {

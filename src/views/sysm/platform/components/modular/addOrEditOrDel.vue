@@ -10,7 +10,7 @@ const propsType = {
     default: () => ({})
   },
   ElMessage: {
-    type: Object,
+    type: Object || Function,
     default: () => ({})
   },
   type: {

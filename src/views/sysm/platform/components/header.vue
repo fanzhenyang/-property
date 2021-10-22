@@ -1,6 +1,7 @@
 <script lang="tsx">
 import { defineComponent, ref } from 'vue'
 export default defineComponent({
+  emits: ['handleOperate'],
   setup (props, { emit, slots }) {
     const searchShow = ref<boolean>(false)
     const handleOperate = (type: string) => {

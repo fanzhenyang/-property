@@ -26,6 +26,7 @@ interface IDefaultProps {
 export default defineComponent({
   name: 'SelectTree',
   props: propsType,
+  emits: ['nodeClick'],
   setup (props, { emit }) {
     const filterText = ref('')
     const showPopover = ref(false)

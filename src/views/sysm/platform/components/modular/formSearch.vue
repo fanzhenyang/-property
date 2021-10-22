@@ -10,6 +10,7 @@ const propsType = {
 
 export default defineComponent({
   props: propsType,
+  emits: ['submitSearchForm'],
   setup (props, { emit }) {
     const defaultTreeProps = readonly({
       children: 'children',
