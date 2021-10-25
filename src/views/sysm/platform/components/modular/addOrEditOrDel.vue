@@ -4,18 +4,19 @@ import { list } from '@/api/act/act'
 import { upload, saveOrUpdate } from '@/api/sysm/sysm'
 import { IPlatform, IPlatformTree } from '@/interface/sysm'
 import { TreeList } from '@/interface/act'
+import { ElMessage } from 'element-plus'
 const propsType = {
   listGather: {
     type: Object,
     default: () => ({})
   },
-  ElMessage: {
-    type: Object || Function,
-    default: () => ({})
-  },
   type: {
     type: String,
     default: 'add'
+  },
+  rows: {
+    type: Object,
+    default: () => ({})
   }
 } as const
 interface IForm<T, U> {
@@ -31,9 +32,11 @@ interface IForm<T, U> {
   actModelTypeId: T | U
   actModelId: T | U
   fileName: T
+  [x: string]: any
 }
 export default defineComponent({
   props: propsType,
+  emits: ['successFunc', 'handleCancel'],
   setup (props, { emit }) {
     const form = reactive<IForm<string, number>>({
       moduleName: '',
@@ -60,9 +63,10 @@ export default defineComponent({
       label: 'label',
       value: 'id'
     })
-    watch(() => [props.listGather.platformList, props.listGather.parentTree], ([newFormList, newParentList]) => {
+    watch(() => [props.listGather.platformList, props.listGather.parentTree, props.rows], ([newFormList, newParentList, newRows]) => {
       newFormList && platformList(newFormList)
       newParentList && parentList(newParentList)
+      newRows && formDataRow(newRows)
     }, { deep: true })
 
     const platformList = (list: IPlatform[]) => {
@@ -73,6 +77,12 @@ export default defineComponent({
           })
         }
       </>)
+    }
+    const formDataRow = (row: IPlatform) => {
+      Object.keys(row).forEach(key => {
+        form[key] = row[key]
+      })
+      console.log('%c 🥜 row[key]: ', 'font-size:20px;background-color: #E41A6A;color:#fff;', form)
     }
     const nodeClick = (value: number, type: number) => {
       if (type === 1) {
@@ -103,12 +113,12 @@ export default defineComponent({
     const subLoading = ref<boolean>(false)
     const subForm = async () => {
       if (form.modulePath === '' || form.moduleName === '' || form.url === '') {
-        props.ElMessage.warning('请分别填写模块名称、文件路径、菜单路径')
+        ElMessage.warning('请分别填写模块名称、文件路径、菜单路径')
         return false
       }
       if (form.orderNo && isNaN(Number(form.orderNo))) {
         form.orderNo = ''
-        props.ElMessage.warning('请输入数字')
+        ElMessage.warning('请输入数字')
         return false
       }
       subLoading.value = true
@@ -117,12 +127,15 @@ export default defineComponent({
       })
       emit('successFunc')
     }
+    const handleCancel = () => {
+      emit('handleCancel')
+    }
     return () => (
       <el-form mode={form} class="form-public-grey" labelWidth={'80px'}>
         <el-row gutter={20}>
           <el-col span={6}>
             <el-form-item label="模块名称">
-              <el-input vModel={form.moduleName} size="mini" placeholder="请输入模块名称" />
+              <el-input v-model={form.moduleName} size="mini" placeholder="请输入模块名称" />
             </el-form-item>
           </el-col>
           <el-col span={6}>
@@ -202,7 +215,7 @@ export default defineComponent({
         <el-row>
           <el-col span={24} style={{ 'text-align': 'right' }}>
             <el-button type="primary" plain size="mini" loading={subLoading.value} onClick={() => subForm()}>保存</el-button>
-            <el-button plain size="mini" >关闭</el-button>
+            <el-button plain size="mini" onClick={handleCancel}>关闭</el-button>
           </el-col>
         </el-row>
       </el-form>

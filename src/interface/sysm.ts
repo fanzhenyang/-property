@@ -13,7 +13,7 @@ export interface IPlatformTree {
   checkFlag: boolean
   createUser: string
   orderNo: number
-  id: number
+  id: number | string
   moduleName: string
   pId: number
   platformId: number

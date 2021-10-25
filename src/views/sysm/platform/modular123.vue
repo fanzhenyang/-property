@@ -111,7 +111,7 @@ const addOrEditOrDelComp = (isBool: Ref<boolean>, listGather: listData, cbs?: ()
       v-model={[isBool.value, 'dialogVisible']}
     >
       {{
-        main: () => <AddOrEditOrDel ElMessage={ElMessage} type={type} listGather={listGather} {...{ onSuccessFunc: () => successFunc(isBool, cbs) }} />
+        main: () => <AddOrEditOrDel type={type} listGather={listGather} {...{ onSuccessFunc: () => successFunc(isBool, cbs) }} />
       }}
     </Dialog>
   )

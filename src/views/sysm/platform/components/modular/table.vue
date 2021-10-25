@@ -4,7 +4,7 @@ import { IColumn } from '@/components/public/TableComp/index.vue'
 import { listData } from '../../modular.vue'
 import { IPlatformTree } from '@/interface/sysm'
 export default defineComponent({
-  emits: ['handleOperation'],
+  emits: ['handleOperation', 'handleTableSelect'],
   setup (props, { emit }) {
     const checkList = readonly<string[]>(['模块名称', '模块路径', '排序号', '备注', '启停状态', '模块图标', '编制人员', '编制时间'])
     const checkData = ref<string[]>(['模块名称', '模块路径', '排序号', '备注', '启停状态', '模块图标', '编制人员', '编制时间'])
@@ -33,11 +33,20 @@ export default defineComponent({
         }
       })
     }, { deep: true })
+    // 获取到表格数据
     const tableList = inject<listData>('listData')
 
     tableList && initImg(tableList.parentTree)
+
+    // 点击表格操作按钮
     const handleOperation = (row: IPlatformTree, type: string) => {
       emit('handleOperation', row, type)
+    }
+
+    // 点击checkbox
+    const handleSelect = (type: string, list: IPlatformTree[]) => {
+      const ids = list.map(el => el.id).toString()
+      emit('handleTableSelect', ids)
     }
     return () => <>
       <tableComp
@@ -48,6 +57,7 @@ export default defineComponent({
         isSelection={true}
         rowKey={'id'}
         columnData={columnData.value}
+        {...{ onHandleSelect: handleSelect }}
       >
 
         {{
