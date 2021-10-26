@@ -8,16 +8,20 @@ import AddOrEditOrDel from './components/modular/addOrEditOrDel.vue'
 import Dialog from './components/public/dialog.vue'
 import { list, listByTree, deleteById } from '@/api/sysm/sysm'
 import { treeList } from '@/api/act/act'
+import { TreeList } from '@/interface/act'
 import { IPlatform, IPlatformTree, IPropsTree } from '@/interface/sysm'
+import fileSaver from '@/utils/exportFile'
 export interface listData {
   platformList: IPlatform[]
   parentTree: IPlatformTree[]
+  treeList: TreeList[]
 }
 export default defineComponent({
   setup () {
     const listGather = reactive<listData>({
       platformList: [],
-      parentTree: []
+      parentTree: [],
+      treeList: []
     })
     const loading = ref<boolean>(false)
     provide('listData', listGather)
@@ -47,6 +51,13 @@ export default defineComponent({
       })
       listGather.parentTree = data
     }
+
+    // 获取流程
+    const flow = async () => {
+      const { data } = await treeList(null)
+      listGather.treeList = data.children
+    }
+    flow()
     const isBool = ref<boolean>(false)
     const idList = ref<string>('')
 
@@ -72,6 +83,7 @@ export default defineComponent({
 
 // 顶部组件
 function HeaderCmp (props: {isBool: Ref<boolean>, type: Ref<string>, isDel: Ref<boolean>, idList: Ref<string>, target: IPropsTree, initParentTree: () => void}) {
+  const listGather = inject<listData>('listData')
   const handleOperate = (type: string) => {
     if (type === 'delete') {
       if (props.idList.value) {
@@ -87,6 +99,8 @@ function HeaderCmp (props: {isBool: Ref<boolean>, type: Ref<string>, isDel: Ref<
     } else if (type === 'add') {
       props.isBool.value = true
       props.type.value = 'add'
+    } else if (type === 'export') {
+      listGather && fileSaver.exportExcel('#table1', '菜单管理', 'application/octet-stream')
     }
   }
   return <Header { ...{ onHandleOperate: (type: string) => handleOperate(type) }}>
@@ -140,7 +154,7 @@ const useTable = (isBool: Ref<boolean>, isDel: Ref<boolean>, idList: Ref<string>
     if (loading.value) {
       return <div>加载中</div>
     } else {
-      return <Table {...{ onHandleOperation: handleOperation, onHandleTableSelect: handleTableSelect }} />
+      return <Table id={'table1'} {...{ onHandleOperation: handleOperation, onHandleTableSelect: handleTableSelect }} />
     }
   }
   return { tableFunc, type, rows }

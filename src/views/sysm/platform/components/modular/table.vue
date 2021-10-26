@@ -5,6 +5,7 @@ import { listData } from '../../modular.vue'
 import { IPlatformTree } from '@/interface/sysm'
 export default defineComponent({
   emits: ['handleOperation', 'handleTableSelect'],
+  props: ['id'],
   setup (props, { emit }) {
     const checkList = readonly<string[]>(['模块名称', '模块路径', '排序号', '备注', '启停状态', '模块图标', '编制人员', '编制时间'])
     const checkData = ref<string[]>(['模块名称', '模块路径', '排序号', '备注', '启停状态', '模块图标', '编制人员', '编制时间'])
@@ -50,6 +51,7 @@ export default defineComponent({
     }
     return () => <>
       <tableComp
+        id={props.id}
         data={tableList && tableList.parentTree}
         tableRef={tableRef}
         treeProps={treeProps}
