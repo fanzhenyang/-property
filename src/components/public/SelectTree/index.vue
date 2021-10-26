@@ -16,6 +16,10 @@ const propsType = {
   treeLsit: {
     type: Array,
     require: true
+  },
+  disType: {
+    type: Boolean,
+    default: false
   }
 } as const
 interface IDefaultProps {
@@ -76,7 +80,7 @@ export default defineComponent({
           {{
             default: () => (
               <>
-                <el-input vModel={filterText.value} size="mini" placeholder="请进行搜索过滤" />
+                <el-input disabled={props.disType} vModel={filterText.value} size="mini" placeholder="请进行搜索过滤" />
                 <el-scrollbar wrap-class="scrollbar-wrapper" class="scrollbar__view scrollbar-view-height" style={{ height: '20vh' }}>
                   <el-tree ref={tree} data={props.treeLsit} props={props.defaultProps} onNodeClick={handleNodeClick}
                     defaultExpandAll filterNodeMethod={filterNode} style={{ height: '20vh' }} nodeKey={props.defaultProps?.value}/>
@@ -84,7 +88,7 @@ export default defineComponent({
               </>
             ),
             reference: () => (
-              <el-input vModel={parentText.value} ref={inputRef} size={props.size} readonly placeholder="请选择" onFocus={handleFocus}>
+              <el-input disabled={props.disType} vModel={parentText.value} ref={inputRef} size={props.size} readonly placeholder="请选择" onFocus={handleFocus}>
                 {{
                   suffix: () => <i class={showPopover.value ? 'el-icon-arrow-down transition rotate' : 'el-icon-arrow-down transition'}></i>
                 }}

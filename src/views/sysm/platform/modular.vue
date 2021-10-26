@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { ref, reactive, readonly, defineComponent, inject, provide, Ref, nextTick } from 'vue'
+import { ref, reactive, defineComponent, inject, provide, Ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import Header from './components/header.vue'
 import FormSearch from './components/modular/formSearch.vue'
@@ -8,7 +8,7 @@ import AddOrEditOrDel from './components/modular/addOrEditOrDel.vue'
 import Dialog from './components/public/dialog.vue'
 import { list, listByTree, deleteById } from '@/api/sysm/sysm'
 import { treeList } from '@/api/act/act'
-import { IPlatform, IPlatformTree } from '@/interface/sysm'
+import { IPlatform, IPlatformTree, IPropsTree } from '@/interface/sysm'
 export interface listData {
   platformList: IPlatform[]
   parentTree: IPlatformTree[]
@@ -31,8 +31,18 @@ export default defineComponent({
     initPlatform()
 
     // 获取所属平台对应menu
+    const target = reactive<IPropsTree>({
+      moduleName: '',
+      order: 0,
+      statusOrder: 0,
+      page: 1,
+      size: 20,
+      platformId: '',
+      PId: '',
+      status: ''
+    })
     const initParentTree = async () => {
-      const { data } = await listByTree(null, () => {
+      const { data } = await listByTree(target, () => {
         loading.value = false
       })
       listGather.parentTree = data
@@ -49,7 +59,7 @@ export default defineComponent({
     return () => <container imgIndex={1} >
       {{
         cont: () => (<>
-          <HeaderCmp isBool={isBool} type={type} isDel={isDel} idList={idList}/>
+          <HeaderCmp isBool={isBool} type={type} isDel={isDel} idList={idList} target={target} initParentTree={initParentTree}/>
           {tableFunc(loading)}
           {isBool.value ? <AddOrEditOrDelCmp isBool={isBool} type={type} cbs={initParentTree} rows={rows}/> : null }
           {isDel.value ? initComp() : null}
@@ -61,7 +71,7 @@ export default defineComponent({
 })
 
 // 顶部组件
-function HeaderCmp (props: {isBool: Ref<boolean>, type: Ref<string>, isDel: Ref<boolean>, idList: Ref<string>}) {
+function HeaderCmp (props: {isBool: Ref<boolean>, type: Ref<string>, isDel: Ref<boolean>, idList: Ref<string>, target: IPropsTree, initParentTree: () => void}) {
   const handleOperate = (type: string) => {
     if (type === 'delete') {
       if (props.idList.value) {
@@ -80,14 +90,28 @@ function HeaderCmp (props: {isBool: Ref<boolean>, type: Ref<string>, isDel: Ref<
     }
   }
   return <Header { ...{ onHandleOperate: (type: string) => handleOperate(type) }}>
-    {{ collapse: () => <FormSearchCmp /> }}
+    {{ collapse: () => <FormSearchCmp target={props.target} initParentTree={props.initParentTree} /> }}
   </Header>
 }
 
 // 顶部查询组件
-const FormSearchCmp = () => {
-  const submitSearchForm = () => {
-    console.log(123)
+interface iFormSearch {
+  moduleName: string
+  status: number
+  platformId: number
+  pId: number
+  [x: string] : string | number
+}
+const FormSearchCmp = (props: {target: IPropsTree, initParentTree: () => void}) => {
+  const submitSearchForm = (form: iFormSearch) => {
+    Object.keys(form).forEach(key => {
+      if (key === 'pId') {
+        props.target.PId = form.pId + ''
+      } else {
+        props.target[key] = form[key]
+      }
+    })
+    props.initParentTree()
   }
   const listGather = inject<listData>('listData')
   return <FormSearch listGather={listGather} {...{ onSubmitSearchForm: submitSearchForm }} />
