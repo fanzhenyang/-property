@@ -21,7 +21,6 @@ export default class fileSaver {
 
   static exportExcel (id: string, name: string, type : string): any {
     const xlsxParam = { raw: true } // 导出的内容只做解析，不进行格式转换
-    debugger
     const wb = XLSX.utils.table_to_book(document.querySelector(id), xlsxParam)
     const wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
     try {

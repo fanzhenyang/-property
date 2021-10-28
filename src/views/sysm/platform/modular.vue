@@ -1,11 +1,10 @@
 <script lang="tsx">
 import { ref, reactive, defineComponent, inject, provide, Ref } from 'vue'
 import { ElMessage } from 'element-plus'
-import Header from './components/header.vue'
-import FormSearch from './components/modular/formSearch.vue'
+import Header from './components/public/header.vue'
+import FormSearch from './components/public/formSearch.vue'
 import Table from './components/modular/table.vue'
 import AddOrEditOrDel from './components/modular/addOrEditOrDel.vue'
-import Dialog from './components/public/dialog.vue'
 import { list, listByTree, deleteById } from '@/api/sysm/sysm'
 import { treeList } from '@/api/act/act'
 import { TreeList } from '@/interface/act'
@@ -40,7 +39,7 @@ export default defineComponent({
       order: 0,
       statusOrder: 0,
       page: 1,
-      size: 20,
+      size: 999,
       platformId: '',
       PId: '',
       status: ''
@@ -50,6 +49,7 @@ export default defineComponent({
         loading.value = false
       })
       listGather.parentTree = data
+      console.log('%c 🍰 listGather.parentTree: ', 'font-size:20px;background-color: #ED9EC7;color:#fff;', listGather.parentTree)
     }
 
     // 获取流程
@@ -136,7 +136,7 @@ const useTable = (isBool: Ref<boolean>, isDel: Ref<boolean>, idList: Ref<string>
   const type = ref<string>('add')
   const rows = ref<any>()
 
-  const handleOperation = (row: IPlatformTree, str: string) => {
+  const handleOperation = (row: IPlatformTree, str: string): boolean => {
     if (str === 'delete') {
       idList.value = row.id + ''
       isDel.value = true
@@ -170,15 +170,15 @@ const AddOrEditOrDelCmp = (props: { isBool: Ref<boolean>, type: Ref<string>, cbs
   const handleCancel = () => {
     props.isBool.value = false
   }
-  return <Dialog
-    title={props.type.value === 'edit' ? '编辑' : props.type.value === 'details' ? '详情' : '新增'}
+  return <dialogComp
     width={'70vw'}
+    title={props.type.value === 'edit' ? '编辑' : props.type.value === 'details' ? '详情' : '新增'}
     v-model={[props.isBool.value, 'dialogVisible']}
   >
     {{
       main: () => <AddOrEditOrDel rows={props.rows} type={props.type.value} listGather={listGather} {...{ onSuccessFunc: () => successFunc(props.isBool), onHandleCancel: handleCancel }} />
     }}
-  </Dialog>
+  </dialogComp>
 }
 
 // 删除弹窗
@@ -194,7 +194,7 @@ const useEffectDelete = (cbs: () => void, idList: Ref<string>) => {
     cbs()
   }
   const initComp = () => {
-    return <Dialog title="提示" width={'20vw'} v-model={[isDel.value, 'dialogVisible']}>
+    return <dialogComp title="提示" width={'70vw'} v-model={[isDel.value, 'dialogVisible']}>
       {{
         main: () => <div>确定删除这条数据吗？</div>,
         footer: () => <div>
@@ -202,7 +202,7 @@ const useEffectDelete = (cbs: () => void, idList: Ref<string>) => {
           <el-button plain size="mini" onClick={handleCancel}>取消</el-button>
         </div>
       }}
-    </Dialog>
+    </dialogComp>
   }
   return { isDel, initComp }
 }

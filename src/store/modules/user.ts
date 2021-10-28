@@ -1,5 +1,5 @@
 import { Commit } from 'vuex'
-import { login } from '@/api/user'
+import { login, logout } from '@/api/user'
 import session from '@/utils/auth'
 import { ILoginData } from '@/interface/user'
 interface IState {
@@ -34,6 +34,20 @@ const actions = {
       }).catch(error => {
         reject(error)
       })
+    })
+  },
+  exit ({ commit } : {commit: Commit}):Promise<any> {
+    return new Promise((resolve, reject) => {
+      logout(null).then(res => {
+        console.log('%c 🍜 res: ', 'font-size:20px;background-color: #3F7CFF;color:#fff;', res)
+        session.clear()
+        commit('SET_TOKEN', '')
+        resolve(true)
+      })
+        .catch(err => {
+          reject(err)
+          // return Promise.reject(err)
+        })
     })
   }
 }

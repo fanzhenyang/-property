@@ -19,7 +19,9 @@ export default defineComponent({
     }
 
     initRouteList()
-
+    const exit = () => {
+      store.dispatch('user/exit')
+    }
     return () => (
       <header class="header">
         <img src={require('../../assets/img/menu/dian.png')} alt="" class="header-dian" />
@@ -32,10 +34,11 @@ export default defineComponent({
             <el-popover
               placement="bottom"
               trigger="hover"
+              width={90}
               popperClass="header-menu-popover"
             >
               {{
-                default: () => <ul class="header-menu-ul"><li>修改密码</li><li>退出登录</li></ul>,
+                default: () => <ul class="header-menu-ul"><li>修改密码</li><li onClick={() => exit()}>退出登录</li></ul>,
                 reference: () => <div><i class="iconfont icon-yonghutianchong"></i><span>admin</span></div>
               }}
 
@@ -70,9 +73,8 @@ const MenuComp = (props: { menuList: Menu[] }) => {
         }
       </el-menu>
     )
-  } else {
-    return null
   }
+  return null
 }
 
 interface IMenuItem {
@@ -80,7 +82,6 @@ interface IMenuItem {
   indexPath: string[]
 }
 const routerItem = (i: IMenuItem, el: Menu, router: Router) => {
-  console.log('%c 🍉 el: ', 'font-size:20px;background-color: #33A5FF;color:#fff;', el)
   if (typeof (router as Router) === 'object') {
     const path = el.url
     router.push(path as string)
@@ -190,8 +191,9 @@ const MenuChild = (props: {list: Menu[]}) => {
       }
     }
     /deep/.el-menu-item {
-      background: url("../../assets/img/menu/menu_bg_right.png") no-repeat center center;
-      left: 52rem;
+      background: url("../../assets/img/menu/menu_bg_left.png") no-repeat center center;
+      background-size: 100% 100%;
+      // left: 52rem;
       &:hover {
         background-color: transparent !important;
         outline: none !important;
@@ -215,6 +217,7 @@ const MenuChild = (props: {list: Menu[]}) => {
 <style lang="scss">
 .header-menu-popover{
   background: #163175 !important;
+  min-width: 80px !important;
   .el-popper__arrow {
     &::before {
       background: #163175 !important;

@@ -1,6 +1,5 @@
 <script lang="tsx">
-import { defineComponent, ref, toRef, toRefs } from 'vue'
-import { openDailog } from '@/hooks/dialog'
+import { defineComponent, ref, toRefs } from 'vue'
 const propsType = {
   title: {
     type: String,
@@ -24,7 +23,7 @@ const propsType = {
   }
 } as const
 export default defineComponent({
-  name: 'Dialog',
+  name: 'DialogComp',
   props: propsType,
   setup (props, { slots, emit }) {
     const { dialogVisible } = toRefs(props)

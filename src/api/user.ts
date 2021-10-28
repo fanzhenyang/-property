@@ -9,3 +9,12 @@ export const login = (data: ILoginData, cbs?:() => void):Promise<UserData<Users>
     data
   })
 }
+
+// 退出登录
+export const logout = (data: null, cbs?:() => void): Promise<void> => {
+  return http.request({
+    url: 'vue-element-admin/user/logout',
+    method: 'post',
+    cbs
+  })
+}

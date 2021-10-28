@@ -33,7 +33,6 @@ function setAddRoters (list: Menu[], route: targetRouter, redirect = false) {
 
           }
         })
-        // console.log('%c 🍞 route: ', 'font-size:20px;background-color: #6EC1C2;color:#fff;', route)
       }
       if (item.children && item.children.length > 0) {
         setAddRoters(item.children, route)

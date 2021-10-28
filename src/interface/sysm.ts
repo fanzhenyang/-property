@@ -26,7 +26,7 @@ export interface IPlatformTree {
 // 菜单列表
 export interface IPropsTree {
   moduleName: string
-  order: number
+  order: number | string
   statusOrder: any
   page: number
   size: number
@@ -52,4 +52,17 @@ export interface IFormSub {
   status: number
   url: string
   [x: string]: any
+}
+
+export interface IBtnList {
+  dicClass?: string
+  dicCode?: string
+  dicName: string
+  dicValue: string
+  id: number
+  memo?: string
+  orderNo?: number
+  pId?: number
+  status?: number
+  systemFlag?: number
 }

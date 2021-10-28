@@ -70,6 +70,7 @@ export default defineComponent({
         form[key] = props.rows.value[key]
       })
     }
+
     if (props.type === 'details') {
       disType.value = true
     } else {
@@ -89,6 +90,7 @@ export default defineComponent({
       technological.value = data
     }
     const parentList = (list: IPlatformTree[] | TreeList[], type = 1) => {
+      console.log('%c 🥫 list: ', 'font-size:20px;background-color: #F5CE50;color:#fff;', list)
       return (<selectTree disType={disType.value} treeLsit={form.platformId && type === 1 ? list : type === 2 ? list : []} defaultProps={type === 1 ? defaultTreeProps : defaultTreeProps1} {...{ onNodeClick: (value: number) => nodeClick(value, type) }} />)
     }
 

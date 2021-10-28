@@ -45,6 +45,14 @@ const PropsType = {
   tableRef: {
     type: Object,
     default: () => ({})
+  },
+  class: {
+    type: String,
+    default: ''
+  },
+  id: {
+    type: String,
+    default: ''
   }
 } as const
 
@@ -124,6 +132,8 @@ export default defineComponent({
 
     return () => (
       <el-table
+        id={props.id}
+        class={[props.class, 'table-public']}
         data={props.data}
         ref={props.tableRef}
         treeProps={props.treeProps}
@@ -131,7 +141,6 @@ export default defineComponent({
         height={props.height}
         style={{ width: props.width }}
         rowKey={props.rowKey}
-        class="table-public"
         onSelect={handleSelectChange}
         onSelectAll={handleSelectAllChange}
         default-expand-all={props.defaultExpandpandAll}

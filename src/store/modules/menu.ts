@@ -18,10 +18,10 @@ const actions = {
         .then(res => {
           const list = res.data[0].menus
           const menus = JSON.parse(JSON.stringify(list))
-          menus.splice(2, 0, {
-            moduleName: '规划管理',
-            moduleId: 8888
-          })
+          // menus.splice(2, 0, {
+          //   moduleName: '规划管理',
+          //   moduleId: 8888
+          // })
           resolve(Object.assign([], menus))
           roterPermission(menus)
           commit('SET_ROUTER', menus)
