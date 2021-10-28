@@ -25,3 +25,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 无状态组件
 FunctionalComponent as FC
+
+### toRefs
+### 用于结构props并且不会失去响应式特征
+const { textEcho } = toRefs(props)
