@@ -1,6 +1,7 @@
 <script lang="tsx">
 import { defineComponent, reactive, watch, ref, readonly } from 'vue'
 import { IPlatform, IPlatformTree } from '@/interface/sysm'
+import { ElForm } from 'element-plus'
 const propsType = {
   listGather: {
     type: Object,
@@ -10,7 +11,7 @@ const propsType = {
 
 export default defineComponent({
   props: propsType,
-  emits: ['submitSearchForm'],
+  emits: ['submitSearchForm', 'resetSearchForm'],
   setup (props, { emit }) {
     const defaultTreeProps = readonly({
       children: 'children',
@@ -19,7 +20,7 @@ export default defineComponent({
     })
     const form = reactive({
       moduleName: '',
-      status: 0,
+      status: null,
       platformId: 1,
       pId: 0
     })
@@ -44,10 +45,11 @@ export default defineComponent({
       return (<selectTree treeLsit={list} defaultProps={defaultTreeProps} {...{ onNodeClick: nodeClick }} />)
     }
 
-    const formRef = ref<any>()
+    const formRef = ref<InstanceType<typeof ElForm> | null>(null)
 
     const resetForm = () => {
       (formRef.value as any).resetFields()
+      emit('resetSearchForm', form)
     }
 
     const submitForm = () => {

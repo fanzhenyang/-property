@@ -5,7 +5,8 @@ import Header from './components/public/header.vue'
 import FormSearch from './components/public/formSearch.vue'
 import Table from './components/function/table.vue'
 import AddOrEditOrDel from './components/function/addOrEditOrDel.vue'
-import { list, getList, dictionarylist } from '@/api/sysm/sysm'
+import { list } from '@/api/sysm/sysm'
+import { getList, dictionarylist, deleteById, deleteByModel } from '@/api/sysm/function'
 import Dialog from './components/public/dialog.vue'
 import { IPlatform, IPlatformTree, IPropsTree, IBtnList } from '@/interface/sysm'
 import fileSaver from '@/utils/exportFile'
@@ -50,19 +51,23 @@ export default defineComponent({
       listGather.parentTree = data
     }
 
-    // 弹窗的逻辑与渲染
-    const { initBtnList, RenderDialogAddOrDel, isBool, type } = useEffectDialog()
+    // 详情与编辑和新增弹窗的逻辑与渲染
+    const { initBtnList, RenderDialogAddOrEdit, isBool, type } = useEffectDialog()
     initBtnList()
 
+    // 删除弹窗
+    const { isDel, RenderDialogDel } = useEffectDelete(initParentTree)
+
     // 表格的相关操作
-    const { tableFunc, rows } = useTable(isBool, type)
+    const { tableFunc, rows, ids } = useTable(isBool, type, isDel)
 
     return () => <container imgIndex={1} >
       {{
         cont: () => (<>
-          <HeaderCmp initParentTree={initParentTree} target={target} type={type} isBool={isBool}/>
+          <HeaderCmp initParentTree={initParentTree} target={target} type={type} isDel={isDel} isBool={isBool} ids={ids}/>
           {tableFunc(loading)}
-          {isBool.value ? <RenderDialogAddOrDel cbs={initPlatform} row={rows} type={type} /> : null}
+          {isBool.value ? <RenderDialogAddOrEdit cbs={initPlatform} row={rows} type={type} /> : null}
+          {isDel.value ? <RenderDialogDel rows={rows} ids={ids} /> : null}
         </>)
       }}
 
@@ -71,13 +76,25 @@ export default defineComponent({
 })
 
 // 顶部组件
-function HeaderCmp (props: { initParentTree: () => void, isBool: Ref<boolean>, target: IPropsTree, type: Ref<string>}) {
+function HeaderCmp (props: { initParentTree: () => void, isBool: Ref<boolean>, isDel: Ref<boolean>, target: IPropsTree, type: Ref<string>, ids: Ref<number>}) {
+  const listGather = inject<listData>('listData')
   const handleOperate = (type: string) => {
     if (type === 'add') {
       props.isBool.value = true
       props.type.value = 'add'
+    } else if (type === 'delete') {
+      if (!props.ids.value) {
+        ElMessage.error({
+          message: '请至少选择一条数据',
+          type: 'error'
+        })
+        return false
+      }
+      props.isDel.value = true
+      return true
+    } else if (type === 'export') {
+      listGather && fileSaver.exportExcel('#table2', '功能操作', 'application/octet-stream')
     }
-    console.log('%c 🌽 type: ', 'font-size:20px;background-color: #2EAFB0;color:#fff;', type)
   }
   return <Header { ...{ onHandleOperate: (type: string) => handleOperate(type) }}>
     {{ collapse: () => <FormSearchCmp initParentTree={props.initParentTree} target={props.target} /> }}
@@ -108,21 +125,23 @@ const FormSearchCmp = (props: {initParentTree: () => void, target: IPropsTree}) 
 }
 
 // 表格
-const useTable = (isBool: Ref<boolean>, type: Ref<string>) => {
+const useTable = (isBool: Ref<boolean>, type: Ref<string>, isDel: Ref<boolean>) => {
   const rows = ref<any>()
-
+  const ids = ref<number>(-1)
   const handleOperation = (el:any, row: any, str: string): boolean => {
+    rows.value = Object.assign({}, row, el, { type: 1 })
     if (str === 'edit') {
       isBool.value = true
       type.value = 'edit'
-      rows.value = Object.assign({}, row, el)
+      return true
     } else if (str === 'delete') {
-
+      isDel.value = true
+      return true
     }
     return true
   }
-  const handleTableSelect = (ids: string) => {
-    // idList.value = ids
+  const handleTableSelect = (idList: number) => {
+    ids.value = idList
   }
   const tableFunc = (loading: Ref<boolean>) => {
     if (loading.value) {
@@ -131,7 +150,7 @@ const useTable = (isBool: Ref<boolean>, type: Ref<string>) => {
       return <Table id={'table2'} {...{ onHandleOperation: handleOperation, onHandleTableSelect: handleTableSelect }} />
     }
   }
-  return { tableFunc, type, rows }
+  return { tableFunc, ids, rows }
 }
 
 // 新增，详情，修改
@@ -143,7 +162,7 @@ const useEffectDialog = () => {
     const { data } = await dictionarylist({ dicCode: 'button' })
     listData.value = data
   }
-  const RenderDialogAddOrDel = (props: {cbs: () => void, row: Ref<any>, type: Ref<string>}) => {
+  const RenderDialogAddOrEdit = (props: {cbs: () => void, row: Ref<any>, type: Ref<string>}) => {
     const handleCancel = () => {
       isBool.value = false
     }
@@ -162,7 +181,43 @@ const useEffectDialog = () => {
       }}
     </dialogComp>
   }
-  return { isBool, type, initBtnList, RenderDialogAddOrDel }
+  return { isBool, type, initBtnList, RenderDialogAddOrEdit }
 }
 
+// 删除弹窗
+const useEffectDelete = (cbs: () => void) => {
+  const isDel = ref<boolean>(false)
+  const loading = ref<boolean>(false)
+  const handleCancel = () => {
+    isDel.value = false
+  }
+  const handleSure = async (row: Ref<any>, ids:Ref<number>) => {
+    loading.value = true
+    if (row.value?.type === 1) {
+      await deleteById(row.value.actionId, () => {
+        loading.value = false
+      })
+    } else {
+      const id = ids.value
+      await deleteByModel(id, () => {
+        loading.value = false
+      })
+      console.log('%c 🥓 ids: ', 'font-size:20px;background-color: #E41A6A;color:#fff;', ids)
+    }
+    handleCancel()
+    cbs()
+  }
+  const RenderDialogDel = (props: {rows: Ref<any>, ids: Ref<number>}) => {
+    return <dialogComp title="提示" width={'14vw'} v-model={[isDel.value, 'dialogVisible']}>
+      {{
+        main: () => <div>确定删除这条数据吗？</div>,
+        footer: () => <div>
+          <el-button type="warning" plain size="mini" loading={loading.value} onClick={() => handleSure(props.rows, props.ids)}>确定</el-button>
+          <el-button plain size="mini" onClick={handleCancel}>取消</el-button>
+        </div>
+      }}
+    </dialogComp>
+  }
+  return { isDel, RenderDialogDel }
+}
 </script>

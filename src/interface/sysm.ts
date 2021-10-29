@@ -51,6 +51,7 @@ export interface IFormSub {
   platformId: number | string
   status: number
   url: string
+  id: unknown
   [x: string]: any
 }
 
@@ -65,4 +66,22 @@ export interface IBtnList {
   pId?: number
   status?: number
   systemFlag?: number
+}
+
+export interface IActive {
+  actionList: [{
+    actionId: number
+    actionName: string
+    description: string
+    orderNo: number
+    status: number
+  }]
+  checkFlag: boolean
+  children: IActive[]
+  id: number
+  moduleName: string
+  pId: number
+  platformCode: string
+  platformId: number
+  platformName:string
 }

@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent, readonly, ref, watch, inject } from 'vue'
+import { defineComponent, readonly, computed, ref, watch, inject } from 'vue'
 import { IColumn } from '@/components/public/TableComp/index.vue'
 import { listData } from '../../modular.vue'
 import { IPlatformTree } from '@/interface/sysm'
@@ -37,7 +37,10 @@ export default defineComponent({
     // 获取到表格数据
     const tableList = inject<listData>('listData')
 
-    tableList && initImg(tableList.parentTree)
+    const tbaleData = computed(() => {
+      tableList?.parentTree && initImg(tableList.parentTree)
+      return tableList?.parentTree
+    })
 
     // 点击表格操作按钮
     const handleOperation = (row: IPlatformTree, type: string) => {
@@ -52,7 +55,7 @@ export default defineComponent({
     return () => <>
       <tableComp
         id={props.id}
-        data={tableList && tableList.parentTree}
+        data={tbaleData.value}
         tableRef={tableRef}
         treeProps={treeProps}
         defaultExpandpandAll={true}

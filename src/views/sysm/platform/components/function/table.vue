@@ -1,7 +1,7 @@
 <script lang="tsx">
 import { defineComponent, readonly, ref, watch, inject } from 'vue'
 import { IColumn } from '@/components/public/TableComp/index.vue'
-import { IPlatformTree } from '@/interface/sysm'
+import { IActive } from '@/interface/sysm'
 export default defineComponent({
   emits: ['handleOperation', 'handleTableSelect'],
   props: ['id'],
@@ -24,8 +24,9 @@ export default defineComponent({
     }
 
     // 点击checkbox
-    const handleSelect = (type: string, list: IPlatformTree[]) => {
-      const ids = list.map(el => el.id).toString()
+    const handleSelect = (type: string, list: IActive[]) => {
+      console.log('%c 🥧 list: ', 'font-size:20px;background-color: #ED9EC7;color:#fff;', list)
+      const ids = list.map(el => el.id)
       emit('handleTableSelect', ids)
     }
     return () => <>

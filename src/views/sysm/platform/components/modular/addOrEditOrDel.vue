@@ -1,7 +1,8 @@
 <script lang="tsx">
 import { defineComponent, ref, readonly, watch, reactive } from 'vue'
 import { list } from '@/api/act/act'
-import { upload, saveOrUpdate } from '@/api/sysm/sysm'
+import { upload } from '@/api/sysm/sysm'
+import { saveOrUpdate } from '@/api/sysm/modular'
 import { IPlatform, IPlatformTree, IFormSub } from '@/interface/sysm'
 import { TreeList } from '@/interface/act'
 import { ElMessage } from 'element-plus'
@@ -36,7 +37,8 @@ export default defineComponent({
       pId: '',
       actModelTypeId: '',
       actModelId: '',
-      fileName: ''
+      fileName: '',
+      id: null
     })
     // label
     const defaultTreeProps = readonly({
@@ -66,7 +68,7 @@ export default defineComponent({
 
     const disType = ref<boolean>(false)
     if (props.type !== 'add' && props.rows.value) {
-      Object.keys(props.rows.value).forEach(key => {
+      Object.keys(form).forEach(key => {
         form[key] = props.rows.value[key]
       })
     }
@@ -90,8 +92,7 @@ export default defineComponent({
       technological.value = data
     }
     const parentList = (list: IPlatformTree[] | TreeList[], type = 1) => {
-      console.log('%c 🥫 list: ', 'font-size:20px;background-color: #F5CE50;color:#fff;', list)
-      return (<selectTree disType={disType.value} treeLsit={form.platformId && type === 1 ? list : type === 2 ? list : []} defaultProps={type === 1 ? defaultTreeProps : defaultTreeProps1} {...{ onNodeClick: (value: number) => nodeClick(value, type) }} />)
+      return (<selectTree textEcho={type === 1 ? form.moduleName : form.label} disType={disType.value} treeLsit={form.platformId && type === 1 ? list : type === 2 ? list : []} defaultProps={type === 1 ? defaultTreeProps : defaultTreeProps1} {...{ onNodeClick: (value: number) => nodeClick(value, type) }} />)
     }
 
     const param = ref(new FormData())
@@ -116,10 +117,11 @@ export default defineComponent({
         ElMessage.warning('请输入数字')
         return false
       }
+      console.log('%c 🥃 props.type: ', 'font-size:20px;background-color: #2EAFB0;color:#fff;', props.type)
       subLoading.value = true
       await saveOrUpdate(Object.assign(form, { orderNo: Number(form.orderNo) }), () => {
         subLoading.value = false
-      })
+      }, props.type)
       emit('successFunc')
     }
     const handleCancel = () => {

@@ -1,7 +1,7 @@
 <script lang="tsx">
 import { defineComponent, ref, Ref, inject, readonly, reactive, PropType, onMounted } from 'vue'
 import { ElMessage, ElForm } from 'element-plus'
-import { BtnsaveOrUpdate } from '@/api/sysm/sysm'
+import { saveOrUpdate } from '@/api/sysm/function'
 import { IPlatform, IPlatformTree } from '@/interface/sysm'
 interface Ioption {
   id: string | number
@@ -19,8 +19,10 @@ interface IForm {
   status: number | null
   orderNo: number | null
   description: string
+  id: unknown
   [x: string]: any
 }
+
 type ElFormCtx = InstanceType<typeof ElForm>
 export default defineComponent({
   props: {
@@ -46,7 +48,8 @@ export default defineComponent({
       status: 0,
       orderNo: null,
       description: '',
-      moduleName: ''
+      moduleName: '',
+      id: null
     })
 
     // 获取到表格数据
@@ -60,14 +63,17 @@ export default defineComponent({
     const subLoading = ref<boolean>(false)
 
     if (props.type === 'edit' && props.row.value) {
-      Object.keys(props.row.value).forEach(key => {
-        if (key === 'id') {
-          form.moduleId = props.row.value[key]
+      // console.log('%c 🧀 props.row.value: ', 'font-size:20px;background-color: #2EAFB0;color:#fff;', props.row.value)
+      Object.keys(form).forEach(key => {
+        if (key === 'moduleId') {
+          form.moduleId = props.row.value.id
+        } else if (key === 'id') {
+          form.id = props.row.value.actionId
         } else {
           form[key] = props.row.value[key]
         }
       })
-      console.log('%c 🍠 props.row.value: ', 'font-size:20px;background-color: #ED9EC7;color:#fff;', props.row.value)
+      // console.log('%c 🍠 props.row.value: ', 'font-size:20px;background-color: #ED9EC7;color:#fff;', props.row.value)
     }
 
     const rules = ref<any>({
@@ -80,23 +86,23 @@ export default defineComponent({
     const handleRules = (type: number, rule: { field: string|number }, value: unknown, callback: (e?: Error) => boolean) => {
       if (!form[rule.field]) {
         if (type === 1) {
-          callback(new Error('请选择功能名称'))
+          return callback(new Error('请选择功能名称'))
         } else if (type === 2) {
-          callback(new Error('请选择所属平台'))
+          return callback(new Error('请选择所属平台'))
         } else if (type === 3) {
-          callback(new Error('请选择所属模块'))
+          return callback(new Error('请选择所属模块'))
         } else {
-          callback(new Error('请填写排序号'))
+          return callback(new Error('请填写排序号'))
         }
       } else if (ruleForm.value) {
         if (type === 1) {
-          form.actionName && ruleForm.value.validateField('actionName', () => { callback() })
+          form.actionName && ruleForm.value.validateField('actionName', () => { '错误' })
         } else if (type === 2) {
-          form.platformId && ruleForm.value.validateField('platformId', () => { callback() })
+          form.platformId && ruleForm.value.validateField('platformId', () => { '错误' })
         } else if (type === 3) {
-          form.moduleId && ruleForm.value.validateField('moduleId', () => { callback() })
+          form.moduleId && ruleForm.value.validateField('moduleId', () => { '错误' })
         } else {
-          form.orderNo && ruleForm.value.validateField('orderNo', () => { callback() })
+          form.orderNo && ruleForm.value.validateField('orderNo', () => { '错误' })
         }
       }
     }
@@ -110,21 +116,23 @@ export default defineComponent({
       return (<selectTree textEcho={form.moduleName} treeLsit={form.platformId ? tableList?.parentTree : []} defaultProps={defaultTreeProps} {...{ onNodeClick: (value: number) => nodeClick(value) }} />)
     }
     const subForm = async () => {
-      // if (!ruleForm.value) return
-      // ruleForm.value.validate((valid: any) => {
-      //   console.log('%c 🍹 valid: ', 'font-size:20px;background-color: #42b983;color:#fff;', valid)
-      //   if (valid) {
-      //     alert('submit!')
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
-      subLoading.value = true
-      await BtnsaveOrUpdate(Object.assign(form, { orderNo: Number(form.orderNo) }), () => {
-        subLoading.value = false
+      console.log('%c 🥠 ruleForm.value: ', 'font-size:20px;background-color: #2EAFB0;color:#fff;', ruleForm.value)
+      if (!ruleForm.value) return
+      ruleForm.value.validate((valid: any) => {
+        console.log('%c 🍹 valid: ', 'font-size:20px;background-color: #42b983;color:#fff;', valid)
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
       })
-      emit('successFunc')
+      // subLoading.value = true
+      // // console.log('%c 🥑 form: ', 'font-size:20px;background-color: #2EAFB0;color:#fff;', form)
+      // await saveOrUpdate(Object.assign(form, { orderNo: Number(form.orderNo) }), () => {
+      //   subLoading.value = false
+      // }, props.type)
+      // emit('successFunc')
     }
 
     const handleCancel = () => {
@@ -132,7 +140,7 @@ export default defineComponent({
     }
 
     return () => (
-      <el-form mode={form} ref={ruleForm.value} rules={rules.value} class="form-public-grey" labelWidth={'80px'}>
+      <el-form mode={form} ref={ruleForm} rules={rules} class="form-public-grey" labelWidth={'80px'}>
         <el-row gutter={20}>
           <el-col span={6}>
             <el-form-item label="功能名称" prop='actionName'>

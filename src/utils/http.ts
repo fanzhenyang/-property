@@ -49,10 +49,14 @@ class Http {
       }
 
       if (res.config.msg && document.getElementsByClassName('el-message').length === 0) {
-        if (data.status === 200) {
-          ElMessage.success(data.message)
+        if (res.config.type === 'add') {
+          Http.msgFunc(data, '新增')
+        } else if (res.config.type === 'edit') {
+          Http.msgFunc(data, '编辑')
+        } else if (res.config.type === 'delete') {
+          Http.msgFunc(data, '删除')
         } else {
-          ElMessage.error(data.message)
+          Http.msgFunc(data)
         }
       }
 
@@ -68,6 +72,16 @@ class Http {
     options = Object.assign(this.getInsideConfig(), options)
     this.interceptors(instance, options.url)
     return instance(options)
+  }
+
+  static msgFunc (data:any, str = '') {
+    if (data.status === 200) {
+      ElMessage.success(str + data.message)
+    } else if (data.status === 412) {
+      ElMessage.error(data.message)
+    } else {
+      ElMessage.error(str + data.message)
+    }
   }
 }
 

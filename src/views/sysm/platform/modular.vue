@@ -5,7 +5,8 @@ import Header from './components/public/header.vue'
 import FormSearch from './components/public/formSearch.vue'
 import Table from './components/modular/table.vue'
 import AddOrEditOrDel from './components/modular/addOrEditOrDel.vue'
-import { list, listByTree, deleteById } from '@/api/sysm/sysm'
+import { list, listByTree } from '@/api/sysm/sysm'
+import { deleteById } from '@/api/sysm/modular'
 import { treeList } from '@/api/act/act'
 import { TreeList } from '@/interface/act'
 import { IPlatform, IPlatformTree, IPropsTree } from '@/interface/sysm'
@@ -49,7 +50,6 @@ export default defineComponent({
         loading.value = false
       })
       listGather.parentTree = data
-      console.log('%c 🍰 listGather.parentTree: ', 'font-size:20px;background-color: #ED9EC7;color:#fff;', listGather.parentTree)
     }
 
     // 获取流程
@@ -127,8 +127,14 @@ const FormSearchCmp = (props: {target: IPropsTree, initParentTree: () => void}) 
     })
     props.initParentTree()
   }
+  const resetSearchForm = (form: iFormSearch) => {
+    Object.keys(form).forEach(key => {
+      props.target[key] = form[key]
+    })
+    console.log('%c 🍜 props.target: ', 'font-size:20px;background-color: #E41A6A;color:#fff;', props.target)
+  }
   const listGather = inject<listData>('listData')
-  return <FormSearch listGather={listGather} {...{ onSubmitSearchForm: submitSearchForm }} />
+  return <FormSearch listGather={listGather} {...{ onSubmitSearchForm: submitSearchForm, onResetSearchForm: resetSearchForm }} />
 }
 
 // 表格
@@ -194,7 +200,7 @@ const useEffectDelete = (cbs: () => void, idList: Ref<string>) => {
     cbs()
   }
   const initComp = () => {
-    return <dialogComp title="提示" width={'70vw'} v-model={[isDel.value, 'dialogVisible']}>
+    return <dialogComp title="提示" width={'14vw'} v-model={[isDel.value, 'dialogVisible']}>
       {{
         main: () => <div>确定删除这条数据吗？</div>,
         footer: () => <div>

@@ -1,5 +1,6 @@
 <script lang="tsx">
 import { defineComponent, nextTick, onMounted, toRefs, onUnmounted, ref, watch } from 'vue'
+import { ElInput } from 'element-plus'
 const propsType = {
   width: {
     type: String,
@@ -101,7 +102,7 @@ export default defineComponent({
             </>
           ),
           reference: () => (
-            <el-input disabled={props.disType} vModel={parentText.value} ref={inputRef.value} size={props.size} readonly placeholder="请选择" >
+            <el-input disabled={props.disType} vModel={parentText.value} ref={inputRef} size={props.size} readonly placeholder="请选择" >
               {{
                 suffix: () => <i class={showPopover.value ? 'el-icon-arrow-down transition rotate' : 'el-icon-arrow-down transition'}></i>
               }}
@@ -113,10 +114,12 @@ export default defineComponent({
   }
 })
 const useInputWidth = () => {
-  const inputRef = ref<HTMLDivElement | null>(null)
-  const width = ref('')
+  const inputRef = ref<InstanceType<typeof ElInput> | null>(null)
+  const width = ref<string>('')
   const initWidth = () => {
-    width.value = `${(inputRef.value as any).input.clientWidth}px`
+    if (inputRef.value) {
+      width.value = `${inputRef.value.$el.clientWidth}px`
+    }
   }
   onMounted(() => {
     nextTick(() => {
