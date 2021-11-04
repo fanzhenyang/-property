@@ -1,7 +1,7 @@
 <script lang="tsx">
 import { ref, reactive, defineComponent, inject, provide, Ref } from 'vue'
 import { ElMessage } from 'element-plus'
-import Header from './components/public/header.vue'
+import Header from '../components/public/header.vue'
 import FormSearch from './components/public/formSearch.vue'
 import Table from './components/modular/table.vue'
 import AddOrEditOrDel from './components/modular/addOrEditOrDel.vue'
@@ -127,11 +127,10 @@ const FormSearchCmp = (props: {target: IPropsTree, initParentTree: () => void}) 
     })
     props.initParentTree()
   }
-  const resetSearchForm = (form: iFormSearch) => {
-    Object.keys(form).forEach(key => {
-      props.target[key] = form[key]
-    })
-    console.log('%c 🍜 props.target: ', 'font-size:20px;background-color: #E41A6A;color:#fff;', props.target)
+  const resetSearchForm = () => {
+    props.target.status = null
+    props.target.moduleName = ''
+    props.initParentTree()
   }
   const listGather = inject<listData>('listData')
   return <FormSearch listGather={listGather} {...{ onSubmitSearchForm: submitSearchForm, onResetSearchForm: resetSearchForm }} />

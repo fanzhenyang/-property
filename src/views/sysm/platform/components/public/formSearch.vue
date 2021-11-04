@@ -8,7 +8,6 @@ const propsType = {
     default: () => ({})
   }
 } as const
-
 export default defineComponent({
   props: propsType,
   emits: ['submitSearchForm', 'resetSearchForm'],
@@ -45,10 +44,15 @@ export default defineComponent({
       return (<selectTree treeLsit={list} defaultProps={defaultTreeProps} {...{ onNodeClick: nodeClick }} />)
     }
 
-    const formRef = ref<InstanceType<typeof ElForm> | null>(null)
+    const formRef = ref<InstanceType<typeof ElForm>>()
 
     const resetForm = () => {
-      (formRef.value as any).resetFields()
+      console.log('%c 🍨 formRef.value: ', 'font-size:20px;background-color: #B03734;color:#fff;', formRef.value)
+      if (!formRef.value) return false
+      form.moduleName = ''
+      form.status = null
+      form.pId = 0
+      formRef.value.resetFields()
       emit('resetSearchForm', form)
     }
 

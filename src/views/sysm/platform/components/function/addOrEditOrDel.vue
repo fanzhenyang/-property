@@ -156,7 +156,7 @@ export default defineComponent({
               <el-select style={{ width: '100%' }} vModel={form.platformId} clearable size="mini" filterable placeholder="请选择">
                 {
                   tableList && tableList.platformList.map(option => {
-                    return <el-option label={option.platformName} value={option.id} />
+                    return <el-option label={option.platformName} value={option.id} key={option.id} />
                   })
                 }
               </el-select>
@@ -191,7 +191,7 @@ export default defineComponent({
         <el-row>
           <el-col span={24} style={{ 'text-align': 'right' }}>
             <el-button type="primary" plain size="mini" loading={subLoading.value} onClick={() => subForm()}>保存</el-button>
-            <el-button plain size="mini" onClick={handleCancel}>关闭</el-button>
+            <el-button plain size="mini" onClick={() => handleCancel()}>关闭</el-button>
           </el-col>
         </el-row>
       </el-form>

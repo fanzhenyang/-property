@@ -121,7 +121,8 @@ const MenuChild = (props: {list: Menu[]}) => {
 <style lang="scss" scoped>
 .header {
   position: relative;
-  background: $bg url("../../assets/img/menu/nav_top.png") no-repeat center center;
+  background: $bg url("../../assets/img/menu/nav_top.png") no-repeat center
+    center;
   background-size: 100% 100%;
   min-height: 8rem;
   width: 100%;
@@ -155,7 +156,7 @@ const MenuChild = (props: {list: Menu[]}) => {
     position: relative;
     background-color: transparent !important;
     border-bottom: none !important;
-    margin-left: .8rem;
+    margin-left: 0.8rem;
     flex: 1;
     &-title {
       width: 100%;
@@ -167,13 +168,15 @@ const MenuChild = (props: {list: Menu[]}) => {
     /deep/.el-menu-item {
       @include flex-center;
       position: relative;
-      background: url("../../assets/img/menu/menu_bg_left.png") no-repeat center center;
+      background: url("../../assets/img/menu/menu_bg_left.png") no-repeat center
+        center;
       width: 15rem;
       height: 3.4rem;
       background-size: 100% 100%;
       background-color: transparent !important;
       &:nth-of-type(n + 3) {
-        background: url("../../assets/img/menu/menu_bg_right.png") no-repeat center center;
+        background: url("../../assets/img/menu/menu_bg_right.png") no-repeat
+          center center;
         left: 52rem;
         background-size: 100% 100%;
       }
@@ -191,7 +194,8 @@ const MenuChild = (props: {list: Menu[]}) => {
       }
     }
     /deep/.el-menu-item {
-      background: url("../../assets/img/menu/menu_bg_left.png") no-repeat center center;
+      background: url("../../assets/img/menu/menu_bg_left.png") no-repeat center
+        center;
       background-size: 100% 100%;
       // left: 52rem;
       &:hover {
@@ -215,7 +219,7 @@ const MenuChild = (props: {list: Menu[]}) => {
 </style>
 
 <style lang="scss">
-.header-menu-popover{
+.header-menu-popover {
   background: #163175 !important;
   min-width: 80px !important;
   .el-popper__arrow {

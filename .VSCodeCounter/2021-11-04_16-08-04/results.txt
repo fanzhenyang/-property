@@ -1,0 +1,157 @@
+Date : 2021-11-04 16:08:04
+Directory : c:\Users\dell\Desktop\property
+Total : 80 files,  19042 codes, 213 comments, 371 blanks, all 19626 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| JSON             |          4 |     14,278 |         11 |          3 |     14,292 |
+| Vue              |         31 |      3,249 |        110 |        186 |      3,545 |
+| TypeScript       |         29 |        924 |         61 |        121 |      1,106 |
+| SCSS             |          7 |        222 |         18 |         35 |        275 |
+| TypeScript React |          3 |        209 |          1 |          9 |        219 |
+| JavaScript       |          3 |         93 |         11 |          3 |        107 |
+| CSS              |          1 |         27 |          0 |          6 |         33 |
+| Markdown         |          1 |         24 |          0 |          7 |         31 |
+| HTML             |          1 |         16 |          1 |          1 |         18 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                     | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                        |         80 |     19,042 |        213 |        371 |     19,626 |
+| public                                                                                                   |          1 |         16 |          1 |          1 |         18 |
+| src                                                                                                      |         72 |      4,668 |        190 |        358 |      5,216 |
+| src\api                                                                                                  |          8 |        240 |         21 |         28 |        289 |
+| src\api\act                                                                                              |          1 |         25 |          2 |          2 |         29 |
+| src\api\invest                                                                                           |          1 |         57 |          5 |          6 |         68 |
+| src\api\sys                                                                                              |          1 |         20 |          0 |          2 |         22 |
+| src\api\sysm                                                                                             |          4 |        121 |         13 |         15 |        149 |
+| src\components                                                                                           |          8 |        733 |         15 |         45 |        793 |
+| src\components\echarts                                                                                   |          1 |         65 |          7 |          7 |         79 |
+| src\components\header                                                                                    |          1 |        221 |          3 |         10 |        234 |
+| src\components\public                                                                                    |          6 |        447 |          5 |         28 |        480 |
+| src\components\public\Card                                                                               |          1 |         40 |          0 |          3 |         43 |
+| src\components\public\Container                                                                          |          1 |         37 |          0 |          3 |         40 |
+| src\components\public\DialogComp                                                                         |          1 |         53 |          0 |          1 |         54 |
+| src\components\public\SelectTree                                                                         |          1 |        133 |          0 |          8 |        141 |
+| src\components\public\TableComp                                                                          |          1 |        184 |          5 |         12 |        201 |
+| src\components\public\Upload                                                                             |          1 |          0 |          0 |          1 |          1 |
+| src\hooks                                                                                                |          1 |         10 |          6 |          2 |         18 |
+| src\interface                                                                                            |          5 |        181 |          4 |         20 |        205 |
+| src\layout                                                                                               |          2 |         40 |          3 |          6 |         49 |
+| src\layout\components                                                                                    |          1 |         23 |          3 |          3 |         29 |
+| src\plugins                                                                                              |          1 |         77 |          0 |          7 |         84 |
+| src\router                                                                                               |          1 |         61 |          0 |          4 |         65 |
+| src\store                                                                                                |          4 |        124 |         14 |         20 |        158 |
+| src\store\modules                                                                                        |          2 |        101 |          5 |         12 |        118 |
+| src\styles                                                                                               |          9 |        286 |         18 |         42 |        346 |
+| src\styles\fonts                                                                                         |          2 |         64 |          0 |          7 |         71 |
+| src\utils                                                                                                |          6 |        200 |         15 |         32 |        247 |
+| src\views                                                                                                |         23 |      2,677 |         93 |        143 |      2,913 |
+| src\views\error                                                                                          |          1 |          0 |          0 |          1 |          1 |
+| src\views\investmentManage                                                                               |          7 |      1,088 |         14 |         48 |      1,150 |
+| src\views\investmentManage\components                                                                    |          6 |      1,034 |         11 |         46 |      1,091 |
+| src\views\login                                                                                          |          1 |        150 |          8 |         12 |        170 |
+| src\views\map-page                                                                                       |          1 |          5 |          0 |          2 |          7 |
+| src\views\sysm                                                                                           |         13 |      1,434 |         71 |         80 |      1,585 |
+| src\views\sysm\components                                                                                |          1 |         29 |          0 |          1 |         30 |
+| src\views\sysm\components\public                                                                         |          1 |         29 |          0 |          1 |         30 |
+| src\views\sysm\platform                                                                                  |          8 |      1,078 |         68 |         64 |      1,210 |
+| src\views\sysm\platform\components                                                                       |          6 |        683 |         48 |         35 |        766 |
+| src\views\sysm\platform\components\function                                                              |          2 |        244 |         12 |         16 |        272 |
+| src\views\sysm\platform\components\modular                                                               |          2 |        293 |         36 |         12 |        341 |
+| src\views\sysm\platform\components\public                                                                |          2 |        146 |          0 |          7 |        153 |
+| src\views\sysm\user                                                                                      |          4 |        327 |          3 |         15 |        345 |
+| src\views\sysm\user\components                                                                           |          2 |        201 |          1 |          8 |        210 |
+| src\views\sysm\user\components\group                                                                     |          2 |        201 |          1 |          8 |        210 |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                                                 | language         | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| c:\Users\dell\Desktop\property\.eslintrc.js                                                              | JavaScript       |         20 |          0 |          1 |         21 |
+| c:\Users\dell\Desktop\property\README.md                                                                 | Markdown         |         24 |          0 |          7 |         31 |
+| c:\Users\dell\Desktop\property\babel.config.js                                                           | JavaScript       |         21 |          5 |          1 |         27 |
+| c:\Users\dell\Desktop\property\package-lock.json                                                         | JSON             |     14,159 |          0 |          1 |     14,160 |
+| c:\Users\dell\Desktop\property\package.json                                                              | JSON             |         52 |          0 |          1 |         53 |
+| c:\Users\dell\Desktop\property\public\index.html                                                         | HTML             |         16 |          1 |          1 |         18 |
+| c:\Users\dell\Desktop\property\src\App.tsx                                                               | TypeScript React |          8 |          0 |          1 |          9 |
+| c:\Users\dell\Desktop\property\src\api\act\act.ts                                                        | TypeScript       |         25 |          2 |          2 |         29 |
+| c:\Users\dell\Desktop\property\src\api\invest\invest.ts                                                  | TypeScript       |         57 |          5 |          6 |         68 |
+| c:\Users\dell\Desktop\property\src\api\sys\menu.ts                                                       | TypeScript       |         20 |          0 |          2 |         22 |
+| c:\Users\dell\Desktop\property\src\api\sysm\function.ts                                                  | TypeScript       |         45 |          5 |          5 |         55 |
+| c:\Users\dell\Desktop\property\src\api\sysm\group.ts                                                     | TypeScript       |         10 |          1 |          2 |         13 |
+| c:\Users\dell\Desktop\property\src\api\sysm\modular.ts                                                   | TypeScript       |         21 |          2 |          2 |         25 |
+| c:\Users\dell\Desktop\property\src\api\sysm\sysm.ts                                                      | TypeScript       |         45 |          5 |          6 |         56 |
+| c:\Users\dell\Desktop\property\src\api\user.ts                                                           | TypeScript       |         17 |          1 |          3 |         21 |
+| c:\Users\dell\Desktop\property\src\components\echarts\index.vue                                          | Vue              |         65 |          7 |          7 |         79 |
+| c:\Users\dell\Desktop\property\src\components\header\index.vue                                           | Vue              |        221 |          3 |         10 |        234 |
+| c:\Users\dell\Desktop\property\src\components\public\Card\index.vue                                      | Vue              |         40 |          0 |          3 |         43 |
+| c:\Users\dell\Desktop\property\src\components\public\Container\index.vue                                 | Vue              |         37 |          0 |          3 |         40 |
+| c:\Users\dell\Desktop\property\src\components\public\DialogComp\index.vue                                | Vue              |         53 |          0 |          1 |         54 |
+| c:\Users\dell\Desktop\property\src\components\public\SelectTree\index.vue                                | Vue              |        133 |          0 |          8 |        141 |
+| c:\Users\dell\Desktop\property\src\components\public\TableComp\index.vue                                 | Vue              |        184 |          5 |         12 |        201 |
+| c:\Users\dell\Desktop\property\src\components\public\Upload\index.vue                                    | Vue              |          0 |          0 |          1 |          1 |
+| c:\Users\dell\Desktop\property\src\hooks\dialog.ts                                                       | TypeScript       |         10 |          6 |          2 |         18 |
+| c:\Users\dell\Desktop\property\src\interface\act.ts                                                      | TypeScript       |          6 |          0 |          1 |          7 |
+| c:\Users\dell\Desktop\property\src\interface\investmentManage.ts                                         | TypeScript       |         36 |          0 |          6 |         42 |
+| c:\Users\dell\Desktop\property\src\interface\menu.ts                                                     | TypeScript       |          9 |          0 |          1 |         10 |
+| c:\Users\dell\Desktop\property\src\interface\sysm.ts                                                     | TypeScript       |        105 |          4 |          9 |        118 |
+| c:\Users\dell\Desktop\property\src\interface\user.ts                                                     | TypeScript       |         25 |          0 |          3 |         28 |
+| c:\Users\dell\Desktop\property\src\layout\components\appMain.vue                                         | Vue              |         23 |          3 |          3 |         29 |
+| c:\Users\dell\Desktop\property\src\layout\index.vue                                                      | Vue              |         17 |          0 |          3 |         20 |
+| c:\Users\dell\Desktop\property\src\main.ts                                                               | TypeScript       |         13 |          0 |          3 |         16 |
+| c:\Users\dell\Desktop\property\src\plugins\elemntComponents.ts                                           | TypeScript       |         77 |          0 |          7 |         84 |
+| c:\Users\dell\Desktop\property\src\router\index.ts                                                       | TypeScript       |         61 |          0 |          4 |         65 |
+| c:\Users\dell\Desktop\property\src\shims-vue.d.ts                                                        | TypeScript       |          7 |          1 |          2 |         10 |
+| c:\Users\dell\Desktop\property\src\shims.axios.d.ts                                                      | TypeScript       |         11 |          0 |          3 |         14 |
+| c:\Users\dell\Desktop\property\src\store\getters.ts                                                      | TypeScript       |          5 |          0 |          2 |          7 |
+| c:\Users\dell\Desktop\property\src\store\index.ts                                                        | TypeScript       |         18 |          9 |          6 |         33 |
+| c:\Users\dell\Desktop\property\src\store\modules\menu.ts                                                 | TypeScript       |         38 |          4 |          6 |         48 |
+| c:\Users\dell\Desktop\property\src\store\modules\user.ts                                                 | TypeScript       |         63 |          1 |          6 |         70 |
+| c:\Users\dell\Desktop\property\src\styles\element.scss                                                   | SCSS             |         87 |          2 |          7 |         96 |
+| c:\Users\dell\Desktop\property\src\styles\fonts\iconfont.css                                             | CSS              |         27 |          0 |          6 |         33 |
+| c:\Users\dell\Desktop\property\src\styles\fonts\iconfont.json                                            | JSON             |         37 |          0 |          1 |         38 |
+| c:\Users\dell\Desktop\property\src\styles\index.scss                                                     | SCSS             |         23 |          6 |          5 |         34 |
+| c:\Users\dell\Desktop\property\src\styles\mixin.scss                                                     | SCSS             |         21 |          0 |          1 |         22 |
+| c:\Users\dell\Desktop\property\src\styles\normalize.scss                                                 | SCSS             |          1 |          0 |          0 |          1 |
+| c:\Users\dell\Desktop\property\src\styles\reset.scss                                                     | SCSS             |         50 |          6 |          8 |         64 |
+| c:\Users\dell\Desktop\property\src\styles\transition.scss                                                | SCSS             |         35 |          4 |         10 |         49 |
+| c:\Users\dell\Desktop\property\src\styles\variable.scss                                                  | SCSS             |          5 |          0 |          4 |          9 |
+| c:\Users\dell\Desktop\property\src\utils\auth.ts                                                         | TypeScript       |         41 |          1 |          6 |         48 |
+| c:\Users\dell\Desktop\property\src\utils\config.ts                                                       | TypeScript       |         10 |          3 |          2 |         15 |
+| c:\Users\dell\Desktop\property\src\utils\exportFile.ts                                                   | TypeScript       |         29 |          0 |          5 |         34 |
+| c:\Users\dell\Desktop\property\src\utils\global.ts                                                       | TypeScript       |          8 |          1 |          2 |         11 |
+| c:\Users\dell\Desktop\property\src\utils\http.ts                                                         | TypeScript       |         72 |          8 |         10 |         90 |
+| c:\Users\dell\Desktop\property\src\utils\routerPermission.ts                                             | TypeScript       |         40 |          2 |          7 |         49 |
+| c:\Users\dell\Desktop\property\src\views\error\404.vue                                                   | Vue              |          0 |          0 |          1 |          1 |
+| c:\Users\dell\Desktop\property\src\views\investmentManage\components\InvestmentChangesCapital.vue        | Vue              |        207 |          3 |          9 |        219 |
+| c:\Users\dell\Desktop\property\src\views\investmentManage\components\InvestmentChangesContrast.vue       | Vue              |        167 |          0 |          7 |        174 |
+| c:\Users\dell\Desktop\property\src\views\investmentManage\components\InvestmentCompairPercentEcharts.vue | Vue              |        129 |          0 |          7 |        136 |
+| c:\Users\dell\Desktop\property\src\views\investmentManage\components\InvestmentMonthEcharts.vue          | Vue              |        175 |          1 |          6 |        182 |
+| c:\Users\dell\Desktop\property\src\views\investmentManage\components\InvestmentProjects.vue              | Vue              |        121 |          0 |          6 |        127 |
+| c:\Users\dell\Desktop\property\src\views\investmentManage\components\InvestmentYearEcharts.vue           | Vue              |        235 |          7 |         11 |        253 |
+| c:\Users\dell\Desktop\property\src\views\investmentManage\inverstmentIndexPage.vue                       | Vue              |         54 |          3 |          2 |         59 |
+| c:\Users\dell\Desktop\property\src\views\login\index.vue                                                 | Vue              |        150 |          8 |         12 |        170 |
+| c:\Users\dell\Desktop\property\src\views\map-page\leafMap.vue                                            | Vue              |          5 |          0 |          2 |          7 |
+| c:\Users\dell\Desktop\property\src\views\sysm\components\public\header.vue                               | Vue              |         29 |          0 |          1 |         30 |
+| c:\Users\dell\Desktop\property\src\views\sysm\platform\components\function\addOrEditOrDel.vue            | Vue              |        182 |          9 |         11 |        202 |
+| c:\Users\dell\Desktop\property\src\views\sysm\platform\components\function\table.vue                     | Vue              |         62 |          3 |          5 |         70 |
+| c:\Users\dell\Desktop\property\src\views\sysm\platform\components\modular\addOrEditOrDel.vue             | Vue              |        185 |         32 |          6 |        223 |
+| c:\Users\dell\Desktop\property\src\views\sysm\platform\components\modular\table.vue                      | Vue              |        108 |          4 |          6 |        118 |
+| c:\Users\dell\Desktop\property\src\views\sysm\platform\components\public\dialog.vue                      | Vue              |         54 |          0 |          1 |         55 |
+| c:\Users\dell\Desktop\property\src\views\sysm\platform\components\public\formSearch.vue                  | Vue              |         92 |          0 |          6 |         98 |
+| c:\Users\dell\Desktop\property\src\views\sysm\platform\function.vue                                      | Vue              |        204 |         10 |         15 |        229 |
+| c:\Users\dell\Desktop\property\src\views\sysm\platform\modular.vue                                       | Vue              |        191 |         10 |         14 |        215 |
+| c:\Users\dell\Desktop\property\src\views\sysm\user\components\group\add.tsx                              | TypeScript React |        129 |          0 |          7 |        136 |
+| c:\Users\dell\Desktop\property\src\views\sysm\user\components\group\table.tsx                            | TypeScript React |         72 |          1 |          1 |         74 |
+| c:\Users\dell\Desktop\property\src\views\sysm\user\group.vue                                             | Vue              |        126 |          2 |          6 |        134 |
+| c:\Users\dell\Desktop\property\src\views\sysm\user\index.vue                                             | Vue              |          0 |          0 |          1 |          1 |
+| c:\Users\dell\Desktop\property\tsconfig.json                                                             | JSON             |         30 |         11 |          0 |         41 |
+| c:\Users\dell\Desktop\property\vue.config.js                                                             | JavaScript       |         52 |          6 |          1 |         59 |
+| Total                                                                                                    |                  |     19,042 |        213 |        371 |     19,626 |
++----------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+

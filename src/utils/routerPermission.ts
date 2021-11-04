@@ -4,7 +4,7 @@ import { Menu } from '@/interface/menu'
 import { _RouteLocationBase, RouteRecord } from 'vue-router'
 
 type targetRouter = RouteRecord & _RouteLocationBase
-async function routerConfig (routerList: Menu[]): Promise<boolean | void> {
+async function routerConfig(routerList: Menu[]): Promise<boolean | void> {
   if (routerList.length === 0) {
     return false
   }
@@ -17,7 +17,7 @@ async function routerConfig (routerList: Menu[]): Promise<boolean | void> {
 }
 
 // 处理动态路由
-function setAddRoters (list: Menu[], route: targetRouter, redirect = false) {
+function setAddRoters(list: Menu[], route: targetRouter, redirect = false) {
   list.forEach((item, index) => {
     if ((item.url && item.modulePath) || (item.children && item.children.length > 0)) {
       if (item.url && item.modulePath) {
@@ -25,6 +25,7 @@ function setAddRoters (list: Menu[], route: targetRouter, redirect = false) {
         if (redirect && index === 0) {
           Object.assign(route, { redirect: `${item.url}` })
         }
+        // console.log('%c 🍲 item: ', 'font-size:20px;background-color: #FCA650;color:#fff;', item)
         route.children.push({
           path: `${item.url}`,
           component: i !== 0 ? () => import(`@/views/${item.modulePath}.vue`) : () => import(`@/views${item.modulePath}.vue`),
@@ -34,6 +35,7 @@ function setAddRoters (list: Menu[], route: targetRouter, redirect = false) {
           }
         })
       }
+
       if (item.children && item.children.length > 0) {
         setAddRoters(item.children, route)
       } else {

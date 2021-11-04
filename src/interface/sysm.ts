@@ -32,8 +32,8 @@ export interface IPropsTree {
   size: number
   platformId: string
   PId: string
-  status: string
-  [x: string]: string | number | boolean
+  status: string | number | null
+  [x: string]: string | number | boolean | null
 }
 
 // 新增菜单
@@ -83,5 +83,35 @@ export interface IActive {
   pId: number
   platformCode: string
   platformId: number
-  platformName:string
+  platformName: string
+}
+
+export interface IGropList {
+  groupName?: string
+  groupTypeOrder?: string
+  statusOrder?: string | number
+  page: number
+  size: number
+}
+
+export interface IGropListData {
+  adminFlag: number
+  groupName: string
+  groupType: string | null
+  id: number
+  memo: string
+  moduleName: string
+  orderNo: number
+  status: number
+}
+
+export interface IDictionaryData {
+  dicClass: string
+  dicCode: string
+  dicName: string
+  dicValue: string
+  id: number
+  memo: string | null
+  orderNo: number
+  pId: number
 }
