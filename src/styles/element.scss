@@ -82,6 +82,27 @@
   border-bottom: 1px solid rgba(245, 247, 250, 0.25);
 }
 
+.table-black {
+  th.el-table__cell,
+  tr {
+    background-color: transparent;
+    color: $black;
+    .el-icon-arrow-right {
+      color: $black;
+    }
+  }
+  .el-dropdown {
+    color: $black;
+  }
+  td.el-table__cell, .el-table th.el-table__cell.is-leaf {
+    border-bottom: 1px solid  #dfe6ec;
+  }
+  .el-table--border::after, .el-table--group::after, .el-table::before {
+    border-bottom: 1px solid #dfe6ec;
+  }
+}
+
+
 /* 表单 */
 .form-public-fff {
   .el-form-item__label {

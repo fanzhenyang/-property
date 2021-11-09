@@ -32,6 +32,11 @@ export default defineComponent({
       { label: '分配权限', prop: 'assignPermissions', template: true, width: '210px' }
     ])
     const checkList = readonly<string[]>(['用户组分类', '用户组名称', '所属模块', '用户组描述', '启停状态', '分配权限'])
+
+    const handleSelect = (type: string, list: IGropListData[]) => {
+      const ids = list.map(el => el.id).toString()
+      emit('handleTableSelect', ids)
+    }
     return () => <>
       <tableComp
         id={props.id}
@@ -39,6 +44,7 @@ export default defineComponent({
         isSelection={true}
         rowKey={'id'}
         columnData={columnData.value}
+        {...{ onHandleSelect: handleSelect }}
       >
         {{
           status: (row: any) => (<>
@@ -68,7 +74,7 @@ export default defineComponent({
             <el-button type="text" onClick={() => handleOperation(row, 'details')}>查看</el-button>
             <el-button type="text" onClick={() => handleOperation(row, 'edit')}>编辑</el-button>
             <el-button type="text" style={{ color: 'red' }} onClick={() => handleOperation(row, 'delete')}>删除</el-button>
-            <el-button type="text" >分配权限</el-button>
+            <el-button type="text" onClick={() => handleOperation(row, 'assign')}>分配权限</el-button>
           </>)
         }}
       </tableComp>

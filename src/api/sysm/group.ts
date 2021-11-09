@@ -42,3 +42,17 @@ export const group = (id: number, cbs?: () => void): Promise<any> => {
     cbs
   })
 }
+
+// 权限分配
+interface IAssgin {
+  groupId: number
+  platformId: number | string
+}
+export const permission = (params: IAssgin, cbs?: () => void): Promise<any> => {
+  return http.request({
+    url: '/sysm/group/permission',
+    method: 'get',
+    params,
+    cbs
+  })
+}

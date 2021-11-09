@@ -7,7 +7,6 @@ import Table from './components/function/table.vue'
 import AddOrEditOrDel from './components/function/addOrEditOrDel.vue'
 import { list } from '@/api/sysm/sysm'
 import { getList, dictionarylist, deleteById, deleteByModel } from '@/api/sysm/function'
-import Dialog from './components/public/dialog.vue'
 import { IPlatform, IPlatformTree, IPropsTree, IBtnList } from '@/interface/sysm'
 import fileSaver from '@/utils/exportFile'
 

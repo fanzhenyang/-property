@@ -31,7 +31,7 @@ export default defineComponent({
       default: () => ({})
     }
   },
-  emits: ['successFunc', 'handleCancel'],
+  emits: ['successFunc', 'handleDialogCancel'],
   setup(props, { emit }) {
     const ruleForm = ref<ElFormCtx | null>(null)
     const tree = ref<InstanceType<typeof ElTree> | null>(null)
@@ -64,26 +64,41 @@ export default defineComponent({
 
     const initEditOrDel = async () => {
       const { data } = await group(props.row.id)
+      console.log('%c 🍦 data: ', 'font-size:20px;background-color: #2EAFB0;color:#fff;', data)
       Object.keys(form).forEach(key => {
-        form[key] = data[key]
+        if (key === 'groupType') {
+          form.groupType = data.groupType * 1
+        } else {
+          form[key] = data[key]
+        }
       })
-      console.log('%c 🥠 data: ', 'font-size:20px;background-color: #EA7E5C;color:#fff;', data)
     }
 
     // 编辑
     if (props.type !== 'add') {
       initEditOrDel()
+      console.log('%c 🍺  props.dictionaryList: ', 'font-size:20px;background-color: #F5CE50;color:#fff;', props.dictionaryList)
+    }
+
+    const disabled = ref<boolean>(false)
+
+    // 详情
+    if (props.type === 'details') {
+      disabled.value = true
+    } else {
+      disabled.value = false
     }
 
     const handleCancel = () => {
-      emit('handleCancel')
+      emit('handleDialogCancel')
     }
 
     const subForm = async () => {
       subLoading.value = true
       await saveOrUpdate({ ...form }, () => {
         subLoading.value = false
-      })
+      }, props.type)
+      emit('successFunc')
     }
 
     const handleCheckChange = () => {
@@ -95,16 +110,16 @@ export default defineComponent({
     }
 
     return () => (
-      <el-form mode={form} ref={ruleForm} class="form-public-grey" labelWidth={'90px'}>
+      <el-form mode={form} ref={ruleForm} disabled={disabled.value} class="form-public-grey" labelWidth={'90px'}>
         <el-row gutter={20}>
           <el-col span={6}>
             <el-form-item label="用户组名称" prop='groupName'>
-              <el-input vModel={form.groupName} size="mini" readonly={props.type === 'details'} placeholder="请输入用户组名称" />
+              <el-input vModel={form.groupName} size="mini" placeholder="请输入用户组名称" />
             </el-form-item>
           </el-col>
           <el-col span={6}>
-            <el-form-item label="用户组分类" prop='platformId'>
-              <el-select style={{ width: '100%' }} vModel={form.groupType} disabled={props.type === 'details'} clearable size="mini" filterable placeholder="请选择">
+            <el-form-item label="用户组分类" prop='groupType'>
+              <el-select style={{ width: '100%' }} vModel={form.groupType} clearable size="mini" filterable placeholder="请选择">
                 {
                   props.dictionaryList.map((option: IDictionaryData) => {
                     return <el-option label={option.dicName} value={option.id} key={option.id} />
@@ -115,19 +130,19 @@ export default defineComponent({
           </el-col>
           <el-col span={6}>
             <el-form-item label="排序号" prop={'orderNo'}>
-              <el-input vModel={form.orderNo} size="mini" readonly={props.type === 'details'} placeholder="排序号" />
+              <el-input vModel={form.orderNo} size="mini" placeholder="排序号" />
             </el-form-item>
           </el-col>
           <el-col span={6}>
             <el-form-item label="是否启用">
-              <el-switch vModel={form.status} disabled={props.type === 'details'} activeValue={1} size="mini" inactiveValue={0} />
+              <el-switch vModel={form.status} activeValue={1} size="mini" inactiveValue={0} />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row gutter={20}>
           <el-col span={6}>
             <el-form-item label="是否管理员">
-              <el-switch vModel={form.adminFlag} disabled={props.type === 'details'} activeValue={1} size="mini" inactiveValue={0} />
+              <el-switch vModel={form.adminFlag} activeValue={1} size="mini" inactiveValue={0} />
             </el-form-item>
           </el-col>
         </el-row>
@@ -153,7 +168,7 @@ export default defineComponent({
         <el-row gutter={20}>
           <el-col span={24}>
             <el-form-item label="描述">
-              <el-input resize={'none'} type="textarea" readonly={props.type === 'details'} vModel={form.memo} size="mini" />
+              <el-input resize={'none'} type="textarea" vModel={form.memo} size="mini" />
             </el-form-item>
           </el-col>
         </el-row>

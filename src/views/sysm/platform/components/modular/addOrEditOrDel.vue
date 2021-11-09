@@ -128,16 +128,16 @@ export default defineComponent({
       emit('handleCancel')
     }
     return () => (
-      <el-form mode={form} class="form-public-grey" labelWidth={'80px'}>
+      <el-form mode={form} disabled={disType.value} class="form-public-grey" labelWidth={'80px'}>
         <el-row gutter={20}>
           <el-col span={6}>
             <el-form-item label="模块名称">
-              <el-input vModel={form.moduleName} readonly={disType.value} size="mini" placeholder="请输入模块名称" />
+              <el-input vModel={form.moduleName} size="mini" placeholder="请输入模块名称" />
             </el-form-item>
           </el-col>
           <el-col span={6}>
             <el-form-item label="所属平台">
-              <el-select style={{ width: '100%' }} disabled={disType.value} vModel={form.platformId} clearable size="mini" filterable placeholder="请选择">
+              <el-select style={{ width: '100%' }} vModel={form.platformId} clearable size="mini" filterable placeholder="请选择">
                 {platformList(props.listGather.platformList)}
               </el-select>
             </el-form-item>
@@ -149,19 +149,19 @@ export default defineComponent({
           </el-col>
           <el-col span={6}>
             <el-form-item label="是否启用">
-              <el-switch vModel={form.status} disabled={disType.value} activeValue={1} size="mini" inactiveValue={0} />
+              <el-switch vModel={form.status} activeValue={1} size="mini" inactiveValue={0} />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row gutter={20}>
           <el-col span={6}>
             <el-form-item label="菜单路径">
-              <el-input vModel={form.url} size="mini" readonly={disType.value} placeholder="请输入菜单路径" />
+              <el-input vModel={form.url} size="mini" placeholder="请输入菜单路径" />
             </el-form-item>
           </el-col>
           <el-col span={6}>
             <el-form-item label="文件路径">
-              <el-input vModel={form.modulePath} size="mini" readonly={disType.value} placeholder="请输入文件路径" />
+              <el-input vModel={form.modulePath} size="mini" placeholder="请输入文件路径" />
             </el-form-item>
           </el-col>
           <el-col span={6}>
@@ -171,7 +171,7 @@ export default defineComponent({
           </el-col>
           <el-col span={6}>
             <el-form-item label="流程名称">
-              <el-select vModel={form.actModelId} disabled={disType.value} clearable size="mini" filterable placeholder="请选择">
+              <el-select vModel={form.actModelId} clearable size="mini" filterable placeholder="请选择">
                 {platformList(technological.value)}
               </el-select>
             </el-form-item>
@@ -180,7 +180,7 @@ export default defineComponent({
         <el-row gutter={20}>
           <el-col span={6}>
             <el-form-item label="排序号">
-              <el-input vModel={form.orderNo} size="mini" readonly={disType.value} placeholder="排序号" />
+              <el-input vModel={form.orderNo} size="mini" placeholder="排序号" />
             </el-form-item>
           </el-col>
           <el-col span={12}>
@@ -195,7 +195,7 @@ export default defineComponent({
                     before-upload={(file: any) => beforeAvatarUpload(file)}
                     disabled={disType.value}
                     http-request={() => httpUpload()}>
-                    <el-button type="text" size="mini" disabled={disType.value}>图片上传</el-button>
+                    <el-button type="text" size="mini">图片上传</el-button>
                   </el-upload>
                 }}
               </el-input>
@@ -205,7 +205,7 @@ export default defineComponent({
         <el-row gutter={20}>
           <el-col span={24}>
             <el-form-item label="备注">
-              <el-input resize={'none'} readonly={disType.value} type="textarea" vModel={form.memo} size="mini" />
+              <el-input resize={'none'} type="textarea" vModel={form.memo} size="mini" />
             </el-form-item>
           </el-col>
         </el-row>
