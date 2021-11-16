@@ -75,6 +75,7 @@ export interface IActive {
     description: string
     orderNo: number
     status: number
+    checkFlag?: boolean
   }]
   checkFlag: boolean
   children: IActive[]
@@ -84,6 +85,7 @@ export interface IActive {
   platformCode: string
   platformId: number
   platformName: string
+  [x: string]: any
 }
 
 export interface IGropList {

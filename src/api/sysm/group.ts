@@ -56,3 +56,24 @@ export const permission = (params: IAssgin, cbs?: () => void): Promise<any> => {
     cbs
   })
 }
+
+// 权限分配编辑确认
+interface IActiveList {
+  platformId: number
+  moduleId: number
+  actionIds: number[]
+}
+interface IAction {
+  groupId: number
+  modulePermissionList: IActiveList[]
+}
+export const actionSaveUpdate = (data: IAction, cbs?: () => void, type = 'edit', msg = true): Promise<any> => {
+  return http.request({
+    url: '/sysm/groupAction/saveOrUpdate',
+    method: 'post',
+    data,
+    cbs,
+    type,
+    msg
+  })
+}

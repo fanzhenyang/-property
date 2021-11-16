@@ -1,13 +1,13 @@
-import { defineComponent, readonly, toRefs, ref } from 'vue'
+import { defineComponent, readonly, toRefs, PropType, ref } from 'vue'
 import { IGropListData } from '@/interface/sysm'
 // import { IColumn } from '@/components/public/TableComp/index.vue'
 const propsType = {
   tableList: {
-    type: Array,
+    type: Array as PropType<IGropListData[]>,
     default: () => ([])
   },
   loading: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: false
   },
   id: {
@@ -19,7 +19,7 @@ export default defineComponent({
   emits: ['handleOperation', 'handleTableSelect'],
   props: propsType,
   setup(props, { emit }) {
-    const { tableList, loading } = toRefs(props)
+    // const { tableList, loading } = toRefs(props)
     const handleOperation = (row: any, strType: string) => {
       emit('handleOperation', row, strType)
     }
@@ -40,7 +40,7 @@ export default defineComponent({
     return () => <>
       <tableComp
         id={props.id}
-        data={tableList.value}
+        data={props.tableList}
         isSelection={true}
         rowKey={'id'}
         columnData={columnData.value}

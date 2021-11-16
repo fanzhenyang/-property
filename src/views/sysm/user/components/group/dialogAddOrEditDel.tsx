@@ -110,68 +110,71 @@ export default defineComponent({
     }
 
     return () => (
-      <el-form mode={form} ref={ruleForm} disabled={disabled.value} class="form-public-grey" labelWidth={'90px'}>
-        <el-row gutter={20}>
-          <el-col span={6}>
-            <el-form-item label="用户组名称" prop='groupName'>
-              <el-input vModel={form.groupName} size="mini" placeholder="请输入用户组名称" />
-            </el-form-item>
-          </el-col>
-          <el-col span={6}>
-            <el-form-item label="用户组分类" prop='groupType'>
-              <el-select style={{ width: '100%' }} vModel={form.groupType} clearable size="mini" filterable placeholder="请选择">
-                {
-                  props.dictionaryList.map((option: IDictionaryData) => {
-                    return <el-option label={option.dicName} value={option.id} key={option.id} />
-                  })
-                }
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col span={6}>
-            <el-form-item label="排序号" prop={'orderNo'}>
-              <el-input vModel={form.orderNo} size="mini" placeholder="排序号" />
-            </el-form-item>
-          </el-col>
-          <el-col span={6}>
-            <el-form-item label="是否启用">
-              <el-switch vModel={form.status} activeValue={1} size="mini" inactiveValue={0} />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row gutter={20}>
-          <el-col span={6}>
-            <el-form-item label="是否管理员">
-              <el-switch vModel={form.adminFlag} activeValue={1} size="mini" inactiveValue={0} />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row gutter={20}>
-          <el-col span={24}>
-            <el-form-item label="模块名称" prop='moduleId'>
-              <el-scrollbar wrap-class="scrollbar-wrapper" class="scrollbar__view scrollbar-view-height" style={{ height: '20vh' }}>
-                <el-tree
-                  ref={tree}
-                  data={treeList.value}
-                  show-checkbox
-                  default-expand-all
-                  node-key="id"
-                  highlight-current
-                  default-checked-keys={form.moduleList}
-                  props={defaultProps}
-                  onCheckChange={() => handleCheckChange()}
-                />
-              </el-scrollbar>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row gutter={20}>
-          <el-col span={24}>
-            <el-form-item label="描述">
-              <el-input resize={'none'} type="textarea" vModel={form.memo} size="mini" />
-            </el-form-item>
-          </el-col>
-        </el-row>
+      <>
+        <el-form mode={form} ref={ruleForm} disabled={disabled.value} class="form-public-grey" labelWidth={'90px'}>
+          <el-row gutter={20}>
+            <el-col span={6}>
+              <el-form-item label="用户组名称" prop='groupName'>
+                <el-input vModel={form.groupName} size="mini" placeholder="请输入用户组名称" />
+              </el-form-item>
+            </el-col>
+            <el-col span={6}>
+              <el-form-item label="用户组分类" prop='groupType'>
+                <el-select style={{ width: '100%' }} vModel={form.groupType} clearable size="mini" filterable placeholder="请选择">
+                  {
+                    props.dictionaryList.map((option: IDictionaryData) => {
+                      return <el-option label={option.dicName} value={option.id} key={option.id} />
+                    })
+                  }
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col span={6}>
+              <el-form-item label="排序号" prop={'orderNo'}>
+                <el-input vModel={form.orderNo} size="mini" placeholder="排序号" />
+              </el-form-item>
+            </el-col>
+            <el-col span={6}>
+              <el-form-item label="是否启用">
+                <el-switch vModel={form.status} activeValue={1} size="mini" inactiveValue={0} />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row gutter={20}>
+            <el-col span={6}>
+              <el-form-item label="是否管理员">
+                <el-switch vModel={form.adminFlag} activeValue={1} size="mini" inactiveValue={0} />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row gutter={20}>
+            <el-col span={24}>
+              <el-form-item label="模块名称" prop='moduleId'>
+                <el-scrollbar wrap-class="scrollbar-wrapper" class="scrollbar__view scrollbar-view-height" style={{ height: '20vh' }}>
+                  <el-tree
+                    ref={tree}
+                    data={treeList.value}
+                    show-checkbox
+                    default-expand-all
+                    node-key="id"
+                    highlight-current
+                    default-checked-keys={form.moduleList}
+                    props={defaultProps}
+                    onCheckChange={() => handleCheckChange()}
+                  />
+                </el-scrollbar>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row gutter={20}>
+            <el-col span={24}>
+              <el-form-item label="描述">
+                <el-input resize={'none'} type="textarea" vModel={form.memo} size="mini" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+        </el-form>
         <el-row>
           <el-col span={24} style={{ 'text-align': 'right' }}>
             {
@@ -180,7 +183,7 @@ export default defineComponent({
             <el-button plain size="mini" onClick={() => handleCancel()}>关闭</el-button>
           </el-col>
         </el-row>
-      </el-form>
+      </>
     )
   }
 })

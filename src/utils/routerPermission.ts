@@ -26,6 +26,7 @@ function setAddRoters(list: Menu[], route: targetRouter, redirect = false) {
           Object.assign(route, { redirect: `${item.url}` })
         }
         // console.log('%c 🍲 item: ', 'font-size:20px;background-color: #FCA650;color:#fff;', item)
+        console.log('%c 🥫 item.modulePath: ', 'font-size:20px;background-color: #6EC1C2;color:#fff;', item.modulePath)
         route.children.push({
           path: `${item.url}`,
           component: i !== 0 ? () => import(`@/views/${item.modulePath}.vue`) : () => import(`@/views${item.modulePath}.vue`),

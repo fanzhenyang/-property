@@ -8,6 +8,16 @@ const propsType = {
     default: () => ({})
   }
 } as const
+
+interface IForm {
+  moduleName: string
+  status: unknown
+  disable?: boolean
+  enable?: boolean
+  platformId: number
+  pId: number
+}
+
 export default defineComponent({
   props: propsType,
   emits: ['submitSearchForm', 'resetSearchForm'],
@@ -17,9 +27,11 @@ export default defineComponent({
       label: 'moduleName',
       value: 'id'
     })
-    const form = reactive({
+    const form = reactive<IForm>({
       moduleName: '',
       status: null,
+      disable: false,
+      enable: false,
       platformId: 1,
       pId: 0
     })
@@ -47,17 +59,40 @@ export default defineComponent({
     const formRef = ref<InstanceType<typeof ElForm>>()
 
     const resetForm = () => {
-      console.log('%c 🍨 formRef.value: ', 'font-size:20px;background-color: #B03734;color:#fff;', formRef.value)
       if (!formRef.value) return false
       form.moduleName = ''
       form.status = null
       form.pId = 0
+      form.enable = false
+      form.disable = false
       formRef.value.resetFields()
       emit('resetSearchForm', form)
     }
 
     const submitForm = () => {
       emit('submitSearchForm', form)
+    }
+
+    const handleChange = (val: boolean, type: number) => {
+      if (type === 1) {
+        if (val) {
+          form.enable = true
+          form.disable = false
+          form.status = 1
+          return true
+        }
+        form.enable = false
+        form.status = null
+      } else if (type === 2) {
+        if (val) {
+          form.enable = false
+          form.disable = true
+          form.status = 0
+          return true
+        }
+        form.disable = false
+        form.status = null
+      }
     }
 
     return () => (
@@ -82,7 +117,18 @@ export default defineComponent({
           </el-col>
           <el-col span={5}>
             <el-form-item label="是否启用">
-              <el-switch vModel={form.status} activeValue={1} size="mini" inactiveValue={0} />
+              <div class="align-item">
+                <el-checkbox
+                  vModel={form.enable}
+                  onChange={(val: boolean) => handleChange(val, 1)}
+                  size="mini"
+                >启用</el-checkbox>
+                <el-checkbox
+                  vModel={form.disable}
+                  onChange={(val: boolean) => handleChange(val, 2)}
+                  size="mini"
+                >停用</el-checkbox>
+              </div>
             </el-form-item>
           </el-col>
           <el-col span={4}>
@@ -95,3 +141,14 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.align-item {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  /deep/.el-checkbox {
+    color: #fff;
+  }
+}
+</style>

@@ -1,6 +1,5 @@
 <script lang="tsx">
-import { defineComponent, ref, toRef, toRefs } from 'vue'
-import { openDailog } from '@/hooks/dialog'
+import { defineComponent, ref, toRefs } from 'vue'
 const propsType = {
   title: {
     type: String,
