@@ -11,8 +11,8 @@ import { IGropListData, IDictionaryData } from '@/interface/sysm'
 import { ElForm, ElMessage } from 'element-plus'
 export default defineComponent({
   setup() {
-    const { headerRender } = useHeaderEffect()
-    const { tableRender, initTable } = useTableEffect()
+    const { tableRender, initTable, checkList } = useTableEffect()
+    const { headerRender } = useHeaderEffect(checkList)
     return () => (
       <container imgIndex={1} >
         {{
@@ -28,6 +28,7 @@ export default defineComponent({
 const useTableEffect = () => {
   const loading = ref<boolean>(false)
   const tableList = ref<IGropListData[]>([])
+
   const initTable = async () => {
     const target = {
       page: 1,
@@ -48,19 +49,26 @@ const useTableEffect = () => {
       // deleteShow.value = true
     }
   }
-  const ids = ref<number>(0)
+  const checkList = ref<number>(0)
   const handleTableSelect = (id: number) => {
-    ids.value = id
+    checkList.value = id
   }
   const tableRender = () => {
     return <Table id={'table3'} tableList={tableList.value} loading={loading.value} {...{ onHandleOperation: handleOperation, onHandleTableSelect: handleTableSelect }} />
   }
-  return { tableRender, initTable }
+  return { tableRender, initTable, checkList }
 }
 
-const useHeaderEffect = () => {
+const useHeaderEffect = (checkList: Ref<number>) => {
   const handleOperate = (str: string) => {
-    console.log('%c 🍲 str: ', 'font-size:20px;background-color: #F5CE50;color:#fff;', str)
+    if (str === 'add') {
+
+    } else if (str === 'delete') {
+      if (!checkList.value) {
+        ElMessage.error('请至少选择一条数据')
+        return false
+      }
+    }
   }
   const headerRender = () => {
     return <Header {...{ onHandleOperate: (str: string) => handleOperate(str) }}>
