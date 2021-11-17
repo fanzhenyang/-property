@@ -91,9 +91,10 @@ export interface IActive {
 export interface IGropList {
   groupName?: string
   groupTypeOrder?: string
-  statusOrder?: string | number
+  statusOrder?: number | null
   page: number
   size: number
+  total?: number
 }
 
 export interface IGropListData {

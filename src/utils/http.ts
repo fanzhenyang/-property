@@ -41,6 +41,10 @@ class Http {
       res.config.cbs && res.config.cbs()
       // 返回数据
       const { data, config, status } = res
+      if (data.data?.current && data.data?.size && data.data?.total) {
+        const { data: { current, size, total } } = data
+        data.data.paginationPage = Object.assign({}, { page: current, size: size, total: total })
+      }
       if (config.url && config.url.includes('auth/oauth/token')) {
         if (data.status === 412) {
           ElMessage.error(data.message)
@@ -54,6 +58,10 @@ class Http {
         store.dispatch('user/resetToken').then(res => {
           router.push({ path: '/login' })
         })
+        return false
+      }
+      if (data.status === 412) {
+        ElMessage.error(data.message)
         return false
       }
 

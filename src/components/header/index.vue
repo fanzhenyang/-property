@@ -59,7 +59,7 @@ const MenuComp = (props: { menuList: Menu[] }) => {
   if (props.menuList.length > 0) {
     const router = inject<Router | any>('router')
     return (
-      <el-menu class="el-menu-demo header-menu" mode="horizontal" onSelect={handleSelect} backgroundColor="#043078" textColor="#fff" activeTextColor="#fff">
+      <el-menu class="el-menu-demo header-menu" mode="horizontal" onSelect={(index: string, indexPath: string, item: Menu) => handleSelect(index, indexPath, item)} backgroundColor="#043078" textColor="#fff" activeTextColor="#fff">
         {
           props.menuList.map((item: Menu) => {
             if (item.children && item.children.length > 0) {

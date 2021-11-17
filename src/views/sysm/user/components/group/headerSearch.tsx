@@ -43,7 +43,11 @@ export default defineComponent({
       emit('headerSubmitFrom', Object.freeze(target))
     }
     const resetForm = () => {
-      formRef.value && formRef.value.resetFields()
+      form.disable = false
+      form.enable = false
+      form.groupName = ''
+      form.status = null
+      submitForm()
     }
     return () => (
       <el-form model={form} class="form-public-fff" ref={formRef} inline labelWidth={'100px'}>

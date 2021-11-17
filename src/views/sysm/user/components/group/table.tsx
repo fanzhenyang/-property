@@ -6,10 +6,10 @@ const propsType = {
     type: Array as PropType<IGropListData[]>,
     default: () => ([])
   },
-  loading: {
-    type: Boolean as PropType<boolean>,
-    default: false
-  },
+  // loading: {
+  //   type: Boolean as PropType<boolean>,
+  //   default: false
+  // },
   id: {
     type: String,
     default: ''

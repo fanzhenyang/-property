@@ -1,4 +1,3 @@
-
 import {
   ElMenu,
   ElMenuItem,
@@ -13,12 +12,12 @@ import {
   ElInput,
   ElRow,
   ElInfiniteScroll,
-  ElLoading,
   ElMessage,
   ElMessageBox,
   ElNotification,
   ElPopover,
   ElScrollbar,
+  ElPagination,
   ElCollapseTransition,
   ElPopconfirm,
   ElSelect,
@@ -30,7 +29,8 @@ import {
   ElDropdownMenu,
   ElDropdownItem,
   ElDialog,
-  ElUpload
+  ElUpload,
+  ElConfigProvider
 } from 'element-plus/lib/'
 
 const elemnt: any[] = [
@@ -38,6 +38,7 @@ const elemnt: any[] = [
   ElTableColumn,
   ElInput,
   ElButton,
+  ElPagination,
   ElSwitch,
   ElCol,
   ElRow,
@@ -59,12 +60,12 @@ const elemnt: any[] = [
   ElDropdownMenu,
   ElDropdownItem,
   ElDialog,
-  ElUpload
+  ElUpload,
+  ElConfigProvider
 ]
 
 const plugins: any[] = [
   ElInfiniteScroll,
-  ElLoading,
   ElMessage,
   ElMessageBox,
   ElNotification
