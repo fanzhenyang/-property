@@ -19,7 +19,7 @@ const state = {
 }
 
 const actions = {
-  login ({ commit }: { commit: Commit }, userInfo: ILoginData):Promise<any> {
+  login({ commit }: { commit: Commit }, userInfo: ILoginData): Promise<any> {
     return new Promise((resolve, reject) => {
       login(userInfo).then(res => {
         if (!res) {
@@ -36,7 +36,15 @@ const actions = {
       })
     })
   },
-  exit ({ commit } : {commit: Commit}):Promise<any> {
+  resetToken({ commit }: { commit: Commit }): Promise<any> {
+    return new Promise(resolve => {
+      session.removeItem('ADMIN_TOKEN')
+      commit('SET_TOKEN', '')
+      commit('SET_USER', '')
+      resolve(true)
+    })
+  },
+  exit({ commit }: { commit: Commit }): Promise<any> {
     return new Promise((resolve, reject) => {
       logout(null).then(res => {
         console.log('%c 🍜 res: ', 'font-size:20px;background-color: #3F7CFF;color:#fff;', res)
@@ -53,10 +61,10 @@ const actions = {
 }
 
 const mutations = {
-  SET_TOKEN: (state: IState, token: string):void => {
+  SET_TOKEN: (state: IState, token: string): void => {
     state.token = token
   },
-  SET_USER: (state: IState, name: string):void => {
+  SET_USER: (state: IState, name: string): void => {
     state.name = name
   }
 }

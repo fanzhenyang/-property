@@ -12,11 +12,11 @@ const state = {
 }
 
 const actions = {
-  getRouter ({ commit }: { commit: Commit }):Promise<any> {
+  getRouter({ commit }: { commit: Commit }): Promise<any> {
     return new Promise((resolve) => {
       init({ clientIds: 'cdtye-common-sys-client' })
         .then(res => {
-          const list = res.data[0].menus
+          const list = res?.data[0].menus
           const menus = JSON.parse(JSON.stringify(list))
           // menus.splice(2, 0, {
           //   moduleName: '规划管理',
@@ -34,7 +34,7 @@ const actions = {
 }
 
 const mutations = {
-  SET_ROUTER: (state: IState, routerList: Menu[]):void => {
+  SET_ROUTER: (state: IState, routerList: Menu[]): void => {
     state.routers = routerList
   }
 }
