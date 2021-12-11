@@ -8,7 +8,7 @@ const PropsType = {
   },
   width: {
     type: String,
-    require: true
+    default: '100%'
   },
   height: {
     type: String,

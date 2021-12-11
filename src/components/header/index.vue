@@ -124,32 +124,32 @@ const MenuChild = (props: {list: Menu[]}) => {
   background: $bg url("../../assets/img/menu/nav_top.png") no-repeat center
     center;
   background-size: 100% 100%;
-  min-height: 8rem;
+  min-height: 8.5vh;
   width: 100%;
   color: $fff;
   &-main {
     @include flex-center(flex-start, flex-end);
     height: 100%;
-    min-height: 7rem;
+    min-height: 7.5vh;
     padding: 0 1rem 1rem 1rem;
     box-sizing: border-box;
     &-user {
       @include flex-center(space-between, center);
       flex: 0 0 9.5%;
-      height: 3.4rem;
+      height: 3.4vh;
     }
   }
   &-img {
-    width: 36rem;
+    width: 18vw;
   }
   &-dian {
     position: absolute;
-    left: 123rem;
+    left: 64vw;
     width: 4vw;
   }
   &-title {
     @include vertically;
-    font-size: 3.84rem;
+    font-size: 2vw;
     left: 48.5%;
     color: $fff;
   }
@@ -157,13 +157,14 @@ const MenuChild = (props: {list: Menu[]}) => {
     position: relative;
     background-color: transparent !important;
     border-bottom: none !important;
-    margin-left: 0.8rem;
+    margin-left: .8vw;
     flex: 1;
     &-title {
       width: 100%;
       height: 3.4rem;
       line-height: 3.4rem;
       text-align: center;
+      font-size: 1vw;
     }
     /deep/.el-sub-menu,
     /deep/.el-menu-item {
@@ -171,8 +172,8 @@ const MenuChild = (props: {list: Menu[]}) => {
       position: relative;
       background: url("../../assets/img/menu/menu_bg_left.png") no-repeat center
         center;
-      width: 15rem;
-      height: 3.4rem;
+      width: 8vw;
+      height: 3.5vh;
       background-size: 100% 100%;
       background-color: transparent !important;
       &:nth-of-type(n + 3) {

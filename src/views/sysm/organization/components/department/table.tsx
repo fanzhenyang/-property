@@ -47,6 +47,7 @@ export default defineComponent({
         isSelection={true}
         rowKey={'id'}
         height={'84vh'}
+        width={'100%'}
         columnData={columnData.value}
         {...{ onHandleSelect: handleSelect }}
       >
