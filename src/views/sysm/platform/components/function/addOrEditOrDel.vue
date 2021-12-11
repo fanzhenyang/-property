@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent, ref, Ref, inject, readonly, reactive, PropType, onMounted } from 'vue'
+import { defineComponent, ref, Ref, inject, readonly, reactive, PropType } from 'vue'
 import { ElMessage, ElForm } from 'element-plus'
 import { saveOrUpdate } from '@/api/sysm/function'
 import { IPlatform, IPlatformTree } from '@/interface/sysm'

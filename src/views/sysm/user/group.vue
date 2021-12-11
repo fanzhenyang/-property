@@ -97,8 +97,8 @@ const useTableEffect = (typeStr: Ref<string>, dialogVisible: Ref<boolean>, delet
   }
   const tableRender = () => {
     return <>
-      <div vLoading={loading.value}>
-        <Table id={'table3'} tableList={tableList.value} {...{ onHandleOperation: handleOperation, onHandleTableSelect: handleTableSelect }} />
+      <div>
+        <Table id={'table3'} loading={loading.value} tableList={tableList.value} {...{ onHandleOperation: handleOperation, onHandleTableSelect: handleTableSelect }} />
       </div>
       <paginationComp currentPage={pagination.page} pageSize={pagination.size} total={pagination.total} {...{ onHandlePaginationChange: handlePaginationChange }} />
     </>

@@ -45,12 +45,12 @@ export default defineComponent({
 .inverstment-cont {
   @include flex-center(space-between, flex-end);
   &-view {
-    flex: 0 0 25%;
+    width: 26vw;
     @include flex-center(space-between, flex-end, nowrap, column);
     min-height: calc(100vh - 10rem);
   }
   &-main {
-    flex: 0 0 49%;
+    width: 46vw;
     @include flex-center(space-between, flex-end, nowrap, column);
     min-height: calc(100vh - 10rem);
   }

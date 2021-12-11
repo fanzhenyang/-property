@@ -106,6 +106,7 @@ export interface IGropListData {
   moduleName: string
   orderNo: number
   status: number
+  checkbox: boolean
 }
 
 export interface IDictionaryData {

@@ -10,7 +10,9 @@ html {
   /*rem 相对于根元素html的font-size, r就是root的意思*/
   /*16 * 62.5% = 10px*/
   /*1rem === 10px*/
-  font-size: 62.5%;
+  /*1rem === 0.5208vw*/
+  // font-size: 62.5%;
+  font-size: 0.5208vw;
 }
 
 /*viewport height === vh*/
@@ -30,4 +32,8 @@ html body #app {
   &:hover {
     overflow-y: auto;
   }
+}
+
+.g-relative {
+  position: relative;
 }

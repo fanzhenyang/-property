@@ -135,7 +135,7 @@ const MenuChild = (props: {list: Menu[]}) => {
     box-sizing: border-box;
     &-user {
       @include flex-center(space-between, center);
-      flex: 0 0 8%;
+      flex: 0 0 9.5%;
       height: 3.4rem;
     }
   }
@@ -145,6 +145,7 @@ const MenuChild = (props: {list: Menu[]}) => {
   &-dian {
     position: absolute;
     left: 123rem;
+    width: 4vw;
   }
   &-title {
     @include vertically;

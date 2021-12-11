@@ -70,6 +70,8 @@ class Http {
           Http.msgFunc(data, '新增')
         } else if (res.config.type === 'edit') {
           Http.msgFunc(data, '编辑')
+        } else if (res.config.type === 'reset') {
+          Http.msgFunc(data, '重置密码')
         } else if (res.config.type === 'delete') {
           Http.msgFunc(data, '删除')
         } else {

@@ -24,12 +24,14 @@ export default defineComponent({
       emit('handleOperation', row, strType)
     }
     const columnData = ref([
-      { label: '用户组分类', prop: 'groupType', align: 'left', width: '120px' },
-      { label: '用户组名称', prop: 'groupName', width: '120px' },
-      { label: '所属模块', prop: 'moduleName', tooltip: true },
-      { label: '用户组描述', prop: 'memo', tooltip: true, width: '120px' },
+      { label: '部门名称', prop: 'deptName', align: 'left', width: '160px' },
+      { label: '部门简介', prop: 'shortName', width: '100px' },
+      { label: '部门编号', prop: 'deptCode', tooltip: true },
+      { label: '排序号', prop: 'orderNo', tooltip: true, width: '80px' },
+      { label: '部门上级主管', prop: 'pManagerName', tooltip: true, width: '120px' },
+      { label: '部门主管', prop: 'managerName', tooltip: true, width: '120px' },
       { label: '启停状态', prop: 'status', template: true, width: '80px' },
-      { label: '分配权限', prop: 'assignPermissions', template: true, width: '210px' }
+      { label: '操作', prop: 'assignPermissions', template: true, width: '210px' }
     ])
     const checkList = readonly<string[]>(['用户组分类', '用户组名称', '所属模块', '用户组描述', '启停状态', '分配权限'])
 
@@ -44,6 +46,7 @@ export default defineComponent({
         data={props.tableList}
         isSelection={true}
         rowKey={'id'}
+        height={'84vh'}
         columnData={columnData.value}
         {...{ onHandleSelect: handleSelect }}
       >
@@ -75,7 +78,6 @@ export default defineComponent({
             <el-button type="text" onClick={() => handleOperation(row, 'details')}>查看</el-button>
             <el-button type="text" onClick={() => handleOperation(row, 'edit')}>编辑</el-button>
             <el-button type="text" style={{ color: 'red' }} onClick={() => handleOperation(row, 'delete')}>删除</el-button>
-            <el-button type="text" onClick={() => handleOperation(row, 'assign')}>分配权限</el-button>
           </>)
         }}
       </tableComp>

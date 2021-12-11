@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+const relativeCls = 'g-relative'
 export default function useLoading(Comp: any): any {
   return {
     mounted(el: any, binding: any) {
@@ -9,10 +10,51 @@ export default function useLoading(Comp: any): any {
         el[name] = {}
       }
       el[name].instance = instance
-      // const title = binding.arg
-      console.log('%c 🥘 instance: ', 'font-size:20px;background-color: #FCA650;color:#fff;', instance)
-      console.log('%c 🥚 binding: ', 'font-size:20px;background-color: #FFDD4D;color:#fff;', binding)
-      console.log('%c 🍠 el: ', 'font-size:20px;background-color: #93C0A4;color:#fff;', el[name])
+      const title = binding.arg
+      if (typeof title !== 'undefined') {
+        el[name].instance.setTitle(title)
+      }
+      if (binding.value) {
+        append(el)
+      }
+    },
+    updated(el: any, binding: any) {
+      const title = binding.arg
+      const name = Comp.name
+      if (typeof title !== 'undefined') {
+        el[name].instance.setTitle(title)
+      }
+      if (binding.value !== binding.oldValue) {
+        binding.value ? append(el) : remove(el)
+      }
     }
+  }
+  function append(el: any) {
+    const name = Comp.name
+    const style = getComputedStyle(el)
+    if (['absolute', 'fixed', 'relative'].indexOf(style.position) === -1) {
+      addClass(el, relativeCls)
+    }
+    el.appendChild(el[name].instance.$el)
+  }
+
+  function remove(el: any) {
+    const name = Comp.name
+    removeClass(el, relativeCls)
+    if (el.contains(el[name].instance.$el)) {
+      el.removeChild(el[name].instance.$el)
+    }
+  }
+  function addClass(el: any, className: string) {
+    if (!el.classList.contains(className)) {
+      el.classList.add(className)
+    }
+  }
+
+  function removeClass(el: any, className: string) {
+    if (!className) {
+      return false
+    }
+    el.classList.remove(className)
   }
 }

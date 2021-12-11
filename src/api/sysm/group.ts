@@ -77,3 +77,13 @@ export const actionSaveUpdate = (data: IAction, cbs?: () => void, type = 'edit',
     msg
   })
 }
+
+// 所属用户组
+export const userGroupList = <T>(params: T, cbs?: () => void): Promise<any> => {
+  return http.request({
+    url: '/sysm/group/list',
+    method: 'get',
+    params,
+    cbs
+  })
+}

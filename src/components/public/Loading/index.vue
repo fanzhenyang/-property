@@ -10,7 +10,7 @@ export default defineComponent({
     return () => (
       <div class="loading">
         <div class="loading-content">
-          <img src="./loading.gif" alt="加载中"/>
+          <img src={require('./loading.gif')} alt="加载中"/>
           <p class="desc">{caption.value}</p>
         </div>
       </div>
@@ -18,3 +18,21 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+  .loading {
+    position: absolute;
+    width: 20%;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    .loading-content {
+      text-align: center;
+      .desc {
+        line-height: 20px;
+        font-size: 20px;
+        color: red;
+      }
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
 'use strict'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path')
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, dir)
 }
 module.exports = {
@@ -30,8 +30,8 @@ module.exports = {
       '/itps': {
         // target: 'http://192.168.116.134', // 本地
         // target: 'http://172.28.1.4', // 线上
-        // target: 'http://125.75.36.111:81',
-        target: 'http://172.26.1.102',
+        target: 'http://125.75.36.102:81',
+        // target: 'http://172.26.1.102',
         // target: 'http://172.26.10.2',
         changeOrigin: true,
         pathRewrite: {
@@ -41,7 +41,7 @@ module.exports = {
     }
   },
   productionSourceMap: false,
-  chainWebpack (config) {
+  chainWebpack(config) {
     config.resolve.alias
       .set('@', resolve('src'))
     config

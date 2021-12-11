@@ -1,15 +1,15 @@
 <script lang="tsx">
 import { defineComponent, reactive, ref, provide, Ref } from 'vue'
 import Header from '../components/public/header.vue'
-import HeaderSearch from './components/user/headerSearch'
-import Table from './components/user/table'
-import AddOrEditDialog from './components/user/dialogAddorEdit'
+import HeaderSearch from './components/department/headerSearch'
+import Table from './components/department/table'
+import LeftTreeCompany from './components/department/leftTreeCompany'
+import AddOrEditDialog from './components/department/dialogAddOrEditDel'
 import { ElMessage } from 'element-plus'
 import fileSaver from '@/utils/exportFile'
 import { userGroupList } from '@/api/sysm/group'
-import { listPage } from '@/api/sysm/user'
+import { listByTreeDept } from '@/api/sysm/department'
 import { IGropListData } from '@/interface/sysm'
-import { Ipagination } from '@/interface/public'
 
 export default defineComponent({
   setup() {
@@ -30,14 +30,23 @@ export default defineComponent({
     const { dialogRender, dialogVisible } = useAddOrEditEffect()
     const { headerRender } = useHeaderEffect(dialogVisible)
     const { tableRender, typeStr, id, initTable } = useTableEffect(dialogVisible)
+    const handleTreeNodeClick = (data: any) => {
+      initTable({}, data.id)
+    }
     return () => (
       <container imgIndex={1} >
         {{
-          cont: () => (<>
-            { headerRender(typeStr) }
-            { tableRender() }
-            { dialogVisible.value ? dialogRender(typeStr, id.value, initTable) : null}
-          </>)
+          cont: () => (<div class="flex">
+            <div class="flex-left">
+              <h1>公司</h1>
+              <LeftTreeCompany {...{ onHandleTreeNodeClick: (data: any) => handleTreeNodeClick(data) }} />
+            </div>
+            <div class="flex-right">
+              { headerRender(typeStr) }
+              { tableRender() }
+              { dialogVisible.value ? dialogRender(typeStr, id.value, initTable) : null}
+            </div>
+          </div>)
         }}
       </container>
     )
@@ -46,29 +55,25 @@ export default defineComponent({
 
 // 表格
 interface IForm {
-  account?: string
-  status?: number | null
-  lockFlag?: number | null
-  incumbentFlag?: number | null
-  groupId?: number | null
+  deptName?: string
+  statusOrder?: number | null
+  order?: number | null
+  PId?: number | null
+  companyIds?: number | null
   [key: string]: any
 }
 const useTableEffect = (dialogVisible: Ref<boolean>) => {
-  const pagination = reactive<Ipagination>({
-    page: 1,
-    size: 10,
-    total: 0
-  })
   const initData = reactive<IForm>({
-    account: '',
-    status: null,
-    lockFlag: null,
+    deptName: '',
+    statusOrder: null,
+    PId: null,
     incumbentFlag: null,
-    groupId: null
+    companyIds: null
   })
   const loading = ref<boolean>(false)
   const tableList = ref([])
-  const initTable = async(dataForm: IForm = {}) => {
+  const initTable = async(dataForm: IForm = {}, id?: number) => {
+    id ? initData.companyIds = id : initData.companyIds = null
     loading.value = true
     if (Object.keys(dataForm).length > 0) {
       Object.keys(dataForm).forEach(key => {
@@ -76,16 +81,12 @@ const useTableEffect = (dialogVisible: Ref<boolean>) => {
       })
     }
     const target = {
-      ...pagination,
       ...initData
     }
-    const { data: { paginationPage, records } } = await listPage(target, () => {
+    const { data } = await listByTreeDept(target, () => {
       loading.value = false
     })
-    tableList.value = records
-    paginationPage && Object.keys(paginationPage).forEach(key => {
-      pagination[key] = paginationPage[key]
-    })
+    tableList.value = data
   }
   initTable()
 
@@ -101,20 +102,9 @@ const useTableEffect = (dialogVisible: Ref<boolean>) => {
   const tableRender = () => {
     return <>
       <Table id={'table3'} loading={loading.value} tableList={tableList.value} {...{ onHandleOperation: handleOperation }} />
-      <paginationComp currentPage={pagination.page} pageSize={pagination.size} total={pagination.total} {...{ onHandlePaginationChange: handlePaginationChange }} />
     </>
   }
-
-  const handlePaginationChange = (val: number, type: string) => {
-    if (type === 'size') {
-      pagination.size = val
-      pagination.page = 1
-    } else if (type === 'current') {
-      pagination.page = val
-    }
-    initTable()
-  }
-  return { tableRender, typeStr, id, initTable }
+  return { tableRender, typeStr, initData, id, initTable }
 }
 
 // 顶部按钮
@@ -165,10 +155,22 @@ const useAddOrEditEffect = () => {
       v-model={[dialogVisible.value, 'dialogVisible']}
     >
       {{
-        main: () => <AddOrEditDialog targetId={id} strType={typeStr} {...{ onHandleDialogCancel: handleDialogCancel, onHandleSubForm: () => handleSubForm(cbs) }} />
+        main: () => <div>213</div>
       }}
     </dialogComp>
   }
   return { dialogRender, dialogVisible }
 }
 </script>
+
+<style lang="scss" scoped>
+.flex {
+  @include flex-center(space-between, flex-start);
+  &-left {
+    flex: 0 0 20%;
+  }
+  &-right {
+    flex: 0 0 78%;
+  }
+}
+</style>
