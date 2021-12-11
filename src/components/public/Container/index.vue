@@ -29,7 +29,7 @@ export default defineComponent({
 .container {
   padding: 1rem;
   box-sizing: border-box;
-  min-height: calc(100vh - 8rem);
+  min-height: calc(100vh - 8.5vh);
   max-height: 100vh;
   height: 100%;
   width: 100%;

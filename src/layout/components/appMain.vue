@@ -19,7 +19,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .layout {
-  min-height: calc(100vh - 8rem);
+  min-height: calc(100vh - 8.5vh);
   width: 100%;
   position: relative;
   overflow: hidden;

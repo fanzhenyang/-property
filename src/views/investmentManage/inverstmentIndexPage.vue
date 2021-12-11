@@ -47,12 +47,12 @@ export default defineComponent({
   &-view {
     width: 26vw;
     @include flex-center(space-between, flex-end, nowrap, column);
-    min-height: calc(100vh - 10rem);
+    min-height: calc(100vh - 8.5vh - 2rem);
   }
   &-main {
     width: 46vw;
     @include flex-center(space-between, flex-end, nowrap, column);
-    min-height: calc(100vh - 10rem);
+    min-height: calc(100vh - 8.5vh - 2rem);
   }
 }
 </style>
